@@ -5,17 +5,24 @@ using UnityEngine.AI;
 
 public class PlayerControlScript : MonoBehaviour
 {
+    //thomas, ada, eliana, kris
+    public GameObject[] players = { };
     public GameObject player;
+    public string chosenPlayer; 
 
-    private NavMeshAgent navMeshAgent;
+    private NavMeshAgent agent;
 
     Vector2 movementInput;
-    
 
     // Start is called before the first frame update
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        if (chosenPlayer == "Thomas")
+        {
+            Quaternion r = new Quaternion(0, 0, 0, 0);           
+            player = Instantiate(players[0], transform.position, r, gameObject.transform);
+        }
     }
 
     // Update is called once per frame
@@ -39,12 +46,12 @@ public class PlayerControlScript : MonoBehaviour
     public void Move(Vector2 input)
     {
         Vector3 destination = transform.position + transform.right * input.x + transform.forward * input.y;
-        navMeshAgent.destination = destination;
+        agent.destination = destination;
     }
 
     public void ROTATE(Vector2 input)
     {
-        navMeshAgent.destination = transform.position;
-        transform.Rotate(0, input.x * navMeshAgent.angularSpeed * Time.deltaTime, 0);
+        agent.destination = transform.position;
+        transform.Rotate(0, input.x * agent.angularSpeed * Time.deltaTime, 0);
     }
 }
