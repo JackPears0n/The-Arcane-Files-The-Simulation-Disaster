@@ -18,10 +18,17 @@ public class PlayerControlScript : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
         if (chosenPlayer == "Thomas")
         {
             Quaternion r = new Quaternion(0, 0, 0, 0);           
             player = Instantiate(players[0], transform.position, r, gameObject.transform);
+        }
+
+        if (chosenPlayer == "Ada")
+        {
+            Quaternion r = new Quaternion(0, 0, 0, 0);
+            player = Instantiate(players[1], transform.position, r, gameObject.transform);
         }
     }
 

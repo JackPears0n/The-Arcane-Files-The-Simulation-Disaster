@@ -97,14 +97,14 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.0002
+    - _OutlineWidth: 0.257
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimStep: 0
-    - _RimStepSmooth: 0
-    - _ShadowStep: 0.351
-    - _ShadowStepSmooth: 0.022
+    - _RimStep: 1
+    - _RimStepSmooth: 1
+    - _ShadowStep: 0
+    - _ShadowStepSmooth: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -115,7 +115,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.9858491, g: 1, b: 0.9988823, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0.3066038, g: 1, b: 0.8368091, a: 1}

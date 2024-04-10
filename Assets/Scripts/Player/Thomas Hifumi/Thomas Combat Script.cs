@@ -4,15 +4,18 @@ using UnityEngine.AI;
 
 public class ThomasCombatScript : MonoBehaviour
 {
+    public Animator anim;
     public LayerMask whatIsEnemy;
     public int balence;
 
     [Header("Stats")]
-    public ThomasStats stats;
+    public Stats stats;
     [HideInInspector]public float attack;
     public float health;
     public float maxHealth;
     private float defence;
+    public float iFramesDuration;
+    public bool hasIFrames;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
@@ -40,10 +43,8 @@ public class ThomasCombatScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
-        attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
+        CheckStats();
         health = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
-        defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
     }
 
     // Update is called once per frame
@@ -221,6 +222,11 @@ public class ThomasCombatScript : MonoBehaviour
 
         }
     }
+
+    public void RemoveIFrames()
+    {
+       hasIFrames = false;
+    }
     /*
     public IEnumerator ResetCooldown(int skillNum, int skillCD)
     {
@@ -270,7 +276,17 @@ public class ThomasCombatScript : MonoBehaviour
     #region Health
     public void TakeDamage(float dmg)
     {
-        health -= (dmg - defence);
+        if (!hasIFrames)
+        {
+            health -= (dmg - defence);
+            hasIFrames = true;
+            Invoke(nameof(RemoveIFrames), iFramesDuration);
+        }
+        else
+        {
+            return;
+        }
+
     }
 
     public void CheckHealth()
