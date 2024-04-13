@@ -114,11 +114,6 @@ public class ThomasCombatScript : MonoBehaviour
         GameObject proj = Instantiate(projectile, new Vector3 (projectileLaunchPos.transform.position.x, projectileLaunchPos.transform.position.y, projectileLaunchPos.transform.position.z), transform.rotation);
         proj.GetComponent<ThomasProjectileScript>().GetInfo(gameObject, chosenEnemy.gameObject);
 
-        //Make it move towrds the enemy
-        //proj.transform.LookAt(chosenEnemy.transform.position);
-        //proj.transform.position = Vector3.MoveTowards(proj.transform.position, chosenEnemy.transform.position, 20);
-
-
         //Add 1 to the balence
         balence++;
 

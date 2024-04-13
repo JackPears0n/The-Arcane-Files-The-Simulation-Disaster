@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class ThomasProjectileScript : MonoBehaviour
 {
-    public LayerMask enemyLayers;
-
     public NavMeshAgent agent;
 
     public GameObject thomas;

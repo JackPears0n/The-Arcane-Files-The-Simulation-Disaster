@@ -6,6 +6,8 @@ public class EnemyHealthScript : MonoBehaviour
 {
     public float difficulty;
 
+    public char mobType;
+
     public float maxHP;
     public float health;
 

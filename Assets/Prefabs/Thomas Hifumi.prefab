@@ -1170,6 +1170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03c288c59fcc044dbde7f58fb12f6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
@@ -1178,6 +1179,8 @@ MonoBehaviour:
   attack: 0
   health: 0
   maxHealth: 0
+  iFramesDuration: 0.4
+  hasIFrames: 0
   cooldowns:
   - 1
   - 0.1

@@ -25,7 +25,7 @@ public class AdaCombatScript : MonoBehaviour
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
 
-    [Header("Basic Attack 1")]
+    [Header("Basic Attack")]
     public float bAttackDMGScale;
     public float maxTimeBetweenAttacks;
     public float lastAttackTime;
