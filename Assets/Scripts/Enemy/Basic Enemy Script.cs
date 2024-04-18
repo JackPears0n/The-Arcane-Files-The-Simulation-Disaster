@@ -78,7 +78,7 @@ public class BasicEnemyScript : MonoBehaviour
         if (target.GetComponent<PlayerControlScript>().chosenPlayer == 'E')
         {
             GameObject p = target.GetComponent<PlayerControlScript>().player;
-            //p.GetComponent<ElianaCombatScript>().TakeDamage(attack);
+            p.GetComponent<ElianaCombatScript>().TakeDamage(attack);
         }
 
         Invoke(nameof(resetBA), attackCooldown);

@@ -8,7 +8,10 @@ public class PlayerControlScript : MonoBehaviour
     //thomas, ada, kris, eliana 
     public GameObject[] players = { };
     public GameObject player;
-    public char chosenPlayer; 
+    public char chosenPlayer;
+
+    public float maxHP;
+    public float currentHP;
 
     private NavMeshAgent agent;
 
@@ -48,7 +51,7 @@ public class PlayerControlScript : MonoBehaviour
             Quaternion r = new Quaternion(0, 0, 0, 0);
             player = Instantiate(players[3], transform.position, r, gameObject.transform);
 
-            //ElianaDefaultStats(player.GetComponent<ElianaCombatScript>().stats);
+            ElianaDefaultStats(player.GetComponent<ElianaCombatScript>().stats);
         }
     }
 

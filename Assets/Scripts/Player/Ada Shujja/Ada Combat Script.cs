@@ -204,6 +204,10 @@ public class AdaCombatScript : MonoBehaviour
         maxHealth = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
         attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
         defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
+
+
+        player.GetComponent<PlayerControlScript>().maxHP = maxHealth;
+        player.GetComponent<PlayerControlScript>().currentHP = health;
     }
 
     #region Calldowns

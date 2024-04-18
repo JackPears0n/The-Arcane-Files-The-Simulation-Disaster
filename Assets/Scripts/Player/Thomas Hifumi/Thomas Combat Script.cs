@@ -7,6 +7,7 @@ public class ThomasCombatScript : MonoBehaviour
     public Animator anim;
     public LayerMask whatIsEnemy;
     public int balence;
+    public GameObject player;
 
     [Header("Stats")]
     public Stats stats;
@@ -43,6 +44,7 @@ public class ThomasCombatScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player Object");
         CheckStats();
         health = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
     }
@@ -190,6 +192,10 @@ public class ThomasCombatScript : MonoBehaviour
         maxHealth = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
         attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
         defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
+
+
+        player.GetComponent<PlayerControlScript>().maxHP = maxHealth;
+        player.GetComponent<PlayerControlScript>().currentHP = health;
     }
 
     #region Calldowns
