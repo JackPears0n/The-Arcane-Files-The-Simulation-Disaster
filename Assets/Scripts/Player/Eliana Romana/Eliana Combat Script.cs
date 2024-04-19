@@ -7,25 +7,17 @@ public class ElianaCombatScript : MonoBehaviour
     public Animator anim;
     public LayerMask whatIsEnemy;
     public GameObject player;
+    public PlayerControlScript PCS;
 
     [Header("Stats")]
     public Stats stats;
     [HideInInspector] public float attack;
-    public float health;
-    public float maxHealth;
-    private float defence;
 
     public float attackRange;
     public GameObject attackPoint;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
-
-    [Header("IFrames")]
-    public bool hasIFrames;
-    public float iFramesDuration;
-    public float iFramesCooldown;
-    public bool canHaveIFrames;
 
     [Header("Basic Attack")]
     public float bAttackDMGScale;
@@ -35,8 +27,6 @@ public class ElianaCombatScript : MonoBehaviour
 
     [Header("Parry")]
     public float parryDMGScale;
-    public bool parryState;
-    public bool hasBeenHit;
 
     [Header("Individual Skill")]
     public float iSkillDMGScale;
@@ -48,18 +38,15 @@ public class ElianaCombatScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player Object");
+        PCS.player = GameObject.Find("Player Object");
+        PCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
-        health = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
-
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckStats();
-
-        CheckHealth();
 
         AttackInput();
     }
@@ -150,15 +137,15 @@ public class ElianaCombatScript : MonoBehaviour
     public IEnumerator Parry()
     {
         //Makes it so the player is in the parry state
-        parryState = true;
+        PCS.parryState = true;
 
         //Only triggers when hit while in parry state
-        if (hasBeenHit)
+        if (PCS.hasBeenHit)
         {
             //Puts skill on cooldown
             cooldownDone[1] = false;
 
-            hasBeenHit = false;
+            PCS.hasBeenHit = false;
 
             if (ultBuffActive)
             {
@@ -255,13 +242,7 @@ public class ElianaCombatScript : MonoBehaviour
 
     public void CheckStats()
     {
-        maxHealth = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
-        attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
-        defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
-
-        player.GetComponent<PlayerControlScript>().maxHP = maxHealth;
-        player.GetComponent<PlayerControlScript>().currentHP = health;
-
+        PCS.attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
     }
 
     #region Calldowns
@@ -274,12 +255,12 @@ public class ElianaCombatScript : MonoBehaviour
     }
     public void ResetIFrameCooldown()
     {
-        canHaveIFrames = true;
+        PCS.canHaveIFrames = true;
     }
 
     public void RemoveIFrames()
     {
-        hasIFrames = false;
+        PCS.hasIFrames = false;
     }
 
     public void RemoveUltBuff()
@@ -290,18 +271,18 @@ public class ElianaCombatScript : MonoBehaviour
 
     public void AttackInput()
     {
-        if (hasBeenHit)
+        if (PCS.hasBeenHit)
         {
             //Puts skill on cooldown
             cooldownDone[1] = false;
 
-            hasBeenHit = false;
+            PCS.hasBeenHit = false;
             //Attacks the enemies
             Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, 1.5f, whatIsEnemy);
 
             foreach (Collider enemy in hitEnemies)
             {
-                enemy.GetComponent<EnemyHealthScript>().TakeDamage(parryDMGScale * defence);
+                enemy.GetComponent<EnemyHealthScript>().TakeDamage(parryDMGScale * attack);
             }
 
             StartCoroutine(ResetCooldown(1, 1));
@@ -309,7 +290,7 @@ public class ElianaCombatScript : MonoBehaviour
 
         if (!Input.GetMouseButton(1) || !Input.GetKey(KeyCode.Space))
         {
-            parryState = false;
+            PCS.parryState = false;
         }
 
         if ((Input.GetKeyDown(KeyCode.Q) || Input.GetMouseButtonDown(0)) && cooldownDone[0])
@@ -333,56 +314,4 @@ public class ElianaCombatScript : MonoBehaviour
         }
 
     }
-
-    #region Health
-    public void TakeDamage(float dmg)
-    {
-        if (parryState)
-        {
-            hasBeenHit = true;
-        }
-
-        if (!parryState)
-        {
-            if (!hasIFrames)
-            {
-                health -= (dmg - defence);
-                if (canHaveIFrames)
-                {
-                    hasIFrames = true;
-                    canHaveIFrames = false;
-                    Invoke("RemoveIFrames", iFramesDuration);
-                    Invoke("ResetIFrameCooldown", iFramesCooldown);
-                }
-            }
-            else
-            {
-                return;
-            }
-        }
-    }
-
-    public void CheckHealth()
-    {
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-        else if (health < 0)
-        {
-            health = 0;
-        }
-
-        if (health == 0)
-        {
-            PlayerDeath();
-        }
-    }
-
-    public IEnumerator PlayerDeath()
-    {
-        Debug.Log("Player is dead");
-        yield return null;
-    }
-    #endregion
 }

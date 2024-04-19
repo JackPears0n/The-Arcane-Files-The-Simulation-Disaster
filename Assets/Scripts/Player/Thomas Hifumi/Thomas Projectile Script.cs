@@ -13,12 +13,6 @@ public class ThomasProjectileScript : MonoBehaviour
     public GameObject target;
     private EnemyHealthScript targetHS;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

@@ -57,29 +57,7 @@ public class BasicEnemyScript : MonoBehaviour
     {
         attackReady = false;
 
-        if (target.GetComponent<PlayerControlScript>().chosenPlayer == 'T')
-        {            
-            GameObject p = target.GetComponent<PlayerControlScript>().player;
-            p.GetComponent<ThomasCombatScript>().TakeDamage(attack);
-        }
-
-        if (target.GetComponent<PlayerControlScript>().chosenPlayer == 'A')
-        {
-            GameObject p = target.GetComponent<PlayerControlScript>().player;
-            p.GetComponent<AdaCombatScript>().TakeDamage(attack);
-        }
-
-        if (target.GetComponent<PlayerControlScript>().chosenPlayer == 'K')
-        {
-            GameObject p = target.GetComponent<PlayerControlScript>().player;
-            p.GetComponent<KrisCombatScript>().TakeDamage(attack);
-        }
-
-        if (target.GetComponent<PlayerControlScript>().chosenPlayer == 'E')
-        {
-            GameObject p = target.GetComponent<PlayerControlScript>().player;
-            p.GetComponent<ElianaCombatScript>().TakeDamage(attack);
-        }
+        target.GetComponent<PlayerControlScript>().TakeDamage(attack);
 
         Invoke(nameof(resetBA), attackCooldown);
 

@@ -7,12 +7,10 @@ public class KrisCombatScript : MonoBehaviour
     public Animator anim;
     public LayerMask whatIsEnemy;
     public GameObject player;
+    public PlayerControlScript PCS;
 
     [Header("Stats")]
     public Stats stats;
-    [HideInInspector] public float attack;
-    public float health;
-    public float maxHealth;
     [HideInInspector] public float defence;
 
     public float attackRange;
@@ -21,19 +19,11 @@ public class KrisCombatScript : MonoBehaviour
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
 
-    [Header("IFrames")]
-    public bool hasIFrames;
-    public float iFramesDuration;
-    public float iFramesCooldown;
-    public bool canHaveIFrames;
-
     [Header("Basic Attack")]
     public float bAttackDMGScale;
 
     [Header("Parry")]
     public float parryDMGScale;
-    public bool parryState;
-    public bool hasBeenHit;
 
     [Header("Individual Skill")]
     public float iSkillHPBuff;
@@ -50,8 +40,8 @@ public class KrisCombatScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player Object");
+        PCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
-        health = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
     }
 
     // Update is called once per frame
@@ -59,12 +49,10 @@ public class KrisCombatScript : MonoBehaviour
     {
         if (hasUltIframes)
         {
-            hasIFrames = true;
+            PCS.hasIFrames = true;
         }
 
         CheckStats();
-
-        CheckHealth();
 
         AttackInput();
 
@@ -77,10 +65,10 @@ public class KrisCombatScript : MonoBehaviour
         cooldownDone[0] = false;
 
         //Makes it so the player is not in the parry state
-        parryState = false;
+        PCS.parryState = false;
 
         //Attacks the enemies
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, 1.5f, whatIsEnemy);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
 
         foreach (Collider enemy in hitEnemies)
         {
@@ -93,27 +81,7 @@ public class KrisCombatScript : MonoBehaviour
     public IEnumerator Parry()
     {
         //Makes it so the player is in the parry state
-        parryState = true;
-
-        //Only triggers when hit while in parry state
-        if (hasBeenHit)
-        {
-            //Puts skill on cooldown
-            cooldownDone[1] = false;
-
-            hasBeenHit = false;
-            //Attacks the enemies
-            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, 1.5f, whatIsEnemy);
-
-            foreach (Collider enemy in hitEnemies)
-            {
-                enemy.GetComponent<EnemyHealthScript>().TakeDamage(parryDMGScale * defence);               
-            }
-
-            StartCoroutine(ResetCooldown(1, 1));
-        }
-
-        yield return null;
+        yield return PCS.parryState = true;
     }
     public IEnumerator IndividualSkill()
     {
@@ -121,9 +89,9 @@ public class KrisCombatScript : MonoBehaviour
         cooldownDone[2] = false;
 
         //Makes it so the player is not in the parry state
-        parryState = false;
+        PCS.parryState = false;
 
-        maxHealth += iSkillHPBuff;
+        PCS.maxHP += iSkillHPBuff;
         defence += iSkillDefBuff;
 
         Invoke(nameof(RemoveISBuff), iSkillDuration);
@@ -136,13 +104,13 @@ public class KrisCombatScript : MonoBehaviour
         cooldownDone[3] = false;
 
         //Makes it so the player is not in the parry state
-        parryState = false;
+        PCS.parryState = false;
 
         //Gives the player Ultimate IFrames
         hasUltIframes = true;
 
         //Heals the player
-        health += ultHeal;
+        PCS.currentHP += ultHeal;
 
         StartCoroutine(ResetCooldown(3, 3));
         Invoke(nameof(RemoveUltIFrames), ultIFramesDuration);
@@ -152,13 +120,7 @@ public class KrisCombatScript : MonoBehaviour
 
     public void CheckStats()
     {
-        maxHealth = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
-        attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
-        defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
-
-
-        player.GetComponent<PlayerControlScript>().maxHP = maxHealth;
-        player.GetComponent<PlayerControlScript>().currentHP = health;
+        PCS.defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
     }
 
     #region Calldowns
@@ -169,37 +131,31 @@ public class KrisCombatScript : MonoBehaviour
         yield return cooldownDone[skillNum] = true;
 
     }
-
-    public void ResetIFrameCooldown()
-    {
-        canHaveIFrames = true;
-    }
-    public void RemoveIFrames()
-    {
-        hasIFrames = false;
-    }
     public void RemoveISBuff()
     {
-        maxHealth -= iSkillHPBuff;
+        PCS.maxHP -= iSkillHPBuff;
         defence -= iSkillDefBuff;
     }
     public void RemoveUltIFrames()
     {
         hasUltIframes = false;
-        hasIFrames = false;
+        PCS.hasIFrames = false;
     }
     #endregion
 
     public void AttackInput()
     {
-        if (hasBeenHit)
+        if (PCS.hasBeenHit)
         {
+            print("Retaliate");
             //Puts skill on cooldown
             cooldownDone[1] = false;
 
-            hasBeenHit = false;
+            PCS.parryState = false;
+            PCS.hasBeenHit = false;
+
             //Attacks the enemies
-            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, 1.5f, whatIsEnemy);
+            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
 
             foreach (Collider enemy in hitEnemies)
             {
@@ -209,9 +165,9 @@ public class KrisCombatScript : MonoBehaviour
             StartCoroutine(ResetCooldown(1, 1));
         }
 
-        if (!Input.GetMouseButton(1) || !Input.GetKey(KeyCode.Space))
+        if (!(Input.GetKey(KeyCode.Space) || Input.GetMouseButton(1)))
         {
-            parryState = false;
+            PCS.parryState = false;
         }
 
         if ((Input.GetKeyDown(KeyCode.Q) || Input.GetMouseButtonDown(0)) && cooldownDone[0])
@@ -234,56 +190,4 @@ public class KrisCombatScript : MonoBehaviour
             StartCoroutine(Ultimate());
         }
     }
-
-    #region Health
-    public void TakeDamage(float dmg)
-    {
-        if (parryState)
-        {
-            hasBeenHit = true;
-        }
-
-        if (!parryState)
-        {
-            if (!hasIFrames)
-            {
-                health -= (dmg - defence);
-                if (canHaveIFrames)
-                {
-                    hasIFrames = true;
-                    canHaveIFrames = false;
-                    Invoke("RemoveIFrames", iFramesDuration);
-                    Invoke("ResetIFrameCooldown", iFramesCooldown);
-                }
-            }
-            else
-            {
-                return;
-            }
-        }
-    }
-
-    public void CheckHealth()
-    {
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-        else if (health < 0)
-        {
-            health = 0;
-        }
-
-        if (health == 0)
-        {
-            PlayerDeath();
-        }
-    }
-
-    public IEnumerator PlayerDeath()
-    {
-        Debug.Log("Player is dead");
-        yield return null;
-    }
-    #endregion
 }

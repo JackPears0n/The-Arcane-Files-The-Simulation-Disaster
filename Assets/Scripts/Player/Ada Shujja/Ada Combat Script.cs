@@ -8,25 +8,17 @@ public class AdaCombatScript : MonoBehaviour
     public Animator anim;
     public LayerMask whatIsEnemy;
     public GameObject player;
+    public PlayerControlScript PCS;
 
     [Header("Stats")]
     public Stats stats;
     [HideInInspector] public float attack;
-    public float health;
-    public float maxHealth;
-    private float defence;  
 
     public float attackRange;
     public GameObject attackPoint;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
-
-    [Header("IFrames")]
-    public bool hasIFrames;
-    public float iFramesDuration;
-    public float iFramesCooldown;
-    public bool canHaveIFrames;
 
     [Header("Basic Attack")]
     public float bAttackDMGScale;
@@ -50,17 +42,14 @@ public class AdaCombatScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player Object");
+        PCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
-        health = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
-
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckStats();
-
-        CheckHealth();
 
         AttackInput();
     }
@@ -118,7 +107,7 @@ public class AdaCombatScript : MonoBehaviour
             if (ultBuffActive)
             {
                 enemy.GetComponent<EnemyHealthScript>().TakeDamage((bAttackDMGScale * attack) * ultDMGBuff);
-                health += ultHeal;
+                PCS.currentHP += ultHeal;
             }
             else 
             {
@@ -134,7 +123,7 @@ public class AdaCombatScript : MonoBehaviour
         //Puts skill on cooldown
         cooldownDone[1] = false;
 
-        hasIFrames = true;
+        PCS.hasIFrames = true;
 
         //Safely disables the NavMesh
         player.GetComponent<NavMeshAgent>().isStopped = true;
@@ -159,7 +148,7 @@ public class AdaCombatScript : MonoBehaviour
         player.GetComponent<NavMeshAgent>().updatePosition = true;
         player.GetComponent<NavMeshAgent>().isStopped = false;
 
-        Invoke(nameof(RemoveIFrames), iFramesDuration);
+        StartCoroutine(PCS.RemoveIFrames());
         StartCoroutine(ResetCooldown(1, 1));
 
         yield return null;
@@ -177,7 +166,7 @@ public class AdaCombatScript : MonoBehaviour
             if (ultBuffActive)
             {
                 enemy.GetComponent<EnemyHealthScript>().TakeDamage((iSkillDMGScale * attack) * ultDMGBuff);
-                health += ultHeal;
+                PCS.currentHP += ultHeal;
             }
             else
             {
@@ -202,13 +191,7 @@ public class AdaCombatScript : MonoBehaviour
 
     public void CheckStats()
     {
-        maxHealth = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
         attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
-        defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
-
-
-        player.GetComponent<PlayerControlScript>().maxHP = maxHealth;
-        player.GetComponent<PlayerControlScript>().currentHP = health;
     }
 
     #region Calldowns
@@ -218,16 +201,6 @@ public class AdaCombatScript : MonoBehaviour
 
         yield return cooldownDone[skillNum] = true;
 
-    }
-
-    public void ResetIFrameCooldown()
-    {
-        canHaveIFrames = true;
-    }
-
-    public void RemoveIFrames()
-    {
-        hasIFrames = false;
     }
 
     public void RemoveUltBuff()
@@ -260,50 +233,4 @@ public class AdaCombatScript : MonoBehaviour
         }
 
     }
-
-    #region Health
-    public void TakeDamage(float dmg)
-    {
-        if (!hasIFrames)
-        {
-            health -= (dmg - defence);
-            if (canHaveIFrames)
-            {
-                hasIFrames = true;
-                canHaveIFrames = false;
-                Invoke("RemoveIFrames", iFramesDuration);
-                Invoke("ResetIFrameCooldown", iFramesCooldown);
-            }
-
-        }
-        else
-        {
-            return;
-        }
-
-    }
-
-    public void CheckHealth()
-    {
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-        else if (health < 0)
-        {
-            health = 0;
-        }
-
-        if (health == 0)
-        {
-            PlayerDeath();
-        }
-    }
-
-    public IEnumerator PlayerDeath()
-    {
-        Debug.Log("Player is dead");
-        yield return null;
-    }
-    #endregion
 }

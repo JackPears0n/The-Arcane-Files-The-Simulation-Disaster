@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class EnemyHealthScript : MonoBehaviour
@@ -15,14 +16,36 @@ public class EnemyHealthScript : MonoBehaviour
 
     public bool isDead = false;
 
+    //Durtion and status of enemy IFrames
+    public float iFrameDuration;
+    public bool hasIFrames;
+
+    //Cooldown variables for the IFrames
+    public float iFrameCooldown;
+    public bool IFramesOffCooldown;
+
+    //Flase if the mobType is N
+    public bool canHaveIFrames;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        //Scales enemy health with difficulty
+        //Scales enemy max health  and defencewith difficulty
         maxHP *= difficulty;
+        defence *= difficulty;
 
         //Sets the enemy health
         health = maxHP;
+
+        if (mobType == 'N')
+        {
+            canHaveIFrames = false;
+        }
+        else
+        {
+            canHaveIFrames = true;
+        }
     }
 
     // Update is called once per frame
@@ -62,8 +85,38 @@ public class EnemyHealthScript : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public IEnumerator EnableIFrames()
+    {
+        yield return hasIFrames = false;
+        yield return canHaveIFrames = true;
+    }
+
+    public IEnumerator RemoveIFrameCooldown()
+    {
+        yield return IFramesOffCooldown = true;
+    }
+
     public void TakeDamage(float dmg)
     {
-        health -= dmg - defence;
+        if (hasIFrames)
+        {
+            return;
+        }
+        else
+        {
+            //Takes damage
+            health -= dmg - defence;
+
+            //Gives IFrames
+            if (canHaveIFrames && IFramesOffCooldown)
+            {
+                hasIFrames = true;
+                canHaveIFrames = false;
+
+                Invoke(nameof(EnableIFrames), iFrameDuration);
+                Invoke(nameof(RemoveIFrameCooldown), iFrameCooldown);
+            }
+        }
+        
     }
 }

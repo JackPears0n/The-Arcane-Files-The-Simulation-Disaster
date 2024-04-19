@@ -8,22 +8,14 @@ public class ThomasCombatScript : MonoBehaviour
     public LayerMask whatIsEnemy;
     public int balence;
     public GameObject player;
+    public PlayerControlScript PCS;
 
     [Header("Stats")]
     public Stats stats;
     [HideInInspector]public float attack;
-    public float health;
-    public float maxHealth;
-    private float defence;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
-
-    [Header("IFrames")]
-    public bool hasIFrames;
-    public float iFramesDuration;
-    public float iFramesCooldown;
-    public bool canHaveIFrames;
 
     [Header("Basic Attack 1")]
     public float bAttack1DMGScale;
@@ -49,8 +41,8 @@ public class ThomasCombatScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player Object");
+        PCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
-        health = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
     }
 
     // Update is called once per frame
@@ -58,8 +50,6 @@ public class ThomasCombatScript : MonoBehaviour
     {
         //Updates the player's stats
         CheckStats();
-
-        CheckHealth();
 
         //Stops balence going out of bounds
         if (balence < -20)
@@ -88,7 +78,7 @@ public class ThomasCombatScript : MonoBehaviour
             enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttack1DMGScale * attack);
             if(iSkillD)
             {
-                health += (bAttack1DMGScale * attack) / 2;
+                PCS.currentHP += (bAttack1DMGScale * attack) / 2;
             }
 
             //Delays the 2nd attack
@@ -98,7 +88,7 @@ public class ThomasCombatScript : MonoBehaviour
             enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttack1DMGScale * attack);
             if (iSkillD)
             {
-                health += (bAttack1DMGScale * attack) / 2;
+                PCS.currentHP += (bAttack1DMGScale * attack) / 2;
             }
         }
 
@@ -135,7 +125,7 @@ public class ThomasCombatScript : MonoBehaviour
         //If neuteral heal the player once
         if (balence == 0)
         {
-            health += 100;
+            PCS.currentHP += 100;
             iSkillD = false;
             iSkillG = false;
         }
@@ -181,7 +171,7 @@ public class ThomasCombatScript : MonoBehaviour
             e.gameObject.GetComponent<EnemyHealthScript>().TakeDamage(ultDMGScale * attack);
             if (iSkillD)
             {
-                health += (ultDMGScale * attack) / 2;
+                PCS.currentHP += (ultDMGScale * attack) / 2;
             }
         }
 
@@ -193,13 +183,7 @@ public class ThomasCombatScript : MonoBehaviour
 
     public void CheckStats()
     {
-        maxHealth = stats.maxHealth + (stats.maxHealth * (stats.maxHealthPercentMod / 100) + stats.maxHealthBonus);
         attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
-        defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
-
-
-        player.GetComponent<PlayerControlScript>().maxHP = maxHealth;
-        player.GetComponent<PlayerControlScript>().currentHP = health;
     }
 
     #region Calldowns
@@ -227,35 +211,6 @@ public class ThomasCombatScript : MonoBehaviour
 
         }
     }
-    public void ResetIFrameCooldown()
-    {
-        canHaveIFrames = true;
-    }
-
-    public void RemoveIFrames()
-    {
-       hasIFrames = false;
-    }
-    /*
-    public IEnumerator ResetCooldown(int skillNum, int skillCD)
-    {
-        yield return new WaitForSeconds(skillCD);
-
-        cooldownDone[skillNum] = true;
-
-        yield return null;
-
-    }
-
-    public IEnumerator RemoveSkillBuff()
-    {
-        yield return new WaitForSeconds(skillDuration);
-
-        iSkillG = false;
-        iSkillD = false;
-
-        yield return null;
-    }*/
     #endregion
 
     public void AttackInput()
@@ -281,49 +236,4 @@ public class ThomasCombatScript : MonoBehaviour
         }
 
     }
-
-    #region Health
-    public void TakeDamage(float dmg)
-    {
-        if (!hasIFrames)
-        {
-            health -= (dmg - defence);
-            if (canHaveIFrames)
-            {
-                hasIFrames = true;
-                canHaveIFrames = false;
-                Invoke("RemoveIFrames", iFramesDuration);
-                Invoke("ResetIFrameCooldown", iFramesCooldown);
-            }
-        }
-        else
-        {
-            return;
-        }
-
-    }
-
-    public void CheckHealth()
-    {
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-        else if (health < 0)
-        {
-            health = 0;
-        }
-
-        if (health == 0)
-        {
-            PlayerDeath();
-        }
-    }
-
-    public IEnumerator PlayerDeath()
-    {
-        Debug.Log("Player is dead");
-        yield return null;
-    }
-    #endregion
 }

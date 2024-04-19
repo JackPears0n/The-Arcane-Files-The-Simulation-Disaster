@@ -5,17 +5,32 @@ using UnityEngine.AI;
 
 public class PlayerControlScript : MonoBehaviour
 {
+    [Header("Player Objects")]
     //thomas, ada, kris, eliana 
     public GameObject[] players = { };
     public GameObject player;
     public char chosenPlayer;
+    public Stats stats;
 
+    [Header("Movement")]
+    public NavMeshAgent agent;
+    Vector2 movementInput;
+
+    [Header("IFrames")]
+    public bool hasIFrames;
+    public float iFramesDuration;
+    public float iFramesCooldown;
+    public bool canHaveIFrames;
+
+    [Header("Stats")]
     public float maxHP;
     public float currentHP;
+    public float defence;
+    public float attack;
 
-    public NavMeshAgent agent;
-
-    Vector2 movementInput;
+    [Header("Misc")]
+    public bool parryState;
+    public bool hasBeenHit;
 
     // Start is called before the first frame update
     void Start()
@@ -53,11 +68,20 @@ public class PlayerControlScript : MonoBehaviour
 
             ElianaDefaultStats(player.GetComponent<ElianaCombatScript>().stats);
         }
+
+        CheckStats();
+
+        currentHP = maxHP;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckStats();
+
+        CheckHealth();
+
         movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
 
@@ -77,6 +101,40 @@ public class PlayerControlScript : MonoBehaviour
         
     }
 
+    public void CheckStats()
+    {
+        if (chosenPlayer == 'T')
+        {
+            stats = player.GetComponent<ThomasCombatScript>().stats;
+            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * stats.maxHealthPercentMod);
+            attack = stats.attack + stats.attackBonus + (stats.attack * stats.attackPercentMod);
+            defence = stats.defence + stats.defenceBonus + (stats.defence * stats.defencePercentMod);
+        }
+        if (chosenPlayer == 'A')
+        {
+            stats = player.GetComponent<AdaCombatScript>().stats;
+            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * stats.maxHealthPercentMod);
+            attack = stats.attack + stats.attackBonus + (stats.attack * stats.attackPercentMod);
+            defence = stats.defence + stats.defenceBonus + (stats.defence * stats.defencePercentMod);
+        }
+        if (chosenPlayer == 'K')
+        {
+            stats = player.GetComponent<KrisCombatScript>().stats;
+            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * stats.maxHealthPercentMod);
+            attack = stats.attack + stats.attackBonus + (stats.attack * stats.attackPercentMod);
+            defence = stats.defence + stats.defenceBonus + (stats.defence * stats.defencePercentMod);
+        }
+        if (chosenPlayer == 'E')
+        {
+            stats = player.GetComponent<ElianaCombatScript>().stats;
+            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * stats.maxHealthPercentMod);
+            attack = stats.attack + stats.attackBonus + (stats.attack * stats.attackPercentMod);
+            defence = stats.defence + stats.defenceBonus + (stats.defence * stats.defencePercentMod);
+        }
+
+    }
+
+    #region Movement
     public void Move(Vector2 input)
     {
         Vector3 destination = transform.position + transform.right * input.x + transform.forward * input.y;
@@ -88,7 +146,9 @@ public class PlayerControlScript : MonoBehaviour
         agent.destination = transform.position;
         transform.Rotate(0, input.x * agent.angularSpeed * Time.deltaTime, 0);
     }
+    #endregion
 
+    #region DefaultStats
     public void ThomasDefaultStats(Stats player)
     {
         player.maxHealth = 300;
@@ -147,5 +207,65 @@ public class PlayerControlScript : MonoBehaviour
         player.defence = 10;
         player.defenceBonus = 0;
         player.defencePercentMod = 0;
+    }
+    #endregion
+
+    #region Health
+    public void TakeDamage(float dmg)
+    {
+        if (parryState)
+        {
+            hasBeenHit = true;
+            parryState = false;
+        }
+        else
+        {
+            if (!hasIFrames)
+            {
+                currentHP -= (dmg - defence);
+                if (canHaveIFrames)
+                {
+                    hasIFrames = true;
+                    canHaveIFrames = false;
+                    StartCoroutine(RemoveIFrames());
+                    Invoke("RemoveIFrameCooldown", iFramesCooldown);
+                }
+            }
+        }
+    }
+
+    public void CheckHealth()
+    {
+        if (currentHP > maxHP)
+        {
+            currentHP = maxHP;
+        }
+        else if (currentHP <= 0)
+        {
+            currentHP = 0;
+        }
+
+        if (currentHP == 0)
+        {
+            PlayerDeath();
+        }
+    }
+
+    public IEnumerator PlayerDeath()
+    {
+        Debug.Log("Player is dead");
+        yield return null;
+    }
+    #endregion
+
+    public IEnumerator RemoveIFrames()
+    {
+        yield return new WaitForSeconds(iFramesDuration);
+        yield return hasIFrames = false;
+    }
+
+    public void RemoveIFrameCooldown()
+    {
+        canHaveIFrames = true;
     }
 }
