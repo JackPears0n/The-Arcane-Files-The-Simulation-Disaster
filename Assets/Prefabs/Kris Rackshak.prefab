@@ -1352,8 +1352,6 @@ MonoBehaviour:
   health: 0
   maxHealth: 0
   defence: 0
-  hasIFrames: 0
-  iFramesDuration: 0.4
   attackRange: 1.5
   attackPoint: {fileID: 2298725766171422423}
   cooldowns:
@@ -1362,8 +1360,12 @@ MonoBehaviour:
   - 15
   - 30
   cooldownDone: 01010101
-  bAttackDMGScale: 2
-  parryDMGScale: 1
+  hasIFrames: 0
+  iFramesDuration: 0.2
+  iFramesCooldown: 0.5
+  canHaveIFrames: 1
+  bAttackDMGScale: 1
+  parryDMGScale: 0.5
   parryState: 0
   hasBeenHit: 0
   iSkillHPBuff: 500

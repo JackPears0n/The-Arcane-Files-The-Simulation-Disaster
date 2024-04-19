@@ -74,7 +74,7 @@ MonoBehaviour:
   target: {fileID: 0}
   attackRange: 1.5
   playerInAttackRange: 0
-  attack: 10
+  attack: 90
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64

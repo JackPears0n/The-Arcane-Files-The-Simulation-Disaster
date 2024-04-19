@@ -15,14 +15,17 @@ public class KrisCombatScript : MonoBehaviour
     public float maxHealth;
     [HideInInspector] public float defence;
 
-    public bool hasIFrames;
-    public float iFramesDuration;
-
     public float attackRange;
     public GameObject attackPoint;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
+
+    [Header("IFrames")]
+    public bool hasIFrames;
+    public float iFramesDuration;
+    public float iFramesCooldown;
+    public bool canHaveIFrames;
 
     [Header("Basic Attack")]
     public float bAttackDMGScale;
@@ -167,6 +170,10 @@ public class KrisCombatScript : MonoBehaviour
 
     }
 
+    public void ResetIFrameCooldown()
+    {
+        canHaveIFrames = true;
+    }
     public void RemoveIFrames()
     {
         hasIFrames = false;
@@ -241,8 +248,13 @@ public class KrisCombatScript : MonoBehaviour
             if (!hasIFrames)
             {
                 health -= (dmg - defence);
-                hasIFrames = true;
-                Invoke("RemoveIFrames", iFramesDuration);
+                if (canHaveIFrames)
+                {
+                    hasIFrames = true;
+                    canHaveIFrames = false;
+                    Invoke("RemoveIFrames", iFramesDuration);
+                    Invoke("ResetIFrameCooldown", iFramesCooldown);
+                }
             }
             else
             {

@@ -11304,8 +11304,6 @@ MonoBehaviour:
   attack: 0
   health: 0
   maxHealth: 0
-  hasIFrames: 0
-  iFramesDuration: 0.4
   attackRange: 1.5
   attackPoint: {fileID: 4296408180946818796}
   cooldowns:
@@ -11314,12 +11312,17 @@ MonoBehaviour:
   - 1
   - 12
   cooldownDone: 01010101
-  bAttackDMGScale: 0.2
+  hasIFrames: 0
+  iFramesDuration: 0.1
+  iFramesCooldown: 0.5
+  canHaveIFrames: 1
+  bAttackDMGScale: 0.5
   maxTimeBetweenAttacks: 1.5
   lastAttackTime: 0
   noOfClicks: 0
   iSkillDMGScale: 1.5
   ultDMGBuff: 1.2
+  ultHeal: 20
   ultBuffActive: 0
   ultBuffDuration: 10
 --- !u!4 &7990567692008702436 stripped

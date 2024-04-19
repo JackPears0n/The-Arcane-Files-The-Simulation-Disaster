@@ -15,14 +15,17 @@ public class ElianaCombatScript : MonoBehaviour
     public float maxHealth;
     private float defence;
 
-    public bool hasIFrames;
-    public float iFramesDuration;
-
     public float attackRange;
     public GameObject attackPoint;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
+
+    [Header("IFrames")]
+    public bool hasIFrames;
+    public float iFramesDuration;
+    public float iFramesCooldown;
+    public bool canHaveIFrames;
 
     [Header("Basic Attack")]
     public float bAttackDMGScale;
@@ -269,6 +272,10 @@ public class ElianaCombatScript : MonoBehaviour
         yield return cooldownDone[skillNum] = true;
 
     }
+    public void ResetIFrameCooldown()
+    {
+        canHaveIFrames = true;
+    }
 
     public void RemoveIFrames()
     {
@@ -340,8 +347,13 @@ public class ElianaCombatScript : MonoBehaviour
             if (!hasIFrames)
             {
                 health -= (dmg - defence);
-                hasIFrames = true;
-                Invoke("RemoveIFrames", iFramesDuration);
+                if (canHaveIFrames)
+                {
+                    hasIFrames = true;
+                    canHaveIFrames = false;
+                    Invoke("RemoveIFrames", iFramesDuration);
+                    Invoke("ResetIFrameCooldown", iFramesCooldown);
+                }
             }
             else
             {

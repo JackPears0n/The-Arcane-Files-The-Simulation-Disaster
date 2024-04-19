@@ -14,16 +14,19 @@ public class AdaCombatScript : MonoBehaviour
     [HideInInspector] public float attack;
     public float health;
     public float maxHealth;
-    private float defence;
-
-    public bool hasIFrames;
-    public float iFramesDuration;
+    private float defence;  
 
     public float attackRange;
     public GameObject attackPoint;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
+
+    [Header("IFrames")]
+    public bool hasIFrames;
+    public float iFramesDuration;
+    public float iFramesCooldown;
+    public bool canHaveIFrames;
 
     [Header("Basic Attack")]
     public float bAttackDMGScale;
@@ -39,6 +42,7 @@ public class AdaCombatScript : MonoBehaviour
 
     [Header("Ultimate")]
     public float ultDMGBuff;
+    public float ultHeal;
     public bool ultBuffActive;
     public float ultBuffDuration;
 
@@ -114,6 +118,7 @@ public class AdaCombatScript : MonoBehaviour
             if (ultBuffActive)
             {
                 enemy.GetComponent<EnemyHealthScript>().TakeDamage((bAttackDMGScale * attack) * ultDMGBuff);
+                health += ultHeal;
             }
             else 
             {
@@ -131,35 +136,28 @@ public class AdaCombatScript : MonoBehaviour
 
         hasIFrames = true;
 
-        dodgeLocation = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
+        //Safely disables the NavMesh
+        player.GetComponent<NavMeshAgent>().isStopped = true;
+        player.GetComponent<NavMeshAgent>().updatePosition = false;
+        player.GetComponent<NavMeshAgent>().updateRotation = false;
+        player.GetComponent<NavMeshAgent>().enabled = false;
 
-        //Stops the dodge location going out of bounds
-        if (dodgeLocation.x > 15 )
-        {
-            dodgeLocation.z = 15;
-        }
-        else if (dodgeLocation.x < -15)
-        {
-            dodgeLocation.z = -15;
-        }
-        else
-        {
-            yield return null;
-        }
-        if (dodgeLocation.z > 15)
-        {
-            dodgeLocation.z = 15;
-        }
-        else if (dodgeLocation.z < -15)
-        {
-            dodgeLocation.z = -15;
-        }
-        else
-        {
-            yield return null;
-        }
+        //Makes the rigidbody non Kinematic
+        player.GetComponent<Rigidbody>().isKinematic = false;
 
-        player.transform.position = dodgeLocation;
+        //Gives the player a direction and force
+        player.GetComponent<Rigidbody>().AddForce(new Vector3(player.transform.forward.x * -1 * 2, player.transform.position.y * -1 * 2, player.transform.forward.z * -1 * 2), ForceMode.Impulse);
+
+        yield return new WaitForSeconds(1);
+
+        //Makes the rigidbody Kinematic
+        player.GetComponent<Rigidbody>().isKinematic = true;
+
+        //Safely enables the NavMesh
+        player.GetComponent<NavMeshAgent>().enabled = true;
+        player.GetComponent<NavMeshAgent>().updateRotation = true;
+        player.GetComponent<NavMeshAgent>().updatePosition = true;
+        player.GetComponent<NavMeshAgent>().isStopped = false;
 
         Invoke(nameof(RemoveIFrames), iFramesDuration);
         StartCoroutine(ResetCooldown(1, 1));
@@ -179,6 +177,7 @@ public class AdaCombatScript : MonoBehaviour
             if (ultBuffActive)
             {
                 enemy.GetComponent<EnemyHealthScript>().TakeDamage((iSkillDMGScale * attack) * ultDMGBuff);
+                health += ultHeal;
             }
             else
             {
@@ -193,6 +192,8 @@ public class AdaCombatScript : MonoBehaviour
     {
         //Puts skill on cooldown
         cooldownDone[3] = false;
+
+        player.GetComponent<PlayerControlScript>().agent.speed = 4.5f;
 
         Invoke(nameof(RemoveUltBuff), ultBuffDuration);
         yield return ultBuffActive = true;
@@ -219,6 +220,11 @@ public class AdaCombatScript : MonoBehaviour
 
     }
 
+    public void ResetIFrameCooldown()
+    {
+        canHaveIFrames = true;
+    }
+
     public void RemoveIFrames()
     {
         hasIFrames = false;
@@ -227,6 +233,7 @@ public class AdaCombatScript : MonoBehaviour
     public void RemoveUltBuff()
     {
         ultBuffActive = false;
+        player.GetComponent<PlayerControlScript>().agent.speed = 3.5f;
     }
     #endregion
 
@@ -260,8 +267,14 @@ public class AdaCombatScript : MonoBehaviour
         if (!hasIFrames)
         {
             health -= (dmg - defence);
-            hasIFrames = true;
-            Invoke("RemoveIFrames", iFramesDuration);
+            if (canHaveIFrames)
+            {
+                hasIFrames = true;
+                canHaveIFrames = false;
+                Invoke("RemoveIFrames", iFramesDuration);
+                Invoke("ResetIFrameCooldown", iFramesCooldown);
+            }
+
         }
         else
         {

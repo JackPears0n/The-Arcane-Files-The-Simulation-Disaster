@@ -15,11 +15,15 @@ public class ThomasCombatScript : MonoBehaviour
     public float health;
     public float maxHealth;
     private float defence;
-    public float iFramesDuration;
-    public bool hasIFrames;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
+
+    [Header("IFrames")]
+    public bool hasIFrames;
+    public float iFramesDuration;
+    public float iFramesCooldown;
+    public bool canHaveIFrames;
 
     [Header("Basic Attack 1")]
     public float bAttack1DMGScale;
@@ -223,6 +227,10 @@ public class ThomasCombatScript : MonoBehaviour
 
         }
     }
+    public void ResetIFrameCooldown()
+    {
+        canHaveIFrames = true;
+    }
 
     public void RemoveIFrames()
     {
@@ -280,8 +288,13 @@ public class ThomasCombatScript : MonoBehaviour
         if (!hasIFrames)
         {
             health -= (dmg - defence);
-            hasIFrames = true;
-            Invoke(nameof(RemoveIFrames), iFramesDuration);
+            if (canHaveIFrames)
+            {
+                hasIFrames = true;
+                canHaveIFrames = false;
+                Invoke("RemoveIFrames", iFramesDuration);
+                Invoke("ResetIFrameCooldown", iFramesCooldown);
+            }
         }
         else
         {

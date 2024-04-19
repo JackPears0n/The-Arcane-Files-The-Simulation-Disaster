@@ -1180,14 +1180,16 @@ MonoBehaviour:
   attack: 0
   health: 0
   maxHealth: 0
-  iFramesDuration: 0.4
-  hasIFrames: 0
   cooldowns:
   - 1
   - 0.1
   - 5
   - 20
   cooldownDone: 01010101
+  hasIFrames: 0
+  iFramesDuration: 0.1
+  iFramesCooldown: 0.5
+  canHaveIFrames: 1
   bAttack1DMGScale: 0.5
   bAttack1Range: 5
   bAttack2DMGScale: 0.1

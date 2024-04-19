@@ -13,7 +13,7 @@ public class PlayerControlScript : MonoBehaviour
     public float maxHP;
     public float currentHP;
 
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     Vector2 movementInput;
 
@@ -63,14 +63,18 @@ public class PlayerControlScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Mathf.Abs(movementInput.y) > 0.01f)
+        if (agent.enabled)
         {
-            Move(movementInput);
+            if (Mathf.Abs(movementInput.y) > 0.01f)
+            {
+                Move(movementInput);
+            }
+            else
+            {
+                ROTATE(movementInput);
+            }
         }
-        else
-        {
-            ROTATE(movementInput);
-        }
+        
     }
 
     public void Move(Vector2 input)

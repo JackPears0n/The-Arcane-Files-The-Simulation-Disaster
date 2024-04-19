@@ -37,7 +37,7 @@ public class EnemyHealthScript : MonoBehaviour
         {
             health = maxHP;
         }
-        else if (health < 0)
+        else if (health <= 0)
         {
             health = 0;
             isDead = true;

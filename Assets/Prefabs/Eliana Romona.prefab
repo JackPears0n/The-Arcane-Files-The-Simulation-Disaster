@@ -194,8 +194,6 @@ MonoBehaviour:
   attack: 0
   health: 0
   maxHealth: 0
-  hasIFrames: 0
-  iFramesDuration: 0.4
   attackRange: 2
   attackPoint: {fileID: 1361013710163476904}
   cooldowns:
@@ -204,7 +202,11 @@ MonoBehaviour:
   - 5
   - 15
   cooldownDone: 01010101
-  bAttackDMGScale: 0.1
+  hasIFrames: 0
+  iFramesDuration: 0.1
+  iFramesCooldown: 0.5
+  canHaveIFrames: 1
+  bAttackDMGScale: 0.2
   maxTimeBetweenAttacks: 1.5
   lastAttackTime: 0
   noOfClicks: 0
