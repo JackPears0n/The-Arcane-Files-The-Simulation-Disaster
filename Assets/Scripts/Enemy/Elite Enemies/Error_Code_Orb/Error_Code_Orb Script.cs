@@ -44,6 +44,8 @@ public class Error_Code_OrbScript : MonoBehaviour
         //Enters the parrying mode
         if (!isParrying && attackReady[1] && playerInAttackRange)
         {
+            isParrying = true;
+
             gameObject.GetComponent<EnemyHealthScript>().hasIFrames = true;
             StartCoroutine(gameObject.GetComponent<EnemyHealthScript>().EnableIFrames());
         }
@@ -51,7 +53,7 @@ public class Error_Code_OrbScript : MonoBehaviour
         if (playerInAttackRange)
         {
             //Uses the ISkill
-            if (attackReady[3] && !isParrying)
+            if (attackReady[2] && !isParrying)
             {
                 StartCoroutine(IndividualSkill());
             }
@@ -115,6 +117,11 @@ public class Error_Code_OrbScript : MonoBehaviour
 
     public IEnumerator ResetCooldown(int skillNO, float cooldownLength)
     {
+        if (skillNO == 1 && cooldownLength == 1)
+        {
+            isParrying = false;
+        }
+
         yield return new WaitForSeconds(cooldownLength);
 
         yield return attackReady[skillNO] = true;
