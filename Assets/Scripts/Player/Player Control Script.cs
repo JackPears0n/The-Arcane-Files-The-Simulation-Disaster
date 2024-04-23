@@ -35,54 +35,29 @@ public class PlayerControlScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-
-        if (chosenPlayer == 'T')
+        if (player == null && chosenPlayer != '\0')
         {
-            Quaternion r = new Quaternion(0, 0, 0, 0);           
-            player = Instantiate(players[0], transform.position, r, gameObject.transform);
-
-            ThomasDefaultStats(player.GetComponent<ThomasCombatScript>().stats);
+            GetPlayer();
         }
-
-        if (chosenPlayer == 'A')
-        {
-            Quaternion r = new Quaternion(0, 0, 0, 0);
-            player = Instantiate(players[1], transform.position, r, gameObject.transform);
-
-            AdaDefaultStats(player.GetComponent<AdaCombatScript>().stats);
-        }
-
-        if (chosenPlayer == 'K')
-        {
-            Quaternion r = new Quaternion(0, 0, 0, 0);
-            player = Instantiate(players[2], transform.position, r, gameObject.transform);
-
-            KrisDefaultStats(player.GetComponent<KrisCombatScript>().stats);
-        }
-
-        if (chosenPlayer == 'E')
-        {
-            Quaternion r = new Quaternion(0, 0, 0, 0);
-            player = Instantiate(players[3], transform.position, r, gameObject.transform);
-
-            ElianaDefaultStats(player.GetComponent<ElianaCombatScript>().stats);
-        }
-
-        CheckStats();
-
-        currentHP = maxHP;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckStats();
+        if (player != null)
+        {
+            CheckStats();
 
-        CheckHealth();
+            CheckHealth();
 
-        movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        }
+        else if (player == null && chosenPlayer != '\0')
+        {
+            GetPlayer();
+        }
+
     }
 
     private void FixedUpdate()
@@ -257,6 +232,47 @@ public class PlayerControlScript : MonoBehaviour
         yield return null;
     }
     #endregion
+
+    public void GetPlayer()
+    {
+        agent = GetComponent<NavMeshAgent>();
+
+        if (chosenPlayer == 'T')
+        {
+            Quaternion r = new Quaternion(0, 0, 0, 0);
+            player = Instantiate(players[0], transform.position, r, gameObject.transform);
+
+            ThomasDefaultStats(player.GetComponent<ThomasCombatScript>().stats);
+        }
+
+        if (chosenPlayer == 'A')
+        {
+            Quaternion r = new Quaternion(0, 0, 0, 0);
+            player = Instantiate(players[1], transform.position, r, gameObject.transform);
+
+            AdaDefaultStats(player.GetComponent<AdaCombatScript>().stats);
+        }
+
+        if (chosenPlayer == 'K')
+        {
+            Quaternion r = new Quaternion(0, 0, 0, 0);
+            player = Instantiate(players[2], transform.position, r, gameObject.transform);
+
+            KrisDefaultStats(player.GetComponent<KrisCombatScript>().stats);
+        }
+
+        if (chosenPlayer == 'E')
+        {
+            Quaternion r = new Quaternion(0, 0, 0, 0);
+            player = Instantiate(players[3], transform.position, r, gameObject.transform);
+
+            ElianaDefaultStats(player.GetComponent<ElianaCombatScript>().stats);
+        }
+
+        CheckStats();
+
+        currentHP = maxHP;
+    }
 
     public IEnumerator RemoveIFrames()
     {

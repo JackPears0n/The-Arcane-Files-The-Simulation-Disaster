@@ -74,7 +74,7 @@ MonoBehaviour:
   target: {fileID: 0}
   attackRange: 1.5
   playerInAttackRange: 0
-  attack: 90
+  attack: 80
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
@@ -98,6 +98,11 @@ MonoBehaviour:
   health: 0
   defence: 15
   isDead: 0
+  iFrameDuration: 0
+  hasIFrames: 0
+  iFrameCooldown: 0
+  IFramesOffCooldown: 0
+  canHaveIFrames: 0
 --- !u!54 &1907346692562053267
 Rigidbody:
   m_ObjectHideFlags: 0

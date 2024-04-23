@@ -16,7 +16,11 @@ public class EnemyHealthScript : MonoBehaviour
 
     public bool isDead = false;
 
-    //Durtion and status of enemy IFrames
+    //Parry Variables
+    public bool isParrying;
+    public bool hasBeenHit;
+
+    //Duration and status of enemy IFrames
     public float iFrameDuration;
     public bool hasIFrames;
 
@@ -24,7 +28,7 @@ public class EnemyHealthScript : MonoBehaviour
     public float iFrameCooldown;
     public bool IFramesOffCooldown;
 
-    //Flase if the mobType is N
+    //False if the mobType is N
     public bool canHaveIFrames;
 
 
@@ -98,24 +102,32 @@ public class EnemyHealthScript : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
-        if (hasIFrames)
+        if (isParrying)
         {
-            return;
+            hasBeenHit = true;
         }
         else
         {
-            //Takes damage
-            health -= dmg - defence;
-
-            //Gives IFrames
-            if (canHaveIFrames && IFramesOffCooldown)
+            if (hasIFrames)
             {
-                hasIFrames = true;
-                canHaveIFrames = false;
-
-                Invoke(nameof(EnableIFrames), iFrameDuration);
-                Invoke(nameof(RemoveIFrameCooldown), iFrameCooldown);
+                return;
             }
+            else
+            {
+                //Takes damage
+                health -= dmg - defence;
+
+                //Gives IFrames
+                if (canHaveIFrames && IFramesOffCooldown)
+                {
+                    hasIFrames = true;
+                    canHaveIFrames = false;
+
+                    Invoke(nameof(EnableIFrames), iFrameDuration);
+                    Invoke(nameof(RemoveIFrameCooldown), iFrameCooldown);
+                }
+            }
+
         }
         
     }

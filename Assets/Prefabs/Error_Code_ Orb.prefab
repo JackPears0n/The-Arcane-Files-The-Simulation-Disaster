@@ -127,9 +127,9 @@ MonoBehaviour:
   health: 0
   defence: 50
   isDead: 0
-  iFrameDuration: 0
+  iFrameDuration: 0.4
   hasIFrames: 0
-  iFrameCooldown: 0
+  iFrameCooldown: 2
   IFramesOffCooldown: 0
   canHaveIFrames: 0
 --- !u!114 &2893278178100029656
@@ -154,6 +154,7 @@ MonoBehaviour:
   - 2
   projectile: {fileID: 7649080957293438208, guid: 6108749f60af1df4dbcd68741bb47715,
     type: 3}
+  isParrying: 0
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
@@ -162,6 +163,7 @@ MonoBehaviour:
   - 2
   - 2
   - 5
+  eHS: {fileID: 0}
 --- !u!135 &724712535930367884
 SphereCollider:
   m_ObjectHideFlags: 0

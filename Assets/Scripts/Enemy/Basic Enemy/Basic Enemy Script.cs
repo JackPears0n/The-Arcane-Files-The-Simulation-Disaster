@@ -76,5 +76,5 @@ public class BasicEnemyScript : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(transform.position, attackRange);
     }*/
-    
+
 }
