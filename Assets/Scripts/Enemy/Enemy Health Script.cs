@@ -31,6 +31,10 @@ public class EnemyHealthScript : MonoBehaviour
     //False if the mobType is N
     public bool canHaveIFrames;
 
+    //Phases for bosses
+    public int bossPhase;
+    public int numberOfPhases;
+
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +54,11 @@ public class EnemyHealthScript : MonoBehaviour
         {
             canHaveIFrames = true;
         }
+
+        if (mobType == 'B')
+        {
+            bossPhase = 0;
+        }
     }
 
     // Update is called once per frame
@@ -60,20 +69,58 @@ public class EnemyHealthScript : MonoBehaviour
 
     public void HealthCheck()
     {
-        if (health > maxHP)
+        if (mobType == 'B')
         {
-            health = maxHP;
+            //Stops healther overflowing max value
+            if (health > maxHP)
+            {
+                health = maxHP;
+            }
+
+            //Checks if the enemy's health is less than or equal to 0
+            if (health <= 0)
+            {
+                //Sets HP to 0
+                health = 0;
+                
+                //Checks the boss phase
+                //If boss isn't in its final phase, move to next phase
+                if (bossPhase < numberOfPhases)
+                {
+                    health = maxHP;
+                    bossPhase++;
+                }
+                //Kills boss
+                else
+                {
+                    isDead = true;
+                }
+            }
+
+            //Kills enemy is the isDead variable is true
+            if (isDead)
+            {
+                StartCoroutine(EnemyDie());
+            }
         }
-        else if (health <= 0)
+        else
         {
-            health = 0;
-            isDead = true;
+            if (health > maxHP)
+            {
+                health = maxHP;
+            }
+            else if (health <= 0)
+            {
+                health = 0;
+                isDead = true;
+            }
+
+            if (isDead)
+            {
+                StartCoroutine(EnemyDie());
+            }
         }
 
-        if (isDead)
-        {
-            StartCoroutine(EnemyDie());
-        }
     }
 
     public IEnumerator EnemyDie()
@@ -114,8 +161,14 @@ public class EnemyHealthScript : MonoBehaviour
             }
             else
             {
-                //Takes damage
-                health -= dmg - defence;
+                //Calculates incoming damage
+                dmg -= defence;
+
+                //Makes sure the damage doesn't heal the player
+                if (dmg > 0)
+                {
+                    health -= dmg;
+                }
 
                 //Gives IFrames
                 if (canHaveIFrames && IFramesOffCooldown)

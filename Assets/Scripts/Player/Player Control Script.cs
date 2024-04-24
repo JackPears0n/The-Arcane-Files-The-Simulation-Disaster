@@ -197,7 +197,15 @@ public class PlayerControlScript : MonoBehaviour
         {
             if (!hasIFrames)
             {
-                currentHP -= (dmg - defence);
+                //Calculates incoming damage
+                dmg -= defence;
+
+                //Makes sure the damage doesn't heal the player
+                if (dmg > 0)
+                {
+                    currentHP -= dmg;
+                }
+
                 if (canHaveIFrames)
                 {
                     hasIFrames = true;

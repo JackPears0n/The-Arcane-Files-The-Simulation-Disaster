@@ -164,6 +164,8 @@ public class ThomasCombatScript : MonoBehaviour
             balence *= -1;
         }
 
+        stats.attackBonus += 20;
+
         //Deals AoE damage to all enemies
         Collider[] enemies = Physics.OverlapSphere(transform.position, 100, whatIsEnemy);
         foreach (Collider e in enemies)
@@ -188,7 +190,12 @@ public class ThomasCombatScript : MonoBehaviour
 
     #region Calldowns
     public IEnumerator ResetCooldown(int skillNum, int skillCD)
-    {      
+    {   
+        if (skillNum == 3)
+        {
+            stats.attackBonus -= 20;
+        }
+        
         yield return new WaitForSeconds(skillCD);
 
         yield return cooldownDone[skillNum] = true;

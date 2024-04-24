@@ -1181,31 +1181,26 @@ MonoBehaviour:
     m_Bits: 128
   balence: 0
   player: {fileID: 0}
+  PCS: {fileID: 0}
   stats: {fileID: 11400000, guid: e9ba559e14d52e046844f7599632f412, type: 2}
   attack: 0
-  health: 0
-  maxHealth: 0
   cooldowns:
   - 1
   - 0.1
   - 5
   - 20
   cooldownDone: 01010101
-  hasIFrames: 0
-  iFramesDuration: 0.1
-  iFramesCooldown: 0.5
-  canHaveIFrames: 1
-  bAttack1DMGScale: 0.5
+  bAttack1DMGScale: 0.75
   bAttack1Range: 5
-  bAttack2DMGScale: 0.1
+  bAttack2DMGScale: 0.5
   projectile: {fileID: 2130767251354594189, guid: 6af386fc0ac78f44c918374dc79e547f,
     type: 3}
   projectileLaunchPos: {fileID: 7039722127452601511}
-  iSkillHPRegen: 0
+  iSkillHPRegen: 200
   iSkillG: 0
   iSkillD: 0
-  skillDuration: 0
-  ultDMGScale: 0
+  skillDuration: 20
+  ultDMGScale: 10
 --- !u!4 &5316461917979079662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fd108dd9c53654742ba9ae0144fce881,
