@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Thomas Stats
   m_EditorClassIdentifier: 
   maxHealth: 300
-  maxHealthPercentMod: 10
-  maxHealthBonus: 10
+  maxHealthPercentMod: 20
+  maxHealthBonus: 20
   attack: 60
-  attackPercentMod: 10
-  attackBonus: 10
+  attackPercentMod: 20
+  attackBonus: 20
   defence: 30
-  defencePercentMod: 0
-  defenceBonus: 0
+  defencePercentMod: 20
+  defenceBonus: 20

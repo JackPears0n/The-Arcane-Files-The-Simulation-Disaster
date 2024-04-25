@@ -23,16 +23,13 @@ public class Study_Gaunt_General : MonoBehaviour
     public bool[] attackReady;
     public float[] attackCooldowns;
 
-    [Header("Parry")]
-    public bool isParrying;
-
     [Header("IS")]
     public int iSkillATKBuff;
 
     [Header("Ult")]
     public int UltIFrameDuration;
     public GameObject husk;
-    public GameObject[] summonedEntities = { null, null, null, null, null};
+    public GameObject[] summonedEntities = { null, null, null };
 
     // Start is called before the first frame update
     void Start()
@@ -53,13 +50,13 @@ public class Study_Gaunt_General : MonoBehaviour
         if (bossPhase == 0)
         {
             attack = 150;
-            Phase1Brain();
+            StartCoroutine(Phase1Brain());
         }
 
         if (bossPhase == 1)
         {
             attack = 175;
-            Phase2Brain();
+            StartCoroutine(Phase2Brain());
         }
     }
 
@@ -76,14 +73,13 @@ public class Study_Gaunt_General : MonoBehaviour
         }
     }
 
-    public void Phase1Brain()
+    public IEnumerator Phase1Brain()
     {
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         //Enters the parrying mode
-        if (!isParrying && attackReady[1] && playerInAttackRange)
+        if (!eHS.isParrying && attackReady[1] && playerInAttackRange)
         {
-            isParrying = true;
             eHS.isParrying = true;
 
             gameObject.GetComponent<EnemyHealthScript>().hasIFrames = true;
@@ -93,31 +89,39 @@ public class Study_Gaunt_General : MonoBehaviour
         if (playerInAttackRange)
         {
             //Uses the ISkill
-            if (attackReady[2] && !isParrying)
+            if (attackReady[2] && !eHS.isParrying)
             {
                 StartCoroutine(IndividualSkill());
             }
             //Uses the BA
-            else if (attackReady[0] && !isParrying)
+            else if (attackReady[0] && !eHS.isParrying)
             {
                 StartCoroutine(BasicAttack());
             }
             //Does the parry mode functionalty
-            else if (isParrying && attackReady[1])
+            else if (eHS.isParrying && attackReady[1])
             {
                 StartCoroutine(Parry());
             }
         }
+
+        yield return new WaitForSeconds(0.5f);
     }
 
-    public void Phase2Brain()
+    public IEnumerator Phase2Brain()
     {
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        //Enters the parrying mode
-        if (!isParrying && attackReady[1] && playerInAttackRange)
+        //Triggers parry on hit
+        if (eHS.hasBeenHit)
         {
-            isParrying = true;
+            StartCoroutine(Parry());
+        }
+
+        //Enters the parrying mode
+        if (!eHS.isParrying && attackReady[1] && playerInAttackRange)
+        {
+            eHS.isParrying = true;
             eHS.isParrying = true;
 
             gameObject.GetComponent<EnemyHealthScript>().hasIFrames = true;
@@ -126,31 +130,35 @@ public class Study_Gaunt_General : MonoBehaviour
 
         if (playerInAttackRange)
         {
-            if (attackReady[3] && !isParrying)
+            if (attackReady[3] && !eHS.isParrying)
             {
                 StartCoroutine(Ultimate());
             }
             //Uses the ISkill
-            else if (attackReady[2] && !isParrying)
+            else if (attackReady[2] && !eHS.isParrying)
             {
                 StartCoroutine(IndividualSkill());
             }
             //Uses the BA
-            else if (attackReady[0] && !isParrying)
+            else if (attackReady[0] && !eHS.isParrying)
             {
                 StartCoroutine(BasicAttack());
             }
             //Does the parry mode functionalty
-            else if (isParrying && attackReady[1])
+            else if (eHS.isParrying && attackReady[1])
             {
                 StartCoroutine(Parry());
             }
         }
+
+        yield return new WaitForSeconds(0.5f);
     }
 
     public IEnumerator BasicAttack()
     {
         attackReady[0] = false;
+
+        eHS.isParrying = false;
 
         target.GetComponent<PlayerControlScript>().TakeDamage(skillDMGScale[0] * attack);
 
@@ -162,8 +170,12 @@ public class Study_Gaunt_General : MonoBehaviour
     {
         attackReady[1] = false;
 
-        //eHS.health += eHS.maxHP * 0.1f;
         eHS.hasBeenHit = false;
+        eHS.isParrying = false;
+        eHS.hasIFrames = false;
+
+        eHS.health += eHS.maxHP * 0.1f;
+        
 
         StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
         yield return null;
@@ -171,6 +183,10 @@ public class Study_Gaunt_General : MonoBehaviour
 
     public IEnumerator IndividualSkill()
     {
+        attackReady[2] = false;
+
+        eHS.isParrying = false;
+
         attack += iSkillATKBuff;
 
         StartCoroutine(ResetCooldown(2, 2));
@@ -179,6 +195,10 @@ public class Study_Gaunt_General : MonoBehaviour
 
     public IEnumerator Ultimate()
     {
+        attackReady[3] = false;
+
+        eHS.isParrying = false;
+
         eHS.hasIFrames = true;
         eHS.canHaveIFrames = false;
 
@@ -186,20 +206,18 @@ public class Study_Gaunt_General : MonoBehaviour
         {
             int enemyNo = 0;
 
-            if (e == null)
+            if (summonedEntities[enemyNo] == null && enemyNo < 3)
             {
                 summonedEntities[enemyNo] = Instantiate(husk, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-                summonedEntities[enemyNo].GetComponent<BasicEnemyScript>().attack += 80;
+                summonedEntities[enemyNo].GetComponent<BasicEnemyScript>().attack += 20;
+                enemyNo++;
             }
 
             if (enemyNo >= 2)
             {
                 enemyNo = 0;
             }
-            else
-            {
-                enemyNo++;
-            }
+
         }
 
         StartCoroutine(ResetCooldown(3, 3));
@@ -210,7 +228,6 @@ public class Study_Gaunt_General : MonoBehaviour
     {
         if (skillNO == 1 && cooldownLength == 1)
         {
-            isParrying = false;
             eHS.isParrying = false;
         }
 
@@ -231,11 +248,11 @@ public class Study_Gaunt_General : MonoBehaviour
     }
 
     // Used for Debugging the Check Sphere
-    /**/
+    /*
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(transform.position, attackRange);
-    }
+    }*/
 
 }

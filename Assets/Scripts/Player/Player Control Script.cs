@@ -81,30 +81,30 @@ public class PlayerControlScript : MonoBehaviour
         if (chosenPlayer == 'T')
         {
             stats = player.GetComponent<ThomasCombatScript>().stats;
-            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * stats.maxHealthPercentMod);
-            attack = stats.attack + stats.attackBonus + (stats.attack * stats.attackPercentMod);
-            defence = stats.defence + stats.defenceBonus + (stats.defence * stats.defencePercentMod);
+            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * (stats.maxHealthPercentMod / 100));
+            attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
+            defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod/100));
         }
         if (chosenPlayer == 'A')
         {
             stats = player.GetComponent<AdaCombatScript>().stats;
-            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * stats.maxHealthPercentMod);
-            attack = stats.attack + stats.attackBonus + (stats.attack * stats.attackPercentMod);
-            defence = stats.defence + stats.defenceBonus + (stats.defence * stats.defencePercentMod);
+            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * (stats.maxHealthPercentMod / 100));
+            attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
+            defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod / 100));
         }
         if (chosenPlayer == 'K')
         {
             stats = player.GetComponent<KrisCombatScript>().stats;
-            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * stats.maxHealthPercentMod);
-            attack = stats.attack + stats.attackBonus + (stats.attack * stats.attackPercentMod);
-            defence = stats.defence + stats.defenceBonus + (stats.defence * stats.defencePercentMod);
+            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * (stats.maxHealthPercentMod / 100));
+            attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
+            defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod / 100));
         }
         if (chosenPlayer == 'E')
         {
             stats = player.GetComponent<ElianaCombatScript>().stats;
-            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * stats.maxHealthPercentMod);
-            attack = stats.attack + stats.attackBonus + (stats.attack * stats.attackPercentMod);
-            defence = stats.defence + stats.defenceBonus + (stats.defence * stats.defencePercentMod);
+            maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * (stats.maxHealthPercentMod / 100));
+            attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
+            defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod / 100) );
         }
 
     }
