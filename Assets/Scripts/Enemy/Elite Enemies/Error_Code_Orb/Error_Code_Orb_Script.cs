@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Error_Code_OrbScript : MonoBehaviour
+public class Error_Code_Orb_Script : MonoBehaviour
 {
     private NavMeshAgent agent;
 

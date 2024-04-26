@@ -8,7 +8,7 @@ public class Error_Code_OrbProjScript : MonoBehaviour
     public NavMeshAgent agent;
 
     public GameObject owner;
-    private Error_Code_OrbScript ownerCS;
+    private Error_Code_Orb_Script ownerCS;
 
     public GameObject target;
 
@@ -36,6 +36,6 @@ public class Error_Code_OrbProjScript : MonoBehaviour
         owner = _owner;
         target = player;
 
-        ownerCS = owner.GetComponent<Error_Code_OrbScript>();
+        ownerCS = owner.GetComponent<Error_Code_Orb_Script>();
     }
 }

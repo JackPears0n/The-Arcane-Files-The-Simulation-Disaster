@@ -159,6 +159,34 @@ public class EnemyHealthScript : MonoBehaviour
             {
                 return;
             }
+            else if (gameObject.name == "Error_Code: The Prisoner")
+            {
+                if (gameObject.GetComponent<Error_Code_The_Prisoner_Script>().ultIsActive)
+                {
+                    gameObject.GetComponent<Error_Code_The_Prisoner_Script>().takenHits++;
+                }
+                else
+                {
+                    //Calculates incoming damage
+                    dmg -= defence;
+
+                    //Makes sure the damage doesn't heal the player
+                    if (dmg > 0)
+                    {
+                        health -= dmg;
+                    }
+
+                    //Gives IFrames
+                    if (canHaveIFrames && IFramesOffCooldown)
+                    {
+                        hasIFrames = true;
+                        canHaveIFrames = false;
+
+                        Invoke(nameof(EnableIFrames), iFrameDuration);
+                        Invoke(nameof(RemoveIFrameCooldown), iFrameCooldown);
+                    }
+                }
+            }
             else
             {
                 //Calculates incoming damage

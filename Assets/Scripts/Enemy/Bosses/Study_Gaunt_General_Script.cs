@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Study_Gaunt_General : MonoBehaviour
+public class Study_Gaunt_General_Script : MonoBehaviour
 {
     private NavMeshAgent agent;
 
@@ -49,12 +49,14 @@ public class Study_Gaunt_General : MonoBehaviour
 
         if (bossPhase == 0)
         {
+            eHS.maxHP = 6000;
             attack = 150;
             StartCoroutine(Phase1Brain());
         }
 
         if (bossPhase == 1)
         {
+            eHS.maxHP = 4000;
             attack = 175;
             StartCoroutine(Phase2Brain());
         }
