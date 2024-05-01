@@ -15,6 +15,7 @@ public class PlayerControlScript : MonoBehaviour
     [Header("Movement")]
     public NavMeshAgent agent;
     Vector2 movementInput;
+    private Rigidbody rb;
 
     [Header("IFrames")]
     public bool hasIFrames;
@@ -31,10 +32,20 @@ public class PlayerControlScript : MonoBehaviour
     [Header("Misc")]
     public bool parryState;
     public bool hasBeenHit;
+    public int tokens;
+
+    public GameObject gameManager;
+    public GameManager gm;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("GM");
+        gm = gameManager.GetComponent<GameManager>();
+
+        rb = gameObject.GetComponent<Rigidbody>();
+
+
         if (player == null && chosenPlayer != '\0')
         {
             GetPlayer();
@@ -45,34 +56,46 @@ public class PlayerControlScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player != null)
+        CheckStats();
+
+        if (!gm.paused)
         {
-            CheckStats();
+            if (!gm.logicPaused)
+            {
+                if (player != null)
+                {
+                    CheckHealth();
 
-            CheckHealth();
-
-            movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                    movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                }
+                else if (player == null && chosenPlayer != '\0')
+                {
+                    GetPlayer();
+                }
+            }
         }
-        else if (player == null && chosenPlayer != '\0')
-        {
-            GetPlayer();
-        }
-
     }
 
     private void FixedUpdate()
     {
-        if (agent.enabled)
+        if (!gm.paused)
         {
-            if (Mathf.Abs(movementInput.y) > 0.01f)
+            if (!gm.logicPaused)
             {
-                Move(movementInput);
-            }
-            else
-            {
-                ROTATE(movementInput);
+                if (agent.enabled)
+                {
+                    if (Mathf.Abs(movementInput.y) > 0.01f)
+                    {
+                        Move(movementInput);
+                    }
+                    else
+                    {
+                        ROTATE(movementInput);
+                    }
+                }
             }
         }
+
         
     }
 
@@ -291,5 +314,29 @@ public class PlayerControlScript : MonoBehaviour
     public void RemoveIFrameCooldown()
     {
         canHaveIFrames = true;
+    }
+
+    public void EnableRB()
+    {
+        //Safely disables the NavMesh
+        agent.isStopped = true;
+        agent.updatePosition = false;
+        agent.updateRotation = false;
+        agent.enabled = false;
+
+        //Makes the rigidbody non Kinematic
+        rb.isKinematic = false;
+    }
+
+    public void EnableNavMesh()
+    {
+        //Makes the rigidbody Kinematic
+        rb.isKinematic = true;
+
+        //Safely enables the NavMesh
+        agent.enabled = true;
+        agent.updateRotation = true;
+        agent.updatePosition = true;
+        agent.isStopped = false;
     }
 }

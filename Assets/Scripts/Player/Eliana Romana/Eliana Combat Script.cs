@@ -7,7 +7,7 @@ public class ElianaCombatScript : MonoBehaviour
     public Animator anim;
     public LayerMask whatIsEnemy;
     public GameObject player;
-    public PlayerControlScript PCS;
+    public PlayerControlScript pCS;
 
     [Header("Stats")]
     public Stats stats;
@@ -38,17 +38,23 @@ public class ElianaCombatScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PCS.player = GameObject.Find("Player Object");
-        PCS = player.GetComponent<PlayerControlScript>();
+        pCS.player = GameObject.Find("Player Object");
+        pCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckStats();
+        if (!pCS.gm.paused)
+        {
+            if (!pCS.gm.logicPaused)
+            {
+                CheckStats();
 
-        AttackInput();
+                AttackInput();
+            }
+        }
     }
 
     #region Skills
@@ -137,15 +143,15 @@ public class ElianaCombatScript : MonoBehaviour
     public IEnumerator Parry()
     {
         //Makes it so the player is in the parry state
-        PCS.parryState = true;
+        pCS.parryState = true;
 
         //Only triggers when hit while in parry state
-        if (PCS.hasBeenHit)
+        if (pCS.hasBeenHit)
         {
             //Puts skill on cooldown
             cooldownDone[1] = false;
 
-            PCS.hasBeenHit = false;
+            pCS.hasBeenHit = false;
 
             if (ultBuffActive)
             {
@@ -242,7 +248,7 @@ public class ElianaCombatScript : MonoBehaviour
 
     public void CheckStats()
     {
-        PCS.attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
+        pCS.attack = stats.attack + (stats.attack * (stats.attackPercentMod / 100) + stats.attackBonus);
     }
 
     #region Calldowns
@@ -255,12 +261,12 @@ public class ElianaCombatScript : MonoBehaviour
     }
     public void ResetIFrameCooldown()
     {
-        PCS.canHaveIFrames = true;
+        pCS.canHaveIFrames = true;
     }
 
     public void RemoveIFrames()
     {
-        PCS.hasIFrames = false;
+        pCS.hasIFrames = false;
     }
 
     public void RemoveUltBuff()
@@ -271,12 +277,12 @@ public class ElianaCombatScript : MonoBehaviour
 
     public void AttackInput()
     {
-        if (PCS.hasBeenHit)
+        if (pCS.hasBeenHit)
         {
             //Puts skill on cooldown
             cooldownDone[1] = false;
 
-            PCS.hasBeenHit = false;
+            pCS.hasBeenHit = false;
             //Attacks the enemies
             Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, 1.5f, whatIsEnemy);
 
@@ -290,7 +296,7 @@ public class ElianaCombatScript : MonoBehaviour
 
         if (!Input.GetMouseButton(1) || !Input.GetKey(KeyCode.Space))
         {
-            PCS.parryState = false;
+            pCS.parryState = false;
         }
 
         if ((Input.GetKeyDown(KeyCode.Q) || Input.GetMouseButtonDown(0)) && cooldownDone[0])

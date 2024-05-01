@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5262288455019782431}
   - component: {fileID: 8866945992077622191}
   - component: {fileID: 7355137933808085055}
-  - component: {fileID: 6663611682785144550}
   - component: {fileID: 6520020690976669542}
   - component: {fileID: 1011892198166234030}
+  - component: {fileID: 1608816700144340818}
   m_Layer: 7
   m_Name: Study Abyssal Spider Queen Controller
   m_TagString: Enemy
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3871891932152783514}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.52, z: 5.17}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -56,7 +56,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2.39
-  m_BaseOffset: 1.34
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!54 &7355137933808085055
@@ -86,27 +86,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!135 &6663611682785144550
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3871891932152783514}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6520020690976669542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +111,8 @@ MonoBehaviour:
   iFrameCooldown: 2
   IFramesOffCooldown: 0
   canHaveIFrames: 0
+  bossPhase: 0
+  numberOfPhases: 0
 --- !u!114 &1011892198166234030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +145,27 @@ MonoBehaviour:
   - 10
   - 20
   eHS: {fileID: 0}
+--- !u!65 &1608816700144340818
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3871891932152783514}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.62, y: 2.62, z: 6.52}
+  m_Center: {x: 0, y: 1.19, z: 0}
 --- !u!1001 &3353429827646652724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190,17 +192,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 17654b20121dbe741ab145a186db085f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 17654b20121dbe741ab145a186db085f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.38
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 17654b20121dbe741ab145a186db085f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.59
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 17654b20121dbe741ab145a186db085f,
         type: 3}

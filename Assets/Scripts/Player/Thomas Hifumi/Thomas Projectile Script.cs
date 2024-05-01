@@ -16,10 +16,25 @@ public class ThomasProjectileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (target != null)
+        if (!thomasCS.pCS.gm.paused)
         {
-            agent.destination = target.transform.position;
+            if (!thomasCS.pCS.gm.logicPaused)
+            {
+                if (target != null)
+                {
+                    agent.destination = target.transform.position;
+                }
+            }
+            else
+            {
+                agent.destination = transform.position;
+            }
         }
+        else
+        {
+            agent.destination = transform.position;
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)

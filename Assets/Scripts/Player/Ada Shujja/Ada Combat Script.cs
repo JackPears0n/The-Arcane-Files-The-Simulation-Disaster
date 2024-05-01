@@ -8,7 +8,7 @@ public class AdaCombatScript : MonoBehaviour
     public Animator anim;
     public LayerMask whatIsEnemy;
     public GameObject player;
-    public PlayerControlScript PCS;
+    public PlayerControlScript pCS;
 
     [Header("Stats")]
     public Stats stats;
@@ -42,16 +42,23 @@ public class AdaCombatScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player Object");
-        PCS = player.GetComponent<PlayerControlScript>();
+        pCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckStats();
+        if (!pCS.gm.paused)
+        {
+            if (!pCS.gm.logicPaused)
+            {
+                CheckStats();
 
-        AttackInput();
+                AttackInput();
+            }
+        }
+
     }
 
     #region Skills
@@ -107,7 +114,7 @@ public class AdaCombatScript : MonoBehaviour
             if (ultBuffActive)
             {
                 enemy.GetComponent<EnemyHealthScript>().TakeDamage((bAttackDMGScale * attack) * ultDMGBuff);
-                PCS.currentHP += ultHeal;
+                pCS.currentHP += ultHeal;
             }
             else 
             {
@@ -123,32 +130,19 @@ public class AdaCombatScript : MonoBehaviour
         //Puts skill on cooldown
         cooldownDone[1] = false;
 
-        PCS.hasIFrames = true;
+        pCS.hasIFrames = true;
 
-        //Safely disables the NavMesh
-        player.GetComponent<NavMeshAgent>().isStopped = true;
-        player.GetComponent<NavMeshAgent>().updatePosition = false;
-        player.GetComponent<NavMeshAgent>().updateRotation = false;
-        player.GetComponent<NavMeshAgent>().enabled = false;
-
-        //Makes the rigidbody non Kinematic
-        player.GetComponent<Rigidbody>().isKinematic = false;
+        //Safely Activates the Rigidbody
+        pCS.EnableRB();
 
         //Gives the player a direction and force
         player.GetComponent<Rigidbody>().AddForce(new Vector3(player.transform.forward.x * -1 * 2, player.transform.position.y * -1 * 2, player.transform.forward.z * -1 * 2), ForceMode.Impulse);
-
         yield return new WaitForSeconds(1);
 
-        //Makes the rigidbody Kinematic
-        player.GetComponent<Rigidbody>().isKinematic = true;
+        //Safely Activates the NavMesh
+        pCS.EnableNavMesh();
 
-        //Safely enables the NavMesh
-        player.GetComponent<NavMeshAgent>().enabled = true;
-        player.GetComponent<NavMeshAgent>().updateRotation = true;
-        player.GetComponent<NavMeshAgent>().updatePosition = true;
-        player.GetComponent<NavMeshAgent>().isStopped = false;
-
-        StartCoroutine(PCS.RemoveIFrames());
+        StartCoroutine(pCS.RemoveIFrames());
         StartCoroutine(ResetCooldown(1, 1));
 
         yield return null;
@@ -166,7 +160,7 @@ public class AdaCombatScript : MonoBehaviour
             if (ultBuffActive)
             {
                 enemy.GetComponent<EnemyHealthScript>().TakeDamage((iSkillDMGScale * attack) * ultDMGBuff);
-                PCS.currentHP += ultHeal;
+                pCS.currentHP += ultHeal;
             }
             else
             {

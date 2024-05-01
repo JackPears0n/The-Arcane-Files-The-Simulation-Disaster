@@ -8,7 +8,7 @@ public class ThomasCombatScript : MonoBehaviour
     public LayerMask whatIsEnemy;
     public int balence;
     public GameObject player;
-    public PlayerControlScript PCS;
+    public PlayerControlScript pCS;
 
     [Header("Stats")]
     public Stats stats;
@@ -41,28 +41,35 @@ public class ThomasCombatScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player Object");
-        PCS = player.GetComponent<PlayerControlScript>();
+        pCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Updates the player's stats
-        CheckStats();
-
-        //Stops balence going out of bounds
-        if (balence < -20)
+        if (!pCS.gm.paused)
         {
-            balence = -20;
-        }
-        else if (balence > 20)
-        {
-            balence = 20;
+            if (!pCS.gm.logicPaused)
+            {
+                //Updates the player's stats
+                CheckStats();
+
+                //Stops balence going out of bounds
+                if (balence < -20)
+                {
+                    balence = -20;
+                }
+                else if (balence > 20)
+                {
+                    balence = 20;
+                }
+
+                //Gets attack input
+                AttackInput();
+            }
         }
 
-        //Gets attack input
-        AttackInput();
     }
 
     #region Skills
@@ -78,7 +85,7 @@ public class ThomasCombatScript : MonoBehaviour
             enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttack1DMGScale * attack);
             if(iSkillD)
             {
-                PCS.currentHP += (bAttack1DMGScale * attack) / 2;
+                pCS.currentHP += (bAttack1DMGScale * attack) / 2;
             }
 
             //Delays the 2nd attack
@@ -88,7 +95,7 @@ public class ThomasCombatScript : MonoBehaviour
             enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttack1DMGScale * attack);
             if (iSkillD)
             {
-                PCS.currentHP += (bAttack1DMGScale * attack) / 2;
+                pCS.currentHP += (bAttack1DMGScale * attack) / 2;
             }
         }
 
@@ -125,7 +132,7 @@ public class ThomasCombatScript : MonoBehaviour
         //If neuteral heal the player once
         if (balence == 0)
         {
-            PCS.currentHP += 100;
+            pCS.currentHP += 100;
             iSkillD = false;
             iSkillG = false;
         }
@@ -173,7 +180,7 @@ public class ThomasCombatScript : MonoBehaviour
             e.gameObject.GetComponent<EnemyHealthScript>().TakeDamage(ultDMGScale * attack);
             if (iSkillD)
             {
-                PCS.currentHP += (ultDMGScale * attack) / 2;
+                pCS.currentHP += (ultDMGScale * attack) / 2;
             }
         }
 

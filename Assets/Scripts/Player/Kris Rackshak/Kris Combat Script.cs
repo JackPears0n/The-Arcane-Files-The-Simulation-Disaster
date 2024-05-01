@@ -7,7 +7,7 @@ public class KrisCombatScript : MonoBehaviour
     public Animator anim;
     public LayerMask whatIsEnemy;
     public GameObject player;
-    public PlayerControlScript PCS;
+    public PlayerControlScript pCS;
 
     [Header("Stats")]
     public Stats stats;
@@ -40,21 +40,27 @@ public class KrisCombatScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player Object");
-        PCS = player.GetComponent<PlayerControlScript>();
+        pCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (hasUltIframes)
+        if (!pCS.gm.paused)
         {
-            PCS.hasIFrames = true;
+            if (!pCS.gm.logicPaused)
+            {
+                if (hasUltIframes)
+                {
+                    pCS.hasIFrames = true;
+                }
+
+                CheckStats();
+
+                AttackInput();
+            }
         }
-
-        CheckStats();
-
-        AttackInput();
 
     }
 
@@ -65,7 +71,7 @@ public class KrisCombatScript : MonoBehaviour
         cooldownDone[0] = false;
 
         //Makes it so the player is not in the parry state
-        PCS.parryState = false;
+        pCS.parryState = false;
 
         //Attacks the enemies
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
@@ -81,7 +87,7 @@ public class KrisCombatScript : MonoBehaviour
     public IEnumerator Parry()
     {
         //Makes it so the player is in the parry state
-        yield return PCS.parryState = true;
+        yield return pCS.parryState = true;
     }
     public IEnumerator IndividualSkill()
     {
@@ -89,9 +95,9 @@ public class KrisCombatScript : MonoBehaviour
         cooldownDone[2] = false;
 
         //Makes it so the player is not in the parry state
-        PCS.parryState = false;
+        pCS.parryState = false;
 
-        PCS.maxHP += iSkillHPBuff;
+        pCS.maxHP += iSkillHPBuff;
         defence += iSkillDefBuff;
 
         Invoke(nameof(RemoveISBuff), iSkillDuration);
@@ -104,13 +110,13 @@ public class KrisCombatScript : MonoBehaviour
         cooldownDone[3] = false;
 
         //Makes it so the player is not in the parry state
-        PCS.parryState = false;
+        pCS.parryState = false;
 
         //Gives the player Ultimate IFrames
         hasUltIframes = true;
 
         //Heals the player
-        PCS.currentHP += ultHeal;
+        pCS.currentHP += ultHeal;
 
         StartCoroutine(ResetCooldown(3, 3));
         Invoke(nameof(RemoveUltIFrames), ultIFramesDuration);
@@ -120,7 +126,7 @@ public class KrisCombatScript : MonoBehaviour
 
     public void CheckStats()
     {
-        PCS.defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
+        pCS.defence = stats.defence + (stats.defence * (stats.defencePercentMod / 100) + stats.defenceBonus);
     }
 
     #region Calldowns
@@ -133,26 +139,26 @@ public class KrisCombatScript : MonoBehaviour
     }
     public void RemoveISBuff()
     {
-        PCS.maxHP -= iSkillHPBuff;
+        pCS.maxHP -= iSkillHPBuff;
         defence -= iSkillDefBuff;
     }
     public void RemoveUltIFrames()
     {
         hasUltIframes = false;
-        PCS.hasIFrames = false;
+        pCS.hasIFrames = false;
     }
     #endregion
 
     public void AttackInput()
     {
-        if (PCS.hasBeenHit)
+        if (pCS.hasBeenHit)
         {
             print("Retaliate");
             //Puts skill on cooldown
             cooldownDone[1] = false;
 
-            PCS.parryState = false;
-            PCS.hasBeenHit = false;
+            pCS.parryState = false;
+            pCS.hasBeenHit = false;
 
             //Attacks the enemies
             Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
@@ -167,7 +173,7 @@ public class KrisCombatScript : MonoBehaviour
 
         if (!(Input.GetKey(KeyCode.Space) || Input.GetMouseButton(1)))
         {
-            PCS.parryState = false;
+            pCS.parryState = false;
         }
 
         if ((Input.GetKeyDown(KeyCode.Q) || Input.GetMouseButtonDown(0)) && cooldownDone[0])
