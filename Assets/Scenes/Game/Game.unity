@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.01667678, g: 0.048299838, b: 0.10631846, a: 1}
+  m_IndirectSpecularColor: {r: 0.016676841, g: 0.04829996, b: 0.10631904, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7577,7 +7577,7 @@ MonoBehaviour:
   - {fileID: 9004091073961757215, guid: 21aaf30152b54844eb71377fba303608, type: 3}
   - {fileID: 5079626374682972818, guid: 3dfa7fbc1b644ad45a134c7c8fad1a3f, type: 3}
   player: {fileID: 0}
-  chosenPlayer: 84
+  chosenPlayer: 65
   stats: {fileID: 0}
   agent: {fileID: 0}
   hasIFrames: 0

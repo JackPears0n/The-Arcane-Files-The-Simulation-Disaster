@@ -878,12 +878,12 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: e4d666a52171e044ea5cf5db965f291e, type: 2}
+      objectReference: {fileID: 2100000, guid: 2531ca3ae1fab9844926130534ee665e, type: 2}
     - target: {fileID: 3506389355297958791, guid: b678cb12255acac46b5dc33a191d070e,
         type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: e4d666a52171e044ea5cf5db965f291e, type: 2}
+      objectReference: {fileID: 2100000, guid: 2531ca3ae1fab9844926130534ee665e, type: 2}
     - target: {fileID: 3506389355297958791, guid: b678cb12255acac46b5dc33a191d070e,
         type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
@@ -1317,7 +1317,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   player: {fileID: 0}
-  PCS: {fileID: 0}
+  pCS: {fileID: 0}
   stats: {fileID: 11400000, guid: 7a1eb66089933704f9aa1a6c9c91acbb, type: 2}
   defence: 0
   attackRange: 2
@@ -1328,10 +1328,6 @@ MonoBehaviour:
   - 15
   - 30
   cooldownDone: 01010101
-  hasIFrames: 0
-  iFramesDuration: 0.2
-  iFramesCooldown: 0.5
-  canHaveIFrames: 1
   bAttackDMGScale: 1
   parryDMGScale: 0.5
   iSkillHPBuff: 500

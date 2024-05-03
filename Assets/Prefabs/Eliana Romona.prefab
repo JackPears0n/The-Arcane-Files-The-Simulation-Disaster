@@ -195,10 +195,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   player: {fileID: 0}
+  pCS: {fileID: 0}
   stats: {fileID: 11400000, guid: aafce80708940d74782b4e9a43f1eba4, type: 2}
   attack: 0
-  health: 0
-  maxHealth: 0
   attackRange: 2
   attackPoint: {fileID: 1361013710163476904}
   cooldowns:
@@ -207,17 +206,11 @@ MonoBehaviour:
   - 5
   - 15
   cooldownDone: 01010101
-  hasIFrames: 0
-  iFramesDuration: 0.1
-  iFramesCooldown: 0.5
-  canHaveIFrames: 1
   bAttackDMGScale: 0.2
   maxTimeBetweenAttacks: 1.5
   lastAttackTime: 0
   noOfClicks: 0
   parryDMGScale: 0.5
-  parryState: 0
-  hasBeenHit: 0
   iSkillDMGScale: 1
   ultBuffActive: 0
   ultBuffDuration: 10
