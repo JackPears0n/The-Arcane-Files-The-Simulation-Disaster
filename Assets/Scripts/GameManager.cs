@@ -19,10 +19,12 @@ public class GameManager : MonoBehaviour
     public GameObject playerObject;
     public PlayerControlScript PCS;
     public Stats stats;
+    public char chosenPlayer;
 
     [Header("Level")]
     public int lvlNum;
     public char lvlType;
+    public float difficulty;
 
     [Header("UI")]
     public GameObject ui;
@@ -45,12 +47,29 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerObject = GameObject.Find("Player Object");
+        playerObject.GetComponent<PlayerControlScript>().chosenPlayer = chosenPlayer;
+
+        ui = GameObject.Find("UI");
+        hud = GameObject.Find("HUD");
+        shop = GameObject.Find("Shop Container");
+
+        lvlNum = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Temporary button to progress to level 1
+        
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (lvlNum == 0)
+            {
+                lvlNum++;
+            }
+        }
+
         //Pauses time
         if (paused)
         {
@@ -67,7 +86,7 @@ public class GameManager : MonoBehaviour
            PauseGame();
        }
 
-       if (lvlType == 'S')
+       if (lvlType == 'S' && shop != null)
        {
             if (Input.GetKeyDown(KeyCode.P))
             {
@@ -112,5 +131,10 @@ public class GameManager : MonoBehaviour
             shop.SetActive(true);
             paused = true;
         }
+    }
+
+    public void SetDifficulty(float dif)
+    {
+        difficulty = dif;
     }
 }

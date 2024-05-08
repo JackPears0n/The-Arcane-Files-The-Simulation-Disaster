@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class MoveCamScript : MonoBehaviour
 {
+
+    //Game Manager
+    public GameObject gm;
+    public GameManager gms;
+
     // Mouse sensativity
     public float xSens;
     public float ySens;
@@ -19,6 +24,9 @@ public class MoveCamScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameObject.Find("GM");
+        gms = gm.GetComponent<GameManager>();
+
         // Locks the cursor in place
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -28,10 +36,10 @@ public class MoveCamScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
 
-        if (Input.GetKey(KeyCode.LeftAlt))
+        if (Input.GetKey(KeyCode.LeftAlt) || gms.paused)
         {
             // Locks the cursor in place
             Cursor.lockState = CursorLockMode.None;
@@ -39,15 +47,9 @@ public class MoveCamScript : MonoBehaviour
             // Makes cursor incisible
             Cursor.visible = true;
 
-            // Pauses any physics
-            Time.timeScale = 0;
-
         }
         else
         {
-            // Resumes physics
-            Time.timeScale = 1;
-
             // Locks the cursor in place
             Cursor.lockState = CursorLockMode.Locked;
 
@@ -66,10 +68,11 @@ public class MoveCamScript : MonoBehaviour
 
             // Clamps the axis view between
             xRotate = Mathf.Clamp(xRotate, -70, 70);
+            yRotate = Mathf.Clamp(yRotate, -70, 70);
 
             // Roate camera and its orientation
             transform.rotation = Quaternion.Euler(xRotate, yRotate, 0);
-            camOrientation.rotation = Quaternion.Euler(0, yRotate, 0);
+            camOrientation.rotation = Quaternion.Euler(xRotate, yRotate, 0);
         }
 
     }
