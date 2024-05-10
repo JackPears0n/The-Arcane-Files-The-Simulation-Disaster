@@ -88,15 +88,19 @@ public class ThomasCombatScript : MonoBehaviour
                 pCS.currentHP += (bAttack1DMGScale * attack) / 2;
             }
 
-            //Delays the 2nd attack
-            yield return new WaitForSeconds(0.1f);
-
-            //Second attack
-            enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttack1DMGScale * attack);
-            if (iSkillD)
+            if (!enemy.GetComponent<EnemyHealthScript>().isDead)
             {
-                pCS.currentHP += (bAttack1DMGScale * attack) / 2;
+                //Delays the 2nd attack
+                yield return new WaitForSeconds(0.1f);
+
+                //Second attack
+                enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttack1DMGScale * attack);
+                if (iSkillD)
+                {
+                    pCS.currentHP += (bAttack1DMGScale * attack) / 2;
+                }
             }
+
         }
 
         //Subtract 1 from balence
@@ -111,14 +115,18 @@ public class ThomasCombatScript : MonoBehaviour
         cooldownDone[1] = false;
 
         Collider[] hitEnemies = Physics.OverlapSphere(transform.position, 100, whatIsEnemy);
-        Collider chosenEnemy = hitEnemies[0];
 
-        //Instanciate an orb
-        GameObject proj = Instantiate(projectile, new Vector3 (projectileLaunchPos.transform.position.x, projectileLaunchPos.transform.position.y, projectileLaunchPos.transform.position.z), transform.rotation);
-        proj.GetComponent<ThomasProjectileScript>().GetInfo(gameObject, chosenEnemy.gameObject);
+        if (hitEnemies.Length > 0)
+        {
+            GameObject chosenEnemy = hitEnemies[0].gameObject;
 
-        //Add 1 to the balence
-        balence++;
+            //Instanciate an orb
+            GameObject proj = Instantiate(projectile, new Vector3(projectileLaunchPos.transform.position.x, projectileLaunchPos.transform.position.y, projectileLaunchPos.transform.position.z), transform.rotation);
+            proj.GetComponent<ThomasProjectileScript>().GetInfo(gameObject, chosenEnemy.gameObject);
+
+            //Add 1 to the balence
+            balence++;
+        }
 
         StartCoroutine(ResetCooldown(1, 1));
         yield return null;

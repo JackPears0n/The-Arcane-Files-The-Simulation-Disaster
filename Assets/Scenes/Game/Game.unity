@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.01667678, g: 0.048299838, b: 0.10631846, a: 1}
+  m_IndirectSpecularColor: {r: 0.016676841, g: 0.04829996, b: 0.10631904, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2645,7 +2645,7 @@ MonoBehaviour:
   playerObject: {fileID: 2080178121}
   PCS: {fileID: 0}
   stats: {fileID: 0}
-  chosenPlayer: 0
+  chosenPlayer: 84
   lvlNum: 0
   lvlType: 67
   difficulty: 1
@@ -3918,7 +3918,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1673151, y: 1.1673151, z: 1.1673151}
+  m_LocalScale: {x: 1.08, y: 1.18, z: 1.08}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1687665036}

@@ -81,12 +81,17 @@ public class GameManager : MonoBehaviour
         }
 
 
-       if (Input.GetKeyDown(KeyCode.Escape))
+       if (Input.GetKeyDown(KeyCode.Escape) && !shop.activeSelf)
        {
            PauseGame();
        }
 
-       if (lvlType == 'S' && shop != null)
+        if (Input.GetKeyDown(KeyCode.Escape) && shop.activeSelf)
+        {
+            ToggleShop();
+        }
+
+        if (lvlType == 'S' && shop != null)
        {
             if (Input.GetKeyDown(KeyCode.P))
             {

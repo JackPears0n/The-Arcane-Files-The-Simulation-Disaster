@@ -13,9 +13,24 @@ public class ThomasProjectileScript : MonoBehaviour
     public GameObject target;
     private EnemyHealthScript targetHS;
 
+    public LayerMask whatIsEnemy;
+
     // Update is called once per frame
     void Update()
     {
+        if (target == null)
+        {
+            Collider[] enemies = Physics.OverlapSphere(transform.position, 100, whatIsEnemy);
+            if (enemies.Length > 0)
+            {
+                target = enemies[0].gameObject;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
         if (!thomasCS.pCS.gm.paused)
         {
             if (!thomasCS.pCS.gm.logicPaused)

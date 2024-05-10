@@ -124,6 +124,9 @@ MonoBehaviour:
   agent: {fileID: 6529255087767418238}
   thomas: {fileID: 0}
   target: {fileID: 0}
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!195 &6529255087767418238
 NavMeshAgent:
   m_ObjectHideFlags: 0
