@@ -40,22 +40,23 @@ public class PlayerControlScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        agent = gameObject.GetComponent<NavMeshAgent>();
+
         gameManager = GameObject.Find("GM");
         gm = gameManager.GetComponent<GameManager>();
 
         rb = gameObject.GetComponent<Rigidbody>();
-
-
-        if (player == null && chosenPlayer != '\0')
-        {
-            GetPlayer();
-        }
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (player == null && chosenPlayer != '\0')
+        {
+            GetPlayer();
+        }
+
         CheckStats();
 
         if (!gm.paused)
@@ -129,6 +130,8 @@ public class PlayerControlScript : MonoBehaviour
             attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
             defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod / 100) );
         }
+
+        gm.stats = stats;
 
     }
 

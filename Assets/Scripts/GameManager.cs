@@ -15,9 +15,11 @@ public class GameManager : MonoBehaviour
     //Pauses all FixedUpdate() methods
     public bool physicsPaused;
 
+    private ProgressionScript ps;
+
     [Header("Player")]
     public GameObject playerObject;
-    public PlayerControlScript PCS;
+    public PlayerControlScript pcs;
     public Stats stats;
     public char chosenPlayer;
 
@@ -30,6 +32,8 @@ public class GameManager : MonoBehaviour
     public GameObject ui;
     public GameObject hud;
     public GameObject shop;
+    public GameObject victoryUI;
+    public GameObject defeatUI;
 
     private void Awake()
     {
@@ -47,26 +51,25 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerObject = GameObject.Find("Player Object");
-        playerObject.GetComponent<PlayerControlScript>().chosenPlayer = chosenPlayer;
+        ps = gameObject.GetComponent<ProgressionScript>();
 
-        ui = GameObject.Find("UI");
-        hud = GameObject.Find("HUD");
-        shop = GameObject.Find("Shop Container");
-
-        lvlNum = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Temporary button to progress to level 1
-        
+        //Gets the game info
+        if (playerObject == null)
+        {
+            GetGameInfo();
+        }
+
+        //Temporary button to progress levels      
         if (Input.GetKeyDown(KeyCode.L))
         {
-            if (lvlNum == 0)
+            if (ps.canProgressToNextLvl)
             {
-                lvlNum++;
+                ps.NextLevel();
             }
         }
 
@@ -141,5 +144,25 @@ public class GameManager : MonoBehaviour
     public void SetDifficulty(float dif)
     {
         difficulty = dif;
+    }
+
+    public void GetGameInfo()
+    {
+        playerObject = GameObject.Find("Player Object");
+        pcs = playerObject.GetComponent<PlayerControlScript>();
+        pcs.chosenPlayer = chosenPlayer;
+        stats = playerObject.GetComponent<PlayerControlScript>().stats;
+
+        ui = GameObject.Find("UI");
+        hud = GameObject.Find("HUD");
+        shop = GameObject.Find("Shop Container");
+
+        victoryUI = GameObject.Find("Victory UI");
+        victoryUI.SetActive(false);
+
+        defeatUI = GameObject.Find("Defeat UI");
+        defeatUI.SetActive(false);
+
+        lvlNum = 0;
     }
 }

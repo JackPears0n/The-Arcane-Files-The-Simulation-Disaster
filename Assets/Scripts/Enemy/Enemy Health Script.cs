@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnemyHealthScript : MonoBehaviour
 {
+    public ShopScript ss;
+    public GameManager gm;
+
     public float difficulty;
 
     public char mobType;
@@ -39,6 +42,12 @@ public class EnemyHealthScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Gets the game manager
+        gm = GameObject.Find("GM").GetComponent<GameManager>();
+
+        //Gets the shop script
+        ss = gm.shop.GetComponent<ShopScript>();
+
         //Scales enemy max health  and defencewith difficulty
         maxHP *= difficulty;
         defence *= difficulty;
@@ -128,6 +137,9 @@ public class EnemyHealthScript : MonoBehaviour
         //Give the player currency
 
         //Play death anim
+
+        //Gives the player a token
+        ss.tokens++;
 
         //Delays the enemy destruction
         yield return new WaitForSeconds(0.1f);

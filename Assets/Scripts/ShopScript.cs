@@ -6,9 +6,10 @@ using UnityEngine;
 public class ShopScript : MonoBehaviour
 {
     public GameObject player;
-    private PlayerControlScript pcs;
-    private Stats playerStats;
-    private int tokens;
+    public PlayerControlScript pcs;
+    public Stats playerStats;
+    public int tokens;
+    public PlayerBuffScript pbs;
 
     public TMP_Text[] text;
 
@@ -16,6 +17,7 @@ public class ShopScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player Object");
+        pbs = player.GetComponent<PlayerBuffScript>();
     }
 
     // Update is called once per frame
@@ -47,5 +49,14 @@ public class ShopScript : MonoBehaviour
         text[7].text = pcs.defence.ToString();
         text[8].text = playerStats.defencePercentMod.ToString();
         text[9].text = playerStats.defenceBonus.ToString();
+    }
+
+    public void AddStat(int statNum)
+    {
+        if (tokens > 0)
+        {
+            pbs.AddStat(statNum);
+            tokens--;
+        }
     }
 }
