@@ -7,11 +7,11 @@ public class ShopScript : MonoBehaviour
 {
     public GameObject player;
     public PlayerControlScript pcs;
-    public Stats playerStats;
+    public Stats stats;
     public int tokens;
     public PlayerBuffScript pbs;
 
-    public TMP_Text[] text;
+    public TMP_Text[] tmp;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +24,8 @@ public class ShopScript : MonoBehaviour
     void Update()
     {
         tokens = player.GetComponent<PlayerControlScript>().tokens;
-        playerStats = player.GetComponent<PlayerControlScript>().stats;
         pcs = player.GetComponent<PlayerControlScript>();
+        stats = pcs.stats;
 
         UpdateUI();
     }
@@ -33,22 +33,22 @@ public class ShopScript : MonoBehaviour
     public void UpdateUI()
     {
         //Tokens
-        text[0].text = tokens.ToString();
+        tmp[0].text = tokens.ToString();
 
         //HP
-        text[1].text = pcs.maxHP.ToString();
-        text[2].text = playerStats.maxHealthPercentMod.ToString();
-        text[3].text = playerStats.maxHealthBonus.ToString();
+        tmp[1].text = pcs.maxHP.ToString();
+        tmp[2].text = pcs.maxHPPer.ToString();
+        tmp[3].text = pcs.maxHPBon.ToString();
 
         //Attack
-        text[4].text = pcs.attack.ToString();
-        text[5].text = playerStats.attackPercentMod.ToString();
-        text[6].text = playerStats.attackBonus.ToString();
+        tmp[4].text = pcs.attack.ToString();
+        tmp[5].text = pcs.attkPer.ToString();
+        tmp[6].text = pcs.attkBon.ToString();
 
-        //HP
-        text[7].text = pcs.defence.ToString();
-        text[8].text = playerStats.defencePercentMod.ToString();
-        text[9].text = playerStats.defenceBonus.ToString();
+        //Defence
+        tmp[7].text = pcs.defence.ToString();
+        tmp[8].text = pcs.defPer.ToString();
+        tmp[9].text = pcs.defBon.ToString();
     }
 
     public void AddStat(int statNum)

@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerBuffScript : MonoBehaviour
 {
-    public PlayerControlScript pCS;
+    public GameObject playerObject;
+    public PlayerControlScript pcs;
     public Stats stats;
 
     public int statBaseAmount;
@@ -15,13 +16,16 @@ public class PlayerBuffScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stats = pCS.GetComponent<PlayerControlScript>().stats;
+        playerObject = GameObject.Find("Player Object");
+        pcs = playerObject.GetComponent<PlayerControlScript>();
+
+        //stats = pCS.GetComponent<PlayerControlScript>().stats;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        stats = pcs.stats;
     }
 
     /*

@@ -26,8 +26,17 @@ public class PlayerControlScript : MonoBehaviour
     [Header("Stats")]
     public float maxHP;
     public float currentHP;
+    public float maxHPPer;
+    [HideInInspector] public float maxHPBon;
+
     public float defence;
+    [HideInInspector] public float defPer;
+    [HideInInspector] public float defBon;
+
     public float attack;
+    [HideInInspector] public float attkPer;
+    [HideInInspector] public float attkBon;
+
 
     [Header("Misc")]
     public bool parryState;
@@ -106,29 +115,65 @@ public class PlayerControlScript : MonoBehaviour
         {
             stats = player.GetComponent<ThomasCombatScript>().stats;
             maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * (stats.maxHealthPercentMod / 100));
+            maxHPPer = stats.maxHealthPercentMod;
+            maxHPBon = stats.maxHealthBonus;
+
             attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
+            attkPer = stats.attackPercentMod;
+            attkBon = stats.attackBonus;
+
             defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod/100));
+            defPer = stats.defencePercentMod;
+            defBon = stats.defenceBonus;
+
         }
         if (chosenPlayer == 'A')
         {
             stats = player.GetComponent<AdaCombatScript>().stats;
             maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * (stats.maxHealthPercentMod / 100));
+            maxHPPer = stats.maxHealthPercentMod;
+            maxHPBon = stats.maxHealthBonus;
+
             attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
+            attkPer = stats.attackPercentMod;
+            attkBon = stats.attackBonus;
+
             defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod / 100));
+            defPer = stats.defencePercentMod;
+            defBon = stats.defenceBonus;
+
         }
         if (chosenPlayer == 'K')
         {
             stats = player.GetComponent<KrisCombatScript>().stats;
             maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * (stats.maxHealthPercentMod / 100));
+            maxHPPer = stats.maxHealthPercentMod;
+            maxHPBon = stats.maxHealthBonus;
+
             attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
+            attkPer = stats.attackPercentMod;
+            attkBon = stats.attackBonus;
+
             defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod / 100));
+            defPer = stats.defencePercentMod;
+            defBon = stats.defenceBonus;
+
         }
         if (chosenPlayer == 'E')
         {
             stats = player.GetComponent<ElianaCombatScript>().stats;
             maxHP = stats.maxHealth + stats.maxHealthBonus + (stats.maxHealth * (stats.maxHealthPercentMod / 100));
+            maxHPPer = stats.maxHealthPercentMod;
+            maxHPBon = stats.maxHealthBonus;
+
             attack = stats.attack + stats.attackBonus + (stats.attack * (stats.attackPercentMod / 100));
-            defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod / 100) );
+            attkPer = stats.attackPercentMod;
+            attkBon = stats.attackBonus;
+
+            defence = stats.defence + stats.defenceBonus + (stats.defence * (stats.defencePercentMod / 100));
+            defPer = stats.defencePercentMod;
+            defBon = stats.defenceBonus;
+
         }
 
         gm.stats = stats;
