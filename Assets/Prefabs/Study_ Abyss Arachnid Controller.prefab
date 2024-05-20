@@ -92,6 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c045e9f92295dcb42894b8ee7d7aad97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ss: {fileID: 0}
+  gm: {fileID: 0}
   difficulty: 1
   mobType: 78
   maxHP: 300

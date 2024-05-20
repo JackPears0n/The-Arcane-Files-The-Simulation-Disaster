@@ -2574,12 +2574,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpawnPoints:
+  - {fileID: 243521015}
   - {fileID: 121930460}
   - {fileID: 1009415842}
   - {fileID: 236595247}
   - {fileID: 541930525}
   - {fileID: 555966157}
-  - {fileID: 243521015}
   gm: {fileID: 623709224}
   canProgressToNextLvl: 0
   ae: 0

@@ -181,6 +181,8 @@ public class ProgressionScript : MonoBehaviour
         //Level 6 logic
         else if (gm.lvlNum == 6)
         {
+            gm.lvlType = 'C';
+
             //Spawns the first wave of enemies
             if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
             {
@@ -313,60 +315,325 @@ public class ProgressionScript : MonoBehaviour
         {
             //Sets level type to shop
             gm.lvlType = 'S';
+
+            canProgressToNextLvl = true;
         }
         //Level 1 logic
         else if (gm.lvlNum == 1)
         {
-            
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 2 logic
         else if (gm.lvlNum == 2)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, husk);
 
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 4;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[4] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 3 logic
         else if (gm.lvlNum == 3)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
 
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 4 logic
         else if (gm.lvlNum == 4)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 5;
+                SpawnEnemy(ae, orb);
 
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 5 logic
         else if (gm.lvlNum == 5)
         {
+            //Sets level type to shop
+            gm.lvlType = 'S';
 
+            canProgressToNextLvl = true;
         }
         //Level 6 logic
         else if (gm.lvlNum == 6)
         {
+            gm.lvlType = 'C';
 
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 5;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 5;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 7 logic
         else if (gm.lvlNum == 7)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
 
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 3;
+                SpawnEnemy(ae, husk);
+
+                ae = 4;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 0;
+                SpawnEnemy(ae, husk);
+
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 1 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
+
+            if (waveNum == 2 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 0;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 2 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 8 logic
         else if (gm.lvlNum == 8)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 5;
+                SpawnEnemy(ae, aSQueen);
 
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 9 logic
         else if (gm.lvlNum == 9)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, orb);
 
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, husk);
+
+                ae = 4;
+                SpawnEnemy(ae, husk);
+
+                ae = 5;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 10 logic
         else if (gm.lvlNum == 10)
         {
+            //Sets level type to shop
+            gm.lvlType = 'S';
 
+            canProgressToNextLvl = true;
         }
         //Level 11 logic
         else if (gm.lvlNum == 11)
         {
+            gm.lvlType = 'C';
+
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, gGeneral);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[0] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
 
         }
 
@@ -380,60 +647,439 @@ public class ProgressionScript : MonoBehaviour
         {
             //Sets level type to shop
             gm.lvlType = 'S';
+
+            canProgressToNextLvl = true;
         }
         //Level 1 logic
         else if (gm.lvlNum == 1)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
 
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 0 && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the first wave of enemies
+            if (waveNum == 1 && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, husk);
+
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 1 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 2 logic
         else if (gm.lvlNum == 2)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, husk);
 
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 5;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 0 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the first wave of enemies
+            if (waveNum == 1 && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 5;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 3 logic
         else if (gm.lvlNum == 3)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
 
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 3;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 4;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 4 logic
         else if (gm.lvlNum == 4)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, orb);
 
+                ae = 2;
+                SpawnEnemy(ae, orb);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 5 logic
         else if (gm.lvlNum == 5)
         {
+            //Sets level type to shop
+            gm.lvlType = 'S';
 
+            canProgressToNextLvl = true;
         }
         //Level 6 logic
         else if (gm.lvlNum == 6)
         {
+            gm.lvlType = 'C';
 
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 4;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 5;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 4;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 5;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 7 logic
         else if (gm.lvlNum == 7)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
 
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 3;
+                SpawnEnemy(ae, husk);
+
+                ae = 4;
+                SpawnEnemy(ae, husk);
+
+                ae = 5;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 0;
+                SpawnEnemy(ae, husk);
+
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the second wave are dead
+            if (waveNum == 1 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the third wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 0;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the third wave are dead
+            if (waveNum == 1 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 8 logic
         else if (gm.lvlNum == 8)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 5;
+                SpawnEnemy(ae, aSQueen);
 
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 9 logic
         else if (gm.lvlNum == 9)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, orb);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 4;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the second wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the third wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 1;
+                SpawnEnemy(ae, orb);
+
+                ae = 2;
+                SpawnEnemy(ae, orb);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the third wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
 
         }
         //Level 10 logic
         else if (gm.lvlNum == 10)
         {
+            //Sets level type to shop
+            gm.lvlType = 'S';
 
+            canProgressToNextLvl = true;
         }
         //Level 11 logic
         else if (gm.lvlNum == 11)
         {
+            gm.lvlType = 'C';
+
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, gGeneral);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[0] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
 
         }
 
@@ -447,60 +1093,450 @@ public class ProgressionScript : MonoBehaviour
         {
             //Sets level type to shop
             gm.lvlType = 'S';
+
+            canProgressToNextLvl = true;
         }
         //Level 1 logic
         else if (gm.lvlNum == 1)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
 
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 0 && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, orb);
+
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 4;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the second wave are dead
+            if (waveNum == 1 && activeEnemies[0] == null &&  activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 2 logic
         else if (gm.lvlNum == 2)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, orb);
 
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 5;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 0 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the first wave of enemies
+            if (waveNum == 1 && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, orb);
+
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 5;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 1 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 3 logic
         else if (gm.lvlNum == 3)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
 
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 3;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 4;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 4 logic
         else if (gm.lvlNum == 4)
-        {
+        {//Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, orb);
 
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 5 logic
         else if (gm.lvlNum == 5)
         {
+            //Sets level type to shop
+            gm.lvlType = 'S';
 
+            canProgressToNextLvl = true;
         }
         //Level 6 logic
         else if (gm.lvlNum == 6)
         {
+            gm.lvlType = 'C';
 
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 4;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 5;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 3;
+                SpawnEnemy(ae, husk);
+
+                ae = 4;
+                SpawnEnemy(ae, husk);
+
+                ae = 5;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+
+            }
+
+            //Checks to see if the first wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 7 logic
         else if (gm.lvlNum == 7)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
 
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 3;
+                SpawnEnemy(ae, husk);
+
+                ae = 4;
+                SpawnEnemy(ae, husk);
+
+                ae = 5;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && activeEnemies[5] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 0;
+                SpawnEnemy(ae, husk);
+
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the second wave are dead
+            if (waveNum == 1 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the third wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 0;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 1;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 2;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the third wave are dead
+            if (waveNum == 1 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 8 logic
         else if (gm.lvlNum == 8)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, gGeneral);
 
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[0] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
         }
         //Level 9 logic
         else if (gm.lvlNum == 9)
         {
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !waveBeaten && !spawnedEnemies)
+            {
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, orb);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the second wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 1;
+                SpawnEnemy(ae, husk);
+
+                ae = 2;
+                SpawnEnemy(ae, husk);
+
+                ae = 3;
+                SpawnEnemy(ae, aArachnid);
+
+                ae = 4;
+                SpawnEnemy(ae, aArachnid);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the second wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && spawnedEnemies)
+            {
+                waveNum++;
+                spawnedEnemies = false;
+                waveBeaten = true;
+            }
+
+            //Spawns the third wave of enemies
+            if (waveNum == 1 && waveBeaten && !spawnedEnemies)
+            {
+                waveBeaten = false;
+
+                ae = 1;
+                SpawnEnemy(ae, orb);
+
+                ae = 2;
+                SpawnEnemy(ae, orb);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the third wave are dead
+            if (waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && spawnedEnemies)
+            {
+                waveBeaten = true;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
 
         }
         //Level 10 logic
         else if (gm.lvlNum == 10)
         {
+            //Sets level type to shop
+            gm.lvlType = 'S';
 
+            canProgressToNextLvl = true;
         }
         //Level 11 logic
         else if (gm.lvlNum == 11)
         {
+            gm.lvlType = 'C';
+
+            //Spawns the first wave of enemies
+            if (waveNum == 0 && !spawnedEnemies)
+            {
+                ae = 0;
+                SpawnEnemy(ae, prisoner);
+
+                spawnedEnemies = true;
+            }
+
+            //Checks to see if the first wave are dead
+            if (activeEnemies[0] == null && spawnedEnemies)
+            {
+                waveNum++;
+                canProgressToNextLvl = true;
+                spawnedEnemies = false;
+            }
 
         }
 
