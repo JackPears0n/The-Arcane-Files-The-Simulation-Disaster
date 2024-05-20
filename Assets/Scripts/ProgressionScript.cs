@@ -28,6 +28,8 @@ public class ProgressionScript : MonoBehaviour
     public bool waveBeaten;
 
     [Header("UI")]
+    public TMP_Text levelText;
+
     public int waveNum;
     public TMP_Text waveTXT;
 
@@ -40,6 +42,26 @@ public class ProgressionScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (levelText == null)
+        {
+            levelText = GameObject.Find("Level Num Text").GetComponent<TMP_Text>();
+        }
+        levelText.text = "Current Level:" + gm.lvlNum.ToString();
+
+        if (waveTXT == null)
+        {
+            waveTXT = GameObject.Find("Level Wave Text").GetComponent<TMP_Text>();
+        }
+
+        if (gm.lvlNum != 0 && gm.lvlNum != 5 && gm.lvlNum != 10)
+        {
+            waveTXT.text = "Current Wave:" + waveNum.ToString();
+        }
+        else
+        {
+            waveTXT.text = "Shop Level";
+        }
+
         if (!gm.paused)
         {
             if (!gm.logicPaused)

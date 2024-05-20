@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public GameObject ui;
     public GameObject hud;
     public GameObject shop;
+    public GameObject pauseMenu;
     public GameObject victoryUI;
     public GameObject defeatUI;
 
@@ -78,22 +79,32 @@ public class GameManager : MonoBehaviour
         if (paused)
         {
             Time.timeScale = 0;
+            logicPaused = true;
+            physicsPaused = true;
         }
         else
         {
             Time.timeScale = 1;
+            logicPaused = false;
+            physicsPaused = false;
         }
-
-
-       if (Input.GetKeyDown(KeyCode.Escape) && !shop.activeSelf)
-       {
-           PauseGame();
-       }
 
         if (Input.GetKeyDown(KeyCode.Escape) && shop.activeSelf)
         {
             ToggleShop();
         }
+        else if (Input.GetKeyDown(KeyCode.Escape) && !shop.activeSelf && !pauseMenu.activeSelf)
+        {
+            pauseMenu.SetActive(true);
+            PauseGame();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeSelf)
+        {
+            pauseMenu.SetActive(false);
+            PauseGame();
+        }
+
+       
 
         if (lvlType == 'S' && shop != null)
        {
@@ -102,7 +113,7 @@ public class GameManager : MonoBehaviour
                 ToggleShop();
             }
 
-            if (!shop.activeSelf)
+            if (!shop.activeSelf && !pauseMenu.activeSelf)
             {
                 paused = false;
             }
@@ -124,6 +135,8 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+
+        print("Pause/Unpause");
     }
 
     public void ToggleShop()
@@ -157,6 +170,9 @@ public class GameManager : MonoBehaviour
         ui = GameObject.Find("UI");
         hud = GameObject.Find("HUD");
         shop = GameObject.Find("Shop Container");
+
+        pauseMenu = GameObject.Find("Pause Menu");
+        pauseMenu.SetActive(false);
 
         victoryUI = GameObject.Find("Victory UI");
         victoryUI.SetActive(false);

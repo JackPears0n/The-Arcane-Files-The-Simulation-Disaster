@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerControlScript : MonoBehaviour
 {
@@ -37,6 +39,9 @@ public class PlayerControlScript : MonoBehaviour
     [HideInInspector] public float attkPer;
     [HideInInspector] public float attkBon;
 
+    [Header("UI")]
+    public Slider hpBar;
+    public TMP_Text healthText;
 
     [Header("Misc")]
     public bool parryState;
@@ -290,6 +295,9 @@ public class PlayerControlScript : MonoBehaviour
 
     public void CheckHealth()
     {
+        healthText.text = "Health: " + currentHP.ToString() + '/' + maxHP.ToString();
+        hpBar.value = currentHP;
+
         if (currentHP > maxHP)
         {
             currentHP = maxHP;
