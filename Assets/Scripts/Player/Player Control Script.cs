@@ -39,9 +39,13 @@ public class PlayerControlScript : MonoBehaviour
     [HideInInspector] public float attkPer;
     [HideInInspector] public float attkBon;
 
+    public bool playerIsDead = false;
+
     [Header("UI")]
     public Slider hpBar;
     public TMP_Text healthText;
+
+    public GameObject defeatUI;
 
     [Header("Misc")]
     public bool parryState;
@@ -54,18 +58,20 @@ public class PlayerControlScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
 
-        gameManager = GameObject.Find("GM");
-        gm = gameManager.GetComponent<GameManager>();
-
-        rb = gameObject.GetComponent<Rigidbody>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        agent = gameObject.GetComponent<NavMeshAgent>();
+
+        rb = gameObject.GetComponent<Rigidbody>();
+
+        gameManager = GameObject.Find("GM");
+        gm = gameManager.GetComponent<GameManager>();
+
         if (player == null && chosenPlayer != '\0')
         {
             GetPlayer();
@@ -93,22 +99,26 @@ public class PlayerControlScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!gm.paused)
+        if (gm != null)
         {
-            if (!gm.logicPaused)
+            if (!gm.paused)
             {
-                if (agent.enabled)
+                if (!gm.logicPaused)
                 {
-                    if (Mathf.Abs(movementInput.y) > 0.01f)
+                    if (agent.enabled)
                     {
-                        Move(movementInput);
-                    }
-                    else
-                    {
-                        ROTATE(movementInput);
+                        if (Mathf.Abs(movementInput.y) > 0.01f)
+                        {
+                            Move(movementInput);
+                        }
+                        else
+                        {
+                            ROTATE(movementInput);
+                        }
                     }
                 }
             }
+
         }
 
         
@@ -315,6 +325,10 @@ public class PlayerControlScript : MonoBehaviour
 
     public IEnumerator PlayerDeath()
     {
+        playerIsDead = true;
+
+        gm.PlayerHasDied();
+
         Debug.Log("Player is dead");
         yield return null;
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,85 +39,82 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
         //Makes sure there is only ever one GM
-        if (instance != null && instance != this)
-        {
-            Destroy(instance);
-        }
-        else
+        if (instance == null)
         {
             instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        lvlNum = 0;
         ps = gameObject.GetComponent<ProgressionScript>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Gets the game info
-        if (playerObject == null)
+        //Performs this logic only if the current scene is the main game
+        if (SceneManager.GetActiveScene().name == "Game")
         {
-            GetGameInfo();
-        }
-
-        //Temporary button to progress levels      
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (ps.canProgressToNextLvl)
+            //Gets the game info
+            if (playerObject == null)
             {
-                ps.NextLevel();
+                GetGameInfo();
             }
-        }
 
-        //Pauses time
-        if (paused)
-        {
-            Time.timeScale = 0;
-            logicPaused = true;
-            physicsPaused = true;
-        }
-        else
-        {
-            Time.timeScale = 1;
-            logicPaused = false;
-            physicsPaused = false;
-        }
+            //Pauses time
+            if (paused)
+            {
+                Time.timeScale = 0;
+                logicPaused = true;
+                physicsPaused = true;
+            }
+            else
+            {
+                Time.timeScale = 1;
+                logicPaused = false;
+                physicsPaused = false;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && shop.activeSelf)
-        {
-            ToggleShop();
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && !shop.activeSelf && !pauseMenu.activeSelf)
-        {
-            pauseMenu.SetActive(true);
-            PauseGame();
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeSelf)
-        {
-            pauseMenu.SetActive(false);
-            PauseGame();
-        }
-
-       
-
-        if (lvlType == 'S' && shop != null)
-       {
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.Escape) && shop.activeSelf && !pcs.playerIsDead)
             {
                 ToggleShop();
             }
-
-            if (!shop.activeSelf && !pauseMenu.activeSelf)
+            else if (Input.GetKeyDown(KeyCode.Escape) && !shop.activeSelf && !pauseMenu.activeSelf && !pcs.playerIsDead)
             {
-                paused = false;
+                pauseMenu.SetActive(true);
+                PauseGame();
             }
+            else if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeSelf && !pcs.playerIsDead)
+            {
+                pauseMenu.SetActive(false);
+                PauseGame();
+            }
+
+
+
+            if (lvlType == 'S' && shop != null)
+            {
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    ToggleShop();
+                }
+
+                if (!shop.activeSelf && !pauseMenu.activeSelf)
+                {
+                    paused = false;
+                }
+            }
+
         }
 
     }
@@ -181,5 +179,12 @@ public class GameManager : MonoBehaviour
         defeatUI.SetActive(false);
 
         lvlNum = 0;
+    }
+
+    public void PlayerHasDied()
+    {
+        PauseGame();
+        hud.SetActive(false);
+        defeatUI.SetActive(true);
     }
 }

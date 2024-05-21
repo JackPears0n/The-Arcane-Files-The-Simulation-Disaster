@@ -24,8 +24,6 @@ public class MoveCamScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gm = GameObject.Find("GM");
-        gms = gm.GetComponent<GameManager>();
 
         // Locks the cursor in place
         Cursor.lockState = CursorLockMode.Locked;
@@ -33,6 +31,12 @@ public class MoveCamScript : MonoBehaviour
         // Makes cursor incisible
         Cursor.visible = false;
 
+    }
+
+    void Update()
+    {
+        gm = GameObject.Find("GM");
+        gms = gm.GetComponent<GameManager>();
     }
 
     // Update is called once per frame

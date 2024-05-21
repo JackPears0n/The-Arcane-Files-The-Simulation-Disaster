@@ -8,7 +8,6 @@ public class ShopScript : MonoBehaviour
     public GameObject player;
     public PlayerControlScript pcs;
     public Stats stats;
-    public int tokens;
     public PlayerBuffScript pbs;
 
     public TMP_Text[] tmp;
@@ -23,7 +22,6 @@ public class ShopScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        tokens = player.GetComponent<PlayerControlScript>().tokens;
         pcs = player.GetComponent<PlayerControlScript>();
         stats = pcs.stats;
 
@@ -33,7 +31,7 @@ public class ShopScript : MonoBehaviour
     public void UpdateUI()
     {
         //Tokens
-        tmp[0].text = tokens.ToString();
+        tmp[0].text = pcs.tokens.ToString();
 
         //HP
         tmp[1].text = pcs.maxHP.ToString();
@@ -53,10 +51,10 @@ public class ShopScript : MonoBehaviour
 
     public void AddStat(int statNum)
     {
-        if (tokens > 0)
+        if (pcs.tokens > 0)
         {
             pbs.AddStat(statNum);
-            tokens--;
+            pcs.tokens--;
         }
     }
 }

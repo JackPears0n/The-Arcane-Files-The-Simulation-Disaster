@@ -88,7 +88,7 @@ public class ThomasCombatScript : MonoBehaviour
                 pCS.currentHP += (bAttack1DMGScale * attack) / 2;
             }
 
-            if (!enemy.GetComponent<EnemyHealthScript>().isDead)
+            if (!enemy.GetComponent<EnemyHealthScript>().isDead && enemy != null)
             {
                 //Delays the 2nd attack
                 yield return new WaitForSeconds(0.1f);

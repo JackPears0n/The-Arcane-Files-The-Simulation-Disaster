@@ -33,6 +33,8 @@ public class ProgressionScript : MonoBehaviour
     public int waveNum;
     public TMP_Text waveTXT;
 
+    public GameObject victoryUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,24 +44,29 @@ public class ProgressionScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (levelText == null)
+        if (SceneManager.GetActiveScene().name == "Game")
         {
-            levelText = GameObject.Find("Level Num Text").GetComponent<TMP_Text>();
-        }
-        levelText.text = "Current Level:" + gm.lvlNum.ToString();
+            GetSpawnPoints();
 
-        if (waveTXT == null)
-        {
-            waveTXT = GameObject.Find("Level Wave Text").GetComponent<TMP_Text>();
-        }
+            if (levelText == null)
+            {
+                levelText = GameObject.Find("Level Num Text").GetComponent<TMP_Text>();
+            }
+            levelText.text = "Current Level:" + gm.lvlNum.ToString();
 
-        if (gm.lvlNum != 0 && gm.lvlNum != 5 && gm.lvlNum != 10)
-        {
-            waveTXT.text = "Current Wave:" + waveNum.ToString();
-        }
-        else
-        {
-            waveTXT.text = "Shop Level";
+            if (waveTXT == null)
+            {
+                waveTXT = GameObject.Find("Level Wave Text").GetComponent<TMP_Text>();
+            }
+
+            if (gm.lvlNum != 0 && gm.lvlNum != 5 && gm.lvlNum != 10)
+            {
+                waveTXT.text = "Current Wave:" + waveNum.ToString();
+            }
+            else
+            {
+                waveTXT.text = "Shop Level";
+            }
         }
 
         if (!gm.paused)
@@ -319,12 +326,12 @@ public class ProgressionScript : MonoBehaviour
             //Checks to see if the first wave are dead
             if (activeEnemies[5] == null && spawnedEnemies)
             {
-                gm.hud.SetActive(false);
-                gm.shop.SetActive(false);
-                gm.victoryUI.SetActive(true);
+                gm.PauseGame();
+                victoryUI.SetActive(true);
+
 
             }
-            
+
         }
 
         yield return null;
@@ -652,9 +659,9 @@ public class ProgressionScript : MonoBehaviour
             //Checks to see if the first wave are dead
             if (activeEnemies[0] == null && spawnedEnemies)
             {
-                waveNum++;
-                canProgressToNextLvl = true;
-                spawnedEnemies = false;
+                gm.PauseGame();
+                victoryUI.SetActive(true);
+
             }
 
         }
@@ -1098,9 +1105,9 @@ public class ProgressionScript : MonoBehaviour
             //Checks to see if the first wave are dead
             if (activeEnemies[0] == null && spawnedEnemies)
             {
-                waveNum++;
-                canProgressToNextLvl = true;
-                spawnedEnemies = false;
+                gm.PauseGame();
+                victoryUI.SetActive(true);
+
             }
 
         }
@@ -1555,9 +1562,9 @@ public class ProgressionScript : MonoBehaviour
             //Checks to see if the first wave are dead
             if (activeEnemies[0] == null && spawnedEnemies)
             {
-                waveNum++;
-                canProgressToNextLvl = true;
-                spawnedEnemies = false;
+                gm.PauseGame();
+                victoryUI.SetActive(true);
+
             }
 
         }
@@ -1594,5 +1601,15 @@ public class ProgressionScript : MonoBehaviour
 
             gm.lvlNum++;
         }
+    }
+
+    public void GetSpawnPoints()
+    {
+        enemySpawnPoints[0] = GameObject.Find("Boss Spawn Point");
+        enemySpawnPoints[1] = GameObject.Find("Enemy Spawn Point (1)");
+        enemySpawnPoints[2] = GameObject.Find("Enemy Spawn Point (2)");
+        enemySpawnPoints[3] = GameObject.Find("Enemy Spawn Point (3)");
+        enemySpawnPoints[4] = GameObject.Find("Enemy Spawn Point (4)");
+        enemySpawnPoints[5] = GameObject.Find("Enemy Spawn Point (5)");
     }
 }

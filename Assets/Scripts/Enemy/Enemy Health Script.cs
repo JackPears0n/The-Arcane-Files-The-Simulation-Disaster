@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class EnemyHealthScript : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class EnemyHealthScript : MonoBehaviour
 
     public GameManager gm;
 
+    [Header("Stats")]
     public float difficulty;
 
     public char mobType;
@@ -20,10 +23,12 @@ public class EnemyHealthScript : MonoBehaviour
 
     public bool isDead = false;
 
+    [Header ("Combat")]
     //Parry Variables
     public bool isParrying;
     public bool hasBeenHit;
 
+    [Header ("I Frames")]
     //Duration and status of enemy IFrames
     public float iFrameDuration;
     public bool hasIFrames;
@@ -32,6 +37,7 @@ public class EnemyHealthScript : MonoBehaviour
     public float iFrameCooldown;
     public bool IFramesOffCooldown;
 
+    [Header("Enemy Type")]
     //False if the mobType is N
     public bool canHaveIFrames;
 
@@ -39,6 +45,8 @@ public class EnemyHealthScript : MonoBehaviour
     public int bossPhase;
     public int numberOfPhases;
 
+    [Header("UI")]
+    public Slider hpBar;
 
     // Start is called before the first frame update
     void Start()
@@ -79,6 +87,9 @@ public class EnemyHealthScript : MonoBehaviour
 
     public void HealthCheck()
     {
+        hpBar.maxValue = maxHP;
+        hpBar.value = health;
+
         if (mobType == 'B')
         {
             //Stops healther overflowing max value
