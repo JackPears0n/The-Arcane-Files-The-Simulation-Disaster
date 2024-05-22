@@ -315,11 +315,11 @@ public class PlayerControlScript : MonoBehaviour
         else if (currentHP <= 0)
         {
             currentHP = 0;
-        }
 
-        if (currentHP == 0)
-        {
-            PlayerDeath();
+            if (!playerIsDead)
+            {
+                StartCoroutine(PlayerDeath());
+            }
         }
     }
 

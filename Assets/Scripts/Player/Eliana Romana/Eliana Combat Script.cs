@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ElianaCombatScript : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class ElianaCombatScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pCS.player = GameObject.Find("Player Object");
+        player = GameObject.Find("Player Object");
         pCS = player.GetComponent<PlayerControlScript>();
         CheckStats();
     }
@@ -153,6 +154,8 @@ public class ElianaCombatScript : MonoBehaviour
 
             pCS.hasBeenHit = false;
 
+            player.gameObject.GetComponent<NavMeshAgent>().speed++;
+
             if (ultBuffActive)
             {
                 //Gets every enemy currenly in the game
@@ -184,6 +187,7 @@ public class ElianaCombatScript : MonoBehaviour
                 }
             }
 
+            Invoke(nameof(RemoveParrySpeedBuff), 5);
             StartCoroutine(ResetCooldown(1, 1));
         }
 
@@ -258,6 +262,11 @@ public class ElianaCombatScript : MonoBehaviour
 
         yield return cooldownDone[skillNum] = true;
 
+    }
+
+    public void RemoveParrySpeedBuff()
+    {
+        player.gameObject.GetComponent<NavMeshAgent>().speed--;
     }
     public void ResetIFrameCooldown()
     {

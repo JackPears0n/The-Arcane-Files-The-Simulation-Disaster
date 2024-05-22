@@ -171,7 +171,7 @@ public class KrisCombatScript : MonoBehaviour
             StartCoroutine(ResetCooldown(1, 1));
         }
 
-        if (!(Input.GetKey(KeyCode.Space) || Input.GetMouseButton(1)))
+        if (!(Input.GetKey(KeyCode.Space) || !Input.GetMouseButton(1)))
         {
             pCS.parryState = false;
         }
