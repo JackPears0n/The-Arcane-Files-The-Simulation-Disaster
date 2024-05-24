@@ -85,6 +85,19 @@ public class Study_Gaunt_General_Script : MonoBehaviour
             StartCoroutine(Parry());
         }
 
+        //Parry
+        if (eHS.hasBeenHit && attackReady[1])
+        {
+            eHS.health += eHS.maxHP * 0.1f;
+
+            attackReady[1] = false;
+
+            eHS.hasBeenHit = false;
+            eHS.isParrying = false;
+
+            StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
+        }
+
         if (playerInAttackRange)
         {
             //Uses the ISkill
@@ -97,17 +110,6 @@ public class Study_Gaunt_General_Script : MonoBehaviour
             {
                 StartCoroutine(BasicAttack());
             }
-            //Does the parry mode functionalty
-            else if (eHS.isParrying && attackReady[1])
-            {
-                eHS.health += eHS.maxHP * 0.1f;
-
-                attackReady[1] = false;
-
-                eHS.hasBeenHit = false;
-                eHS.isParrying = false;
-
-            }
         }
 
         yield return new WaitForSeconds(0.5f);
@@ -118,19 +120,22 @@ public class Study_Gaunt_General_Script : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         //Triggers parry on hit
-        if (eHS.hasBeenHit)
+        if (!eHS.isParrying && attackReady[1] && playerInAttackRange)
         {
             StartCoroutine(Parry());
         }
 
-        //Enters the parrying mode
-        if (!eHS.isParrying && attackReady[1] && playerInAttackRange)
+        //Parry
+        if (eHS.hasBeenHit && attackReady[1])
         {
-            eHS.isParrying = true;
-            eHS.isParrying = true;
+            eHS.health += eHS.maxHP * 0.1f;
 
-            gameObject.GetComponent<EnemyHealthScript>().hasIFrames = true;
-            StartCoroutine(gameObject.GetComponent<EnemyHealthScript>().EnableIFrames());
+            attackReady[1] = false;
+
+            eHS.hasBeenHit = false;
+            eHS.isParrying = false;
+
+            StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
         }
 
         if (playerInAttackRange)
@@ -148,11 +153,6 @@ public class Study_Gaunt_General_Script : MonoBehaviour
             else if (attackReady[0] && !eHS.isParrying)
             {
                 StartCoroutine(BasicAttack());
-            }
-            //Does the parry mode functionalty
-            else if (eHS.isParrying && attackReady[1])
-            {
-                StartCoroutine(Parry());
             }
         }
 
@@ -173,7 +173,6 @@ public class Study_Gaunt_General_Script : MonoBehaviour
 
     public IEnumerator Parry()
     {
-        StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
         yield return eHS.isParrying = true;
     }
 

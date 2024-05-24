@@ -2371,8 +2371,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00018310547, y: -0.000030517578}
-  m_SizeDelta: {x: -0.00024414, y: 0.0001}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.00012207, y: 0.0001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &365826489
 MonoBehaviour:
@@ -3263,10 +3263,10 @@ RectTransform:
   - {fileID: 316969767}
   m_Father: {fileID: 1835113982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00098991, y: -0.16915}
-  m_SizeDelta: {x: 530.73, y: 600.3383}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 1.3349609, y: -0.16918945}
+  m_SizeDelta: {x: -2.2700195, y: 0.33831787}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &483888308
 MonoBehaviour:
@@ -4900,10 +4900,10 @@ RectTransform:
   - {fileID: 516979047}
   m_Father: {fileID: 957719746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.8495, y: 0}
-  m_SizeDelta: {x: 1063.1, y: 600}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.833313, y: 0}
+  m_SizeDelta: {x: 2.3000488, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &703522448
 GameObject:
@@ -11931,7 +11931,7 @@ MonoBehaviour:
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
-    m_InvertInput: 0
+    m_InvertInput: 1
     m_MinValue: 0
     m_MaxValue: 1
     m_Wrap: 0
@@ -11997,15 +11997,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612124931}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.88432825, y: 2.78, z: -3.5833006}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.88432825, y: 2.5, z: 2.8666992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1977839959}
   - {fileID: 950841467}
   - {fileID: 576559099}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2080178123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1627072622
 GameObject:
@@ -12385,7 +12385,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00048828125, y: -0.2900238}
+  m_AnchoredPosition: {x: -0.00048828125, y: -0.29000854}
   m_SizeDelta: {x: 1033.7, y: 487.14972}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1663297999
@@ -12461,8 +12461,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0038452148, y: -0.004699707}
-  m_SizeDelta: {x: -925.77, y: -488.82}
+  m_AnchoredPosition: {x: 0.5687866, y: 0}
+  m_SizeDelta: {x: -825.36, y: -488.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1687665037
 MonoBehaviour:
@@ -13119,10 +13119,10 @@ RectTransform:
   - {fileID: 483888307}
   m_Father: {fileID: 957719746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 265.36, y: 0.000030518}
-  m_SizeDelta: {x: 530.73, y: 600}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 267.17004, y: 0}
+  m_SizeDelta: {x: -533.6699, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835113983
 MonoBehaviour:
@@ -14709,6 +14709,7 @@ Transform:
   m_Children:
   - {fileID: 1287105705}
   - {fileID: 975401022}
+  - {fileID: 1612124933}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2080178124
@@ -15044,7 +15045,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1540883166}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -15467,4 +15468,3 @@ SceneRoots:
   - {fileID: 957719746}
   - {fileID: 2064349135}
   - {fileID: 1292678621}
-  - {fileID: 1612124933}

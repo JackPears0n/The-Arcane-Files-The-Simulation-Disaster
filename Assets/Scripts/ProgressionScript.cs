@@ -385,7 +385,7 @@ public class ProgressionScript : MonoBehaviour
             }
 
             //Checks to see if the first wave are dead
-            if (waveNum == 0 && waveNum == 1 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[4] == null && spawnedEnemies)
+            if (waveNum == 0 && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[4] == null && spawnedEnemies)
             {
                 waveBeaten = true;
                 canProgressToNextLvl = true;
@@ -591,6 +591,7 @@ public class ProgressionScript : MonoBehaviour
             if (waveNum == 0 && activeEnemies[5] == null && spawnedEnemies)
             {
                 waveNum++;
+                waveBeaten = true;
                 canProgressToNextLvl = true;
                 spawnedEnemies = false;
             }
@@ -620,7 +621,7 @@ public class ProgressionScript : MonoBehaviour
             }
 
             //Checks to see if the first wave are dead
-            if (waveNum == 0 && activeEnemies[0] == null && activeEnemies[1] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && spawnedEnemies)
+            if (waveNum == 0 && activeEnemies[0] == null && activeEnemies[2] == null && activeEnemies[3] == null && activeEnemies[4] == null && activeEnemies[5] == null && spawnedEnemies)
             {
                 waveBeaten = true;
                 canProgressToNextLvl = true;
