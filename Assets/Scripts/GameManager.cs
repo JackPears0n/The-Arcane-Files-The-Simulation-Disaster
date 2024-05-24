@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject victoryUI;
     public GameObject defeatUI;
+    public GameObject screenBlock;
 
     private void Awake()
     {
@@ -85,16 +86,16 @@ public class GameManager : MonoBehaviour
                 physicsPaused = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) && shop.activeSelf && !pcs.playerIsDead)
+            if (Input.GetKeyDown(KeyCode.Escape) && shop.activeSelf && !pcs.playerIsDead && !victoryUI.activeSelf && !defeatUI.activeSelf)
             {
                 ToggleShop();
             }
-            else if (Input.GetKeyDown(KeyCode.Escape) && !shop.activeSelf && !pauseMenu.activeSelf && !pcs.playerIsDead)
+            else if (Input.GetKeyDown(KeyCode.Escape) && !shop.activeSelf && !pauseMenu.activeSelf && !pcs.playerIsDead && !victoryUI.activeSelf && !defeatUI.activeSelf)
             {
                 pauseMenu.SetActive(true);
                 PauseGame();
             }
-            else if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeSelf && !pcs.playerIsDead)
+            else if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeSelf && !pcs.playerIsDead && !victoryUI.activeSelf && !defeatUI.activeSelf)
             {
                 pauseMenu.SetActive(false);
                 PauseGame();
@@ -117,6 +118,17 @@ public class GameManager : MonoBehaviour
 
         }
 
+    }
+
+    public void ResetGame()
+    {
+        lvlNum = 0;
+        ps.waveNum = 0;
+
+        foreach (GameObject enemy in ps.activeEnemies)
+        {
+            Destroy(enemy);
+        }
     }
 
     public void PauseGame()
@@ -177,6 +189,9 @@ public class GameManager : MonoBehaviour
 
         defeatUI = GameObject.Find("Defeat UI");
         defeatUI.SetActive(false);
+
+        screenBlock = GameObject.Find("Screen Block");
+        screenBlock.SetActive(false);
 
         lvlNum = 0;
     }

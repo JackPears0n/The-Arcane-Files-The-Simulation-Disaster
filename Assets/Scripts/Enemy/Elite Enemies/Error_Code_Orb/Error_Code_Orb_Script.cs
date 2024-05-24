@@ -15,7 +15,6 @@ public class Error_Code_Orb_Script : MonoBehaviour
     public float attack;
     public float[] skillDMGScale;
     public GameObject projectile;
-    public bool isParrying;
 
     public LayerMask whatIsPlayer;
 
@@ -42,30 +41,34 @@ public class Error_Code_Orb_Script : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         //Enters the parrying mode
-        if (!isParrying && attackReady[1] && playerInAttackRange)
+        if (!eHS.isParrying && attackReady[1] && playerInAttackRange)
         {
-            isParrying = true;
+            StartCoroutine(Parry());
+        }
 
-            gameObject.GetComponent<EnemyHealthScript>().hasIFrames = true;
-            StartCoroutine(gameObject.GetComponent<EnemyHealthScript>().EnableIFrames());
+        //Does the parry mode functionalty
+
+        if (eHS.hasBeenHit && attackReady[1])
+        {
+            attackReady[1] = false;
+
+            target.GetComponent<PlayerControlScript>().TakeDamage(skillDMGScale[1] * attack);
+            eHS.health += eHS.maxHP * 0.01f;
+
+            StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
         }
 
         if (playerInAttackRange)
         {
             //Uses the ISkill
-            if (attackReady[2] && !isParrying)
+            if (attackReady[2] && !eHS.isParrying)
             {
                 StartCoroutine(IndividualSkill());
             }
             //Uses the BA
-            else if (attackReady[0] && !isParrying)
+            else if (attackReady[0] && !eHS.isParrying)
             {
                 StartCoroutine(BasicAttack());
-            }
-            //Does the parry mode functionalty
-            else if(isParrying && attackReady[1])
-            {
-                StartCoroutine(Parry());
             }
         }
     }
@@ -96,13 +99,7 @@ public class Error_Code_Orb_Script : MonoBehaviour
 
     public IEnumerator Parry()
     {
-        attackReady[1] = false;
-
-        target.GetComponent<PlayerControlScript>().TakeDamage(skillDMGScale[1] * attack);
-        eHS.health += eHS.maxHP * 0.01f;
-
-        StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
-        yield return null;
+        yield return eHS.isParrying = true;
     }
 
     public IEnumerator IndividualSkill()
@@ -119,7 +116,7 @@ public class Error_Code_Orb_Script : MonoBehaviour
     {
         if (skillNO == 1 && cooldownLength == 1)
         {
-            isParrying = false;
+            eHS.isParrying = false;
         }
 
         yield return new WaitForSeconds(cooldownLength);

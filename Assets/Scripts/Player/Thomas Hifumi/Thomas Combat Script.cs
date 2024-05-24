@@ -48,6 +48,11 @@ public class ThomasCombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        pCS.skillActive[0] = cooldownDone[0];
+        pCS.skillActive[1] = cooldownDone[1];
+        pCS.skillActive[2] = cooldownDone[2];
+        pCS.skillActive[3] = cooldownDone[3];
+
         if (!pCS.gm.paused)
         {
             if (!pCS.gm.logicPaused)

@@ -13,6 +13,7 @@ public class PlayerControlScript : MonoBehaviour
     public GameObject player;
     public char chosenPlayer;
     public Stats stats;
+    public bool[] skillActive;
 
     [Header("Movement")]
     public NavMeshAgent agent;
@@ -46,6 +47,7 @@ public class PlayerControlScript : MonoBehaviour
     public TMP_Text healthText;
 
     public GameObject defeatUI;
+
 
     [Header("Misc")]
     public bool parryState;
@@ -384,6 +386,15 @@ public class PlayerControlScript : MonoBehaviour
     public void RemoveIFrameCooldown()
     {
         canHaveIFrames = true;
+    }
+
+    public void PlayerToSpawnPoint()
+    {
+        EnableRB();
+        Vector3 spawnPoint = new Vector3(0, 0, -6.45f);
+        //rb.transform.position = new Vector3(0, 0, -6.45f);
+        transform.position = spawnPoint;
+        EnableNavMesh();
     }
 
     public void EnableRB()

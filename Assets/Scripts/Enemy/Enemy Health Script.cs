@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,9 +16,11 @@ public class EnemyHealthScript : MonoBehaviour
     public char mobType;
 
     public float maxHP;
+    public float currentMaxHP;
     public float health;
 
     public float defence;
+    public float currentDef;
 
     public bool isDead = false;
 
@@ -58,11 +59,11 @@ public class EnemyHealthScript : MonoBehaviour
         gm = GameObject.Find("GM").GetComponent<GameManager>();
 
         //Scales enemy max health  and defencewith difficulty
-        maxHP *= difficulty;
-        defence *= difficulty;
+        currentMaxHP = maxHP *= difficulty;
+        currentDef = defence *= difficulty;
 
         //Sets the enemy health
-        health = maxHP;
+        health = currentMaxHP;
 
         if (mobType == 'N')
         {
@@ -87,15 +88,15 @@ public class EnemyHealthScript : MonoBehaviour
 
     public void HealthCheck()
     {
-        hpBar.maxValue = maxHP;
+        hpBar.maxValue = currentMaxHP;
         hpBar.value = health;
 
         if (mobType == 'B')
         {
             //Stops healther overflowing max value
-            if (health > maxHP)
+            if (health > currentMaxHP)
             {
-                health = maxHP;
+                health = currentMaxHP;
             }
 
             //Checks if the enemy's health is less than or equal to 0
@@ -108,7 +109,7 @@ public class EnemyHealthScript : MonoBehaviour
                 //If boss isn't in its final phase, move to next phase
                 if (bossPhase < numberOfPhases)
                 {
-                    health = maxHP;
+                    health = currentMaxHP;
                     bossPhase++;
                 }
                 //Kills boss
@@ -126,9 +127,9 @@ public class EnemyHealthScript : MonoBehaviour
         }
         else
         {
-            if (health > maxHP)
+            if (health > currentMaxHP)
             {
-                health = maxHP;
+                health = currentMaxHP;
             }
             else if (health <= 0)
             {
@@ -148,11 +149,11 @@ public class EnemyHealthScript : MonoBehaviour
     {
         //Play death anim
 
-        //Gives the player a token
-        player.GetComponent<PlayerControlScript>().tokens++;
-
         //Delays the enemy destruction
         yield return new WaitForSeconds(0.1f);
+
+        //Gives the player a token
+        player.GetComponent<PlayerControlScript>().tokens++;
 
         //Destroys the enemy gameobject
         Destroy(gameObject);
@@ -174,6 +175,7 @@ public class EnemyHealthScript : MonoBehaviour
         if (isParrying)
         {
             hasBeenHit = true;
+            isParrying = false;
         }
         else
         {
@@ -190,7 +192,7 @@ public class EnemyHealthScript : MonoBehaviour
                 else
                 {
                     //Calculates incoming damage
-                    dmg -= defence;
+                    dmg -= currentDef;
 
                     //Makes sure the damage doesn't heal the player
                     if (dmg > 0)
@@ -211,11 +213,14 @@ public class EnemyHealthScript : MonoBehaviour
             }
             else
             {
-                //Calculates incoming damage
-                dmg -= defence;
 
-                //Makes sure the damage doesn't heal the player
-                if (dmg > 0)
+                //Calculates incoming damage
+                print(dmg);
+                dmg = dmg - currentDef;
+                print(dmg);
+
+                //Makes sure the damage doesn't heal the enemy
+                if (dmg >= 0)
                 {
                     health -= dmg;
                 }

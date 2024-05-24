@@ -492,7 +492,7 @@ MonoBehaviour:
   mobType: 78
   maxHP: 500
   health: 0
-  defence: 10
+  defence: 5
   isDead: 0
   isParrying: 0
   hasBeenHit: 0

@@ -11,7 +11,7 @@ public class KrisCombatScript : MonoBehaviour
 
     [Header("Stats")]
     public Stats stats;
-    [HideInInspector] public float defence;
+    public float defence;
 
     public float attackRange;
     public GameObject attackPoint;
@@ -47,6 +47,12 @@ public class KrisCombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        pCS.skillActive[0] = cooldownDone[0];
+        pCS.skillActive[1] = cooldownDone[1];
+        pCS.skillActive[2] = cooldownDone[2];
+        pCS.skillActive[3] = cooldownDone[3];
+
+        defence = pCS.defence;
         if (!pCS.gm.paused)
         {
             if (!pCS.gm.logicPaused)

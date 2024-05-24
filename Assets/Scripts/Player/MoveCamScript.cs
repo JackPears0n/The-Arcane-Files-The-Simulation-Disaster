@@ -52,6 +52,7 @@ public class MoveCamScript : MonoBehaviour
             Cursor.visible = true;
 
         }
+        
         else
         {
             // Locks the cursor in place
@@ -59,7 +60,7 @@ public class MoveCamScript : MonoBehaviour
 
             // Makes cursor invisable
             Cursor.visible = false;
-
+            /*
             transform.rotation = camOrientation.rotation;
 
             // Getting the mouse input
@@ -72,16 +73,17 @@ public class MoveCamScript : MonoBehaviour
 
             // Clamps the axis view between
             xRotate = Mathf.Clamp(xRotate, -70, 70);
-            yRotate = Mathf.Clamp(yRotate, -70, 70);
+            //yRotate = Mathf.Clamp(yRotate, -70, 70);
 
             // Roate camera and its orientation
             transform.rotation = Quaternion.Euler(xRotate, yRotate, 0);
             camOrientation.rotation = Quaternion.Euler(xRotate, yRotate, 0);
+            */
         }
 
     }
 
-    private void OnDestroy()
+        private void OnDestroy()
     {
         // Unlocks the cursor in place
         Cursor.lockState = CursorLockMode.None;

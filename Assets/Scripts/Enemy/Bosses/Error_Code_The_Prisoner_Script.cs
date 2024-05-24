@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Error_Code_The_Prisoner_Script : MonoBehaviour
 {
+    public GameObject[] models;
 
     [Header("Player")]
     public GameObject target;
@@ -47,6 +48,7 @@ public class Error_Code_The_Prisoner_Script : MonoBehaviour
     {
         if (eHS.bossPhase == 0)
         {
+            models[0].SetActive(true);
             eHS.maxHP = 10000;
             attack = 150;
             StartCoroutine(Phase1Brain());
@@ -54,6 +56,7 @@ public class Error_Code_The_Prisoner_Script : MonoBehaviour
 
         if (eHS.bossPhase == 1)
         {
+            models[1].SetActive(true);
             eHS.maxHP = 8000;
             attack = 175;
             StartCoroutine(Phase2Brain());
@@ -61,6 +64,7 @@ public class Error_Code_The_Prisoner_Script : MonoBehaviour
 
         if (eHS.bossPhase == 2)
         {
+            models[2].SetActive(true);
             eHS.maxHP = 6000;
             attack = 200;
             StartCoroutine(Phase3Brain());

@@ -47,6 +47,11 @@ public class ElianaCombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        pCS.skillActive[0] = cooldownDone[0];
+        pCS.skillActive[1] = cooldownDone[1];
+        pCS.skillActive[2] = cooldownDone[2];
+        pCS.skillActive[3] = cooldownDone[3];
+
         if (!pCS.gm.paused)
         {
             if (!pCS.gm.logicPaused)
@@ -61,9 +66,11 @@ public class ElianaCombatScript : MonoBehaviour
     #region Skills
     public IEnumerator BasicAttack()
     {
+
         //Puts skill on cooldown
         cooldownDone[0] = false;
 
+        /*
         //Makes sure that the combo attack cancels if input takes too long
         if (Time.time - lastAttackTime > maxTimeBetweenAttacks)
         {
@@ -75,37 +82,53 @@ public class ElianaCombatScript : MonoBehaviour
         noOfClicks++;
 
         #region Animations
+        
         //Plays the animation
         if (noOfClicks == 1)
         {
             //play the 1st animation
         }
         //Makes sure that the animator isn't currently animating
-        else if (noOfClicks == 2 /*&& anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1*/)
+        else if (noOfClicks == 2 && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1)
         {
             //play the 2nd animation
         }
         //Makes sure that the animator isn't currently animating
-        else if (noOfClicks == 3 /*&& anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1*/)
+        else if (noOfClicks == 3 && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1)
         {
             //play the 3rd animation
         }
         //Makes sure that the animator isn't currently animating
-        else if (noOfClicks == 4 /*&& anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1*/)
+        else if (noOfClicks == 4 && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1)
         {
             //play the 4th animation
         }
         //Makes sure that the animator isn't currently animating
-        else if (noOfClicks == 5 /*&& anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1*/)
+        else if (noOfClicks == 5 && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1)
         {
             //play the 5th animation
         }
-        else if (noOfClicks == 6 /*&& anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1*/)
+        else if (noOfClicks == 6 && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.1)
         {
             //play the 6th animation
             noOfClicks = 0;
         }
-        #endregion
+
+        #endregion*/
+
+        if (!ultBuffActive)
+        {
+            //Attacks the enemies
+            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
+           
+            foreach (Collider enemy in hitEnemies)
+            {
+                if (enemy != null)
+                {
+                    enemy.gameObject.GetComponent<EnemyHealthScript>().TakeDamage(bAttackDMGScale * attack);
+                }
+            }
+        }
 
         if (ultBuffActive)
         {
@@ -119,22 +142,18 @@ public class ElianaCombatScript : MonoBehaviour
                 //Insta kill check
                 if (ehs.mobType == 'N' && ehs.health <= (ehs.maxHP * 0.2))
                 {
-                    ehs.isDead = true;
+                    if (enemy != null)
+                    {
+                        ehs.isDead = true;
+                    }
                 }
                 else
                 {
-                    enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttackDMGScale * attack);
+                    if (enemy != null)
+                    {
+                        enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttackDMGScale * attack);
+                    }
                 }
-            }
-        }
-        else
-        {
-            //Attacks the enemies
-            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
-
-            foreach (Collider enemy in hitEnemies)
-            {
-                enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttackDMGScale * attack);
             }
         }
 
@@ -144,54 +163,7 @@ public class ElianaCombatScript : MonoBehaviour
     public IEnumerator Parry()
     {
         //Makes it so the player is in the parry state
-        pCS.parryState = true;
-
-        //Only triggers when hit while in parry state
-        if (pCS.hasBeenHit)
-        {
-            //Puts skill on cooldown
-            cooldownDone[1] = false;
-
-            pCS.hasBeenHit = false;
-
-            player.gameObject.GetComponent<NavMeshAgent>().speed++;
-
-            if (ultBuffActive)
-            {
-                //Gets every enemy currenly in the game
-                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-                foreach (GameObject enemy in enemies)
-                {
-                    EnemyHealthScript ehs = enemy.GetComponent<EnemyHealthScript>();
-
-                    //Insta kill check
-                    if (ehs.mobType == 'N' && ehs.health <= (ehs.maxHP * 0.2))
-                    {
-                        ehs.isDead = true;
-                    }
-                    else
-                    {
-                        enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttackDMGScale * attack);
-                    }
-                }
-            }
-            else
-            {
-                //Attacks the enemies
-                Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
-
-                foreach (Collider enemy in hitEnemies)
-                {
-                    enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttackDMGScale * attack);
-                }
-            }
-
-            Invoke(nameof(RemoveParrySpeedBuff), 5);
-            StartCoroutine(ResetCooldown(1, 1));
-        }
-
-        yield return null;
+        yield return pCS.parryState = true;
     }
     public IEnumerator IndividualSkill()
     {
@@ -288,19 +260,55 @@ public class ElianaCombatScript : MonoBehaviour
     {
         if (pCS.hasBeenHit)
         {
+            print("Retaliate");
+
             //Puts skill on cooldown
             cooldownDone[1] = false;
 
             pCS.hasBeenHit = false;
-            //Attacks the enemies
-            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, 1.5f, whatIsEnemy);
 
-            foreach (Collider enemy in hitEnemies)
+            player.gameObject.GetComponent<NavMeshAgent>().speed++;
+
+            if (ultBuffActive)
             {
-                enemy.GetComponent<EnemyHealthScript>().TakeDamage(parryDMGScale * attack);
+                //Gets every enemy currenly in the game
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+                foreach (GameObject enemy in enemies)
+                {
+                    EnemyHealthScript ehs = enemy.GetComponent<EnemyHealthScript>();
+
+                    //Insta kill check
+                    if (ehs.mobType == 'N' && ehs.health <= (ehs.maxHP * 0.2))
+                    {
+                        ehs.isDead = true;
+                    }
+                    else
+                    {
+                        enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttackDMGScale * attack);
+                    }
+                }
+            }
+            else
+            {
+                //Attacks the enemies
+                Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
+
+                foreach (Collider enemy in hitEnemies)
+                {
+                    enemy.GetComponent<EnemyHealthScript>().TakeDamage(bAttackDMGScale * attack);
+                }
             }
 
+            Invoke(nameof(RemoveParrySpeedBuff), 5);
             StartCoroutine(ResetCooldown(1, 1));
+
+        }
+
+        //Removes parry state if the parry inputs are not being used
+        if (!(Input.GetKey(KeyCode.Space) || !Input.GetMouseButton(1)))
+        {
+            pCS.parryState = false;
         }
 
         if (!Input.GetMouseButton(1) || !Input.GetKey(KeyCode.Space))

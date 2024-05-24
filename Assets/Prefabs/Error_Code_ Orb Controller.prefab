@@ -247,9 +247,9 @@ GameObject:
   - component: {fileID: 5869384089125920591}
   - component: {fileID: 578000227049844716}
   - component: {fileID: 6880958367605318986}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Error_Code_ Orb Controller
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -310,8 +310,10 @@ MonoBehaviour:
   difficulty: 1
   mobType: 69
   maxHP: 500
+  currentMaxHP: 0
   health: 0
-  defence: 30
+  defence: 10
+  currentDef: 0
   isDead: 0
   isParrying: 0
   hasBeenHit: 0
@@ -345,14 +347,13 @@ MonoBehaviour:
   - 2
   projectile: {fileID: 7649080957293438208, guid: 6108749f60af1df4dbcd68741bb47715,
     type: 3}
-  isParrying: 0
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
   attackReady: 010101
   attackCooldowns:
   - 2
-  - 2
+  - 10
   - 5
   eHS: {fileID: 0}
 --- !u!136 &6880958367605318986

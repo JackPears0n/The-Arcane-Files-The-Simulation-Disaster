@@ -15,7 +15,6 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
     public float attack;
     public float[] skillDMGScale;
     public GameObject summonEntity;
-    public bool isParrying;
 
     public LayerMask whatIsPlayer;
 
@@ -42,31 +41,37 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         //Enters the parrying mode
-        if (!isParrying && attackReady[1] && playerInAttackRange)
+        if (!eHS.isParrying && attackReady[1] && playerInAttackRange)
         {
-            isParrying = true;
-            eHS.isParrying = true;
-
-            gameObject.GetComponent<EnemyHealthScript>().hasIFrames = true;
-            StartCoroutine(gameObject.GetComponent<EnemyHealthScript>().EnableIFrames());
+            StartCoroutine(Parry());
         }
 
         if (playerInAttackRange)
         {
             //Uses the ISkill
-            if (attackReady[2] && !isParrying)
+            if (attackReady[2] && !eHS.isParrying)
             {
                 StartCoroutine(IndividualSkill());
             }
             //Uses the BA
-            else if (attackReady[0] && !isParrying)
+            else if (attackReady[0] && !eHS.isParrying)
             {
                 StartCoroutine(BasicAttack());
             }
             //Does the parry mode functionalty
-            else if (isParrying && attackReady[1])
+            else if (eHS.hasBeenHit && attackReady[1])
             {
-                StartCoroutine(Parry());
+                attackReady[1] = false;
+
+                if (eHS.hasBeenHit)
+                {
+                    eHS.hasBeenHit = false;
+                    eHS.isParrying = false;
+
+                    GameObject enemy = Instantiate(summonEntity, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+                }
+
+                StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
             }
         }
     }
@@ -96,19 +101,7 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
 
     public IEnumerator Parry()
     {
-        attackReady[1] = false;
-
-        if (eHS.hasBeenHit)
-        {
-            eHS.hasBeenHit = false;
-            isParrying = false;
-            eHS.isParrying = false;
-
-            GameObject enemy = Instantiate(summonEntity, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-        }
-
-        StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
-        yield return null;
+        yield return eHS.isParrying = true;
     }
 
     public IEnumerator IndividualSkill()
@@ -145,8 +138,8 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
     {
         if (skillNO == 1 && cooldownLength == 1)
         {
-            isParrying = false;
             eHS.isParrying = false;
+
         }
 
         yield return new WaitForSeconds(cooldownLength);

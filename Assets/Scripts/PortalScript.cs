@@ -28,6 +28,16 @@ public class PortalScript : MonoBehaviour
         gm = gameManager.GetComponent<GameManager>();
         ps = gameManager.GetComponent<ProgressionScript>();
 
+        if(ps.canProgressToNextLvl && !isATrigger)
+        {
+            portalModel.SetActive(true);
+        }
+        else if (!ps.canProgressToNextLvl && !isATrigger)
+        {
+            portalModel.SetActive(false);
+        }
+
+        /*
         if (!isATrigger)
         {
             if (ps.canProgressToNextLvl)
@@ -38,7 +48,7 @@ public class PortalScript : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.L) && !pcs.playerIsDead)
                     {
-                        ps.NextLevel();
+                        StartCoroutine(ps.NextLevel());
                     }
                 }
             }
@@ -47,7 +57,7 @@ public class PortalScript : MonoBehaviour
                 portalModel.SetActive(false);
                 return;
             }
-        }        
+        }*/        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,7 +66,8 @@ public class PortalScript : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                ps.NextLevel();
+                StartCoroutine(ps.NextLevel());
+                //ps.NextLevel();
             }
         }
     }

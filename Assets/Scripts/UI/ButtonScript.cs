@@ -33,6 +33,7 @@ public class ButtonScript : MonoBehaviour
 
     public void PrevoiusScene()
     {
+        gms.ResetGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
