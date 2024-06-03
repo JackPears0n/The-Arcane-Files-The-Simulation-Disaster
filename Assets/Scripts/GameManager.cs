@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject victoryUI;
     public GameObject defeatUI;
-    public GameObject screenBlock;
+    public GameObject startingText;
 
     private void Awake()
     {
@@ -63,6 +63,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Performs logiconly in the sart menu
+        if (SceneManager.GetActiveScene().name == "Start Menu")
+        {
+            playerObject = null;            
+        }
+
         //Performs this logic only if the current scene is the main game
         if (SceneManager.GetActiveScene().name == "Game")
         {
@@ -124,6 +130,7 @@ public class GameManager : MonoBehaviour
     {
         lvlNum = 0;
         ps.waveNum = 0;
+        playerObject = null;
 
         foreach (GameObject enemy in ps.activeEnemies)
         {
@@ -190,10 +197,10 @@ public class GameManager : MonoBehaviour
         defeatUI = GameObject.Find("Defeat UI");
         defeatUI.SetActive(false);
 
-        screenBlock = GameObject.Find("Screen Block");
-        screenBlock.SetActive(false);
+        startingText = GameObject.Find("Screen Block");
 
         lvlNum = 0;
+        paused = false;
     }
 
     public void PlayerHasDied()

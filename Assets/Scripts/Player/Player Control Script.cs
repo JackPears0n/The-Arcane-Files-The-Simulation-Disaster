@@ -57,6 +57,14 @@ public class PlayerControlScript : MonoBehaviour
     public GameObject gameManager;
     public GameManager gm;
 
+    public Animator anim;
+
+
+    void Awake()
+    {
+        //agent.updatePosition = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,6 +95,8 @@ public class PlayerControlScript : MonoBehaviour
             {
                 if (player != null)
                 {
+                    agent.updatePosition = false;
+
                     CheckHealth();
 
                     movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -109,6 +119,7 @@ public class PlayerControlScript : MonoBehaviour
                 {
                     if (agent.enabled)
                     {
+                        agent.updatePosition = true;
                         if (Mathf.Abs(movementInput.y) > 0.01f)
                         {
                             Move(movementInput);
@@ -121,9 +132,7 @@ public class PlayerControlScript : MonoBehaviour
                 }
             }
 
-        }
-
-        
+        }        
     }
 
     public void CheckStats()
@@ -371,6 +380,8 @@ public class PlayerControlScript : MonoBehaviour
 
             ElianaDefaultStats(player.GetComponent<ElianaCombatScript>().stats);
         }
+
+        anim = player.GetComponent<Animator>();
 
         CheckStats();
 

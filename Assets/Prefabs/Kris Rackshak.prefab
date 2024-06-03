@@ -1462,6 +1462,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3298471441534335797}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b678cb12255acac46b5dc33a191d070e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7818713306280766862}
   m_SourcePrefab: {fileID: 100100000, guid: b678cb12255acac46b5dc33a191d070e, type: 3}
 --- !u!4 &8628656698022809765 stripped
 Transform:
@@ -1512,3 +1516,25 @@ MonoBehaviour:
   ultHeal: 500
   ultIFramesDuration: 20
   hasUltIframes: 0
+--- !u!95 &7818713306280766862
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9004091073961757215}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b678cb12255acac46b5dc33a191d070e, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

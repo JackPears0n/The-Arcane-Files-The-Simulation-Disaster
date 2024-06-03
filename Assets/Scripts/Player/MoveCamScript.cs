@@ -83,7 +83,7 @@ public class MoveCamScript : MonoBehaviour
 
     }
 
-        private void OnDestroy()
+    private void OnDestroy()
     {
         // Unlocks the cursor in place
         Cursor.lockState = CursorLockMode.None;
