@@ -330,6 +330,11 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 080ee463be3b8f342a85546de5aa9412, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 174636a65f0d18e4897fa9f4ebdef12f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 87b97272e1986134885f549be1cad0d2, type: 2}
     - target: {fileID: 9030121183028636322, guid: 174636a65f0d18e4897fa9f4ebdef12f,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -352,6 +357,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3382410771264648725}
   m_SourcePrefab: {fileID: 100100000, guid: 174636a65f0d18e4897fa9f4ebdef12f, type: 3}
+--- !u!95 &2005660109675598418 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 174636a65f0d18e4897fa9f4ebdef12f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5386055117221015491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5079626374682972818 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 174636a65f0d18e4897fa9f4ebdef12f,
@@ -370,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d8e5771360818488195797766e717b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  anim: {fileID: 2005660109675598418}
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128

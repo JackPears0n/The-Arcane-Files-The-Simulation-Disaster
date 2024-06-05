@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb347bb00decf245acf083f467d2263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  anim: {fileID: 7818713306280766862}
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
@@ -1526,7 +1526,7 @@ Animator:
   m_GameObject: {fileID: 9004091073961757215}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b678cb12255acac46b5dc33a191d070e, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4410aea8d88f834993a347a445a6ba5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

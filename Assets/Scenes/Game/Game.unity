@@ -1885,6 +1885,7 @@ GameObject:
   - component: {fileID: 237556971}
   - component: {fileID: 237556970}
   - component: {fileID: 237556969}
+  - component: {fileID: 237556973}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -1952,8 +1953,8 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 1
-  m_BlendUpdateMethod: 1
+  m_UpdateMethod: 0
+  m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 2
@@ -2029,13 +2030,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 237556968}
   serializedVersion: 2
-  m_LocalRotation: {x: 1e-45, y: -1e-45, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.28, z: -6.45}
+  m_LocalRotation: {x: 0.15354796, y: 0, z: 0, w: 0.98814124}
+  m_LocalPosition: {x: 0, y: 3.28, z: -9.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &237556973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237556968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae70781ffbc6654cb15d498a457e801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gm: {fileID: 0}
+  gms: {fileID: 0}
+  xSens: 0
+  ySens: 0
+  camOrientation: {fileID: 0}
+  characterBody: {fileID: 0}
 --- !u!1 &243521015
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,7 +2133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 2, z: 0}
+  m_FollowOffset: {x: 0, y: 3, z: -2.64}
   m_XDamping: 1
   m_YDamping: 2
   m_ZDamping: 1
@@ -6033,8 +6052,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739334423}
   serializedVersion: 2
-  m_LocalRotation: {x: 1e-45, y: -1e-45, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.28, z: -6.45}
+  m_LocalRotation: {x: 0.15354796, y: 0, z: 0, w: 0.98814124}
+  m_LocalPosition: {x: 0, y: 3.28, z: -9.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15192,6 +15211,7 @@ MonoBehaviour:
   tokens: 10
   gameManager: {fileID: 0}
   gm: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!136 &2080178125
 CapsuleCollider:
   m_ObjectHideFlags: 0

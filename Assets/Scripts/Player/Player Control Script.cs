@@ -75,6 +75,8 @@ public class PlayerControlScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         agent = gameObject.GetComponent<NavMeshAgent>();
 
         rb = gameObject.GetComponent<Rigidbody>();
@@ -105,8 +107,22 @@ public class PlayerControlScript : MonoBehaviour
                 {
                     GetPlayer();
                 }
+
+                
+                if (agent.velocity.magnitude < 0.1f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f /*Makes sure current anim is 70% done */&& !anim.GetBool("DP"))
+                {
+                    anim.SetBool("Running", false);
+                    //anim.Play("Idle");
+                }
+                else if (agent.velocity.magnitude > 0.1f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f /*Makes sure current anim is 70% done */&& !anim.GetBool("DP"))
+                {
+                    anim.SetBool("Running", true);
+                    //anim.Play("Running");
+                }
+
             }
         }
+        CheckAnimLength();
     }
 
     private void FixedUpdate()
@@ -209,8 +225,16 @@ public class PlayerControlScript : MonoBehaviour
     #region Movement
     public void Move(Vector2 input)
     {
-        Vector3 destination = transform.position + transform.right * input.x + transform.forward * input.y;
-        agent.destination = destination;
+        Vector3 vel = Vector3.zero;
+
+        if (agent.speed == 0)
+        {
+            agent.speed = 3.5f;
+        }
+        Vector3 d = transform.position + transform.right * input.x + transform.forward * input.y;
+        agent.destination = d;
+
+        transform.position = Vector3.SmoothDamp(transform.position, d, ref vel, Time.fixedDeltaTime, agent.speed);
     }
 
     public void ROTATE(Vector2 input)
@@ -430,5 +454,11 @@ public class PlayerControlScript : MonoBehaviour
         agent.updateRotation = true;
         agent.updatePosition = true;
         agent.isStopped = false;
+    }
+
+    public void CheckAnimLength()
+    {
+        AnimatorClipInfo[] ac = this.anim.GetCurrentAnimatorClipInfo(0);
+        print(ac[0].clip.name + " " + ac[0].clip.length.ToString());
     }
 }
