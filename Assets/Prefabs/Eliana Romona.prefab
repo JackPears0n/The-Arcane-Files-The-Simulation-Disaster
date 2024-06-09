@@ -325,6 +325,36 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3328148663079334810, guid: 174636a65f0d18e4897fa9f4ebdef12f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328148663079334810, guid: 174636a65f0d18e4897fa9f4ebdef12f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9918048
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328148663079334810, guid: 174636a65f0d18e4897fa9f4ebdef12f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000003743959
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328148663079334810, guid: 174636a65f0d18e4897fa9f4ebdef12f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.12776254
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328148663079334810, guid: 174636a65f0d18e4897fa9f4ebdef12f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0000000048229016
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328148663079334810, guid: 174636a65f0d18e4897fa9f4ebdef12f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 14.681
+      objectReference: {fileID: 0}
     - target: {fileID: 3768030790848270296, guid: 174636a65f0d18e4897fa9f4ebdef12f,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -341,7 +371,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 631d60f692ca97d4381da798520d2108, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -1684543897826104800, guid: 174636a65f0d18e4897fa9f4ebdef12f, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 174636a65f0d18e4897fa9f4ebdef12f,
         type: 3}
@@ -398,7 +429,7 @@ MonoBehaviour:
   - 15
   cooldownDone: 01010101
   bAttackDMGScale: 1
-  maxTimeBetweenAttacks: 1.5
+  maxTimeBetweenAttacks: 1
   lastAttackTime: 0
   noOfClicks: 0
   parryDMGScale: 0.5

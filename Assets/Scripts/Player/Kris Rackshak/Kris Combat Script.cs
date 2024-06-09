@@ -35,6 +35,7 @@ public class KrisCombatScript : MonoBehaviour
     public float ultHeal;
     public float ultIFramesDuration;
     public bool hasUltIframes;
+    public ParticleSystem ps;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,7 @@ public class KrisCombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        anim = pCS.anim;
         pCS.skillActive[0] = cooldownDone[0];
         pCS.skillActive[1] = cooldownDone[1];
         pCS.skillActive[2] = cooldownDone[2];
@@ -68,6 +70,51 @@ public class KrisCombatScript : MonoBehaviour
             }
         }
 
+        //Enables Ult Particles
+        if (hasUltIframes)
+        {
+            ps.gameObject.SetActive(true);
+        }
+        else
+        {
+            ps.gameObject.SetActive(false);
+        }
+
+        #region Anim Manager
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("BA"))
+        {
+            anim.SetBool("BA", false);
+        }
+
+        if (pCS.parryState)
+        {
+            anim.SetBool("DP", true);
+        }
+        if (!pCS.parryState)
+        {
+            anim.SetBool("DP", false);
+
+        }
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("DP"))
+        {
+            anim.SetBool("DP", false);
+        }
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("Retaliate"))
+        {
+            anim.SetBool("Retaliate", false);
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("IS"))
+        {
+            anim.SetBool("IS", false);
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("Ult"))
+        {
+            anim.SetBool("Ult", false);
+        }
+        #endregion
+
     }
 
     #region Skills
@@ -78,6 +125,14 @@ public class KrisCombatScript : MonoBehaviour
 
         //Makes it so the player is not in the parry state
         pCS.parryState = false;
+
+        //Plays the anim
+        anim.SetBool("BA", true);
+        anim.SetBool("DP", false);
+        anim.SetBool("Retaliate", false);
+        anim.SetBool("IS", false);
+        anim.SetBool("Ult", false);
+
 
         //Attacks the enemies
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
@@ -103,6 +158,13 @@ public class KrisCombatScript : MonoBehaviour
         //Makes it so the player is not in the parry state
         pCS.parryState = false;
 
+        //Plays the anim
+        anim.SetBool("BA", false);
+        anim.SetBool("DP", false);
+        anim.SetBool("Retaliate", false);
+        anim.SetBool("IS", true);
+        anim.SetBool("Ult", false);
+
         pCS.maxHP += iSkillHPBuff;
         defence += iSkillDefBuff;
 
@@ -117,6 +179,13 @@ public class KrisCombatScript : MonoBehaviour
 
         //Makes it so the player is not in the parry state
         pCS.parryState = false;
+
+        //Plays the anim
+        anim.SetBool("BA", false);
+        anim.SetBool("DP", false);
+        anim.SetBool("Retaliate", false);
+        anim.SetBool("IS", false);
+        anim.SetBool("Ult", true);
 
         //Gives the player Ultimate IFrames
         hasUltIframes = true;
@@ -166,6 +235,13 @@ public class KrisCombatScript : MonoBehaviour
             pCS.parryState = false;
             pCS.hasBeenHit = false;
 
+            //Plays the anim
+            anim.SetBool("BA", false);
+            anim.SetBool("DP", false);
+            anim.SetBool("Retaliate", true);
+            anim.SetBool("IS", false);
+            anim.SetBool("Ult", false);
+
             //Attacks the enemies
             Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.transform.position, attackRange, whatIsEnemy);
 
@@ -177,7 +253,8 @@ public class KrisCombatScript : MonoBehaviour
             StartCoroutine(ResetCooldown(1, 1));
         }
 
-        if (!(Input.GetKey(KeyCode.Space) || !Input.GetMouseButton(1)))
+        //Removes parry state if the parry inputs are not being used
+        if (!(Input.GetKey(KeyCode.Space) && !Input.GetMouseButton(1)))
         {
             pCS.parryState = false;
         }

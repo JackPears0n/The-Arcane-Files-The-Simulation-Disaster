@@ -109,12 +109,12 @@ public class PlayerControlScript : MonoBehaviour
                 }
 
                 
-                if (agent.velocity.magnitude < 0.1f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f /*Makes sure current anim is 70% done */&& !anim.GetBool("DP"))
+                if (agent.velocity.magnitude < 0.1f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.2f /*Makes sure current anim is 70% done */&& !anim.GetBool("DP"))
                 {
                     anim.SetBool("Running", false);
                     //anim.Play("Idle");
                 }
-                else if (agent.velocity.magnitude > 0.1f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f /*Makes sure current anim is 70% done */&& !anim.GetBool("DP"))
+                else if (agent.velocity.magnitude > 0.1f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.2f /*Makes sure current anim is 70% done */&& !anim.GetBool("DP"))
                 {
                     anim.SetBool("Running", true);
                     //anim.Play("Running");
