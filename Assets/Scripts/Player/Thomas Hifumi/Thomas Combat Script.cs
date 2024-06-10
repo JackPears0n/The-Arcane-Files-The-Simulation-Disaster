@@ -12,7 +12,7 @@ public class ThomasCombatScript : MonoBehaviour
 
     [Header("Stats")]
     public Stats stats;
-    [HideInInspector]public float attack;
+    [HideInInspector] public float attack;
 
     public float[] cooldowns = { };
     public bool[] cooldownDone = { true, true, true, true };
@@ -24,7 +24,7 @@ public class ThomasCombatScript : MonoBehaviour
     [Header("Basic Attack 2")]
     public float bAttack2DMGScale;
     public GameObject projectile;
-    public GameObject projectileLaunchPos; 
+    public GameObject projectileLaunchPos;
 
     [Header("Individual Skill")]
     public float iSkillHPRegen;
@@ -34,8 +34,11 @@ public class ThomasCombatScript : MonoBehaviour
 
     public float skillDuration;
 
+    public ParticleSystem[] isPart;
+
     [Header("Ultimate")]
     public float ultDMGScale;
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +51,8 @@ public class ThomasCombatScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        anim = pCS.anim;
+
         pCS.skillActive[0] = cooldownDone[0];
         pCS.skillActive[1] = cooldownDone[1];
         pCS.skillActive[2] = cooldownDone[2];
@@ -75,6 +80,47 @@ public class ThomasCombatScript : MonoBehaviour
             }
         }
 
+        if (iSkillG)
+        {
+            isPart[0].gameObject.SetActive(true);
+        }
+        else
+        {
+            isPart[0].gameObject.SetActive(false);
+        }
+        
+        if (iSkillD)
+        {
+            isPart[1].gameObject.SetActive(true);
+        }
+        else
+        {
+            isPart[1].gameObject.SetActive(false);
+        }
+
+        #region Anim Manager
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("BA1"))
+        {
+            anim.SetBool("BA1", false);
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("BA2"))
+        {
+            anim.SetBool("BA2", false);
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("IS"))
+        {
+            anim.SetBool("IS", false);
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("Ult"))
+        {
+            anim.SetBool("Ult", false);
+        }
+        #endregion
+
+
     }
 
     #region Skills
@@ -83,6 +129,12 @@ public class ThomasCombatScript : MonoBehaviour
         cooldownDone[0] = false;
         //Two hit AoE attack to all enemies near the player
         Collider[] hitEnemies = Physics.OverlapSphere(transform.position, bAttack1Range, whatIsEnemy);
+
+        //Animate
+        anim.SetBool("BA1", true);
+        anim.SetBool("BA2", false);
+        anim.SetBool("IS", false);
+        anim.SetBool("Ult", false);
 
         foreach (Collider enemy in hitEnemies)
         {
@@ -121,6 +173,12 @@ public class ThomasCombatScript : MonoBehaviour
 
         Collider[] hitEnemies = Physics.OverlapSphere(transform.position, 100, whatIsEnemy);
 
+        //Animate
+        anim.SetBool("BA1", false);
+        anim.SetBool("BA2", true);
+        anim.SetBool("IS", false);
+        anim.SetBool("Ult", false);
+
         if (hitEnemies.Length > 0)
         {
             GameObject chosenEnemy = hitEnemies[0].gameObject;
@@ -141,6 +199,12 @@ public class ThomasCombatScript : MonoBehaviour
     {
         cooldownDone[2] = false;
 
+        //Animate
+        anim.SetBool("BA1", false);
+        anim.SetBool("BA2", false);
+        anim.SetBool("IS", true);
+        anim.SetBool("Ult", false);
+
         //Check for balence
         //If neuteral heal the player once
         if (balence == 0)
@@ -158,7 +222,7 @@ public class ThomasCombatScript : MonoBehaviour
 
         }
         //If postative heal the player for a small amount each time they're hit
-        else if (balence < 0)
+        else if (balence > 0)
         {
             iSkillD = false;
             iSkillG = true;
@@ -173,6 +237,12 @@ public class ThomasCombatScript : MonoBehaviour
     public IEnumerator Ultimate()
     {
         cooldownDone[3] = false;
+
+        //Animate
+        anim.SetBool("BA1", false);
+        anim.SetBool("BA2", false);
+        anim.SetBool("IS", false);
+        anim.SetBool("Ult", true);
 
         //Inverses the current balence
         if (balence > 0)

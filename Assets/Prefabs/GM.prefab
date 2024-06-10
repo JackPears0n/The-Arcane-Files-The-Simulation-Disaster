@@ -58,8 +58,10 @@ MonoBehaviour:
   ui: {fileID: 0}
   hud: {fileID: 0}
   shop: {fileID: 0}
+  pauseMenu: {fileID: 0}
   victoryUI: {fileID: 0}
   defeatUI: {fileID: 0}
+  startingText: {fileID: 0}
 --- !u!114 &7914751655193603201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,5 +102,6 @@ MonoBehaviour:
   - {fileID: 0}
   spawnedEnemies: 0
   waveBeaten: 0
+  levelText: {fileID: 0}
   waveNum: 0
   waveTXT: {fileID: 0}
