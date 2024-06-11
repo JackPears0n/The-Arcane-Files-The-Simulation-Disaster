@@ -1383,6 +1383,11 @@ PrefabInstance:
       propertyPath: lvlType
       value: 83
       objectReference: {fileID: 0}
+    - target: {fileID: 642503130928261019, guid: 976b2f11d4aedb042b1e77a5f516daa1,
+        type: 3}
+      propertyPath: chosenPlayer
+      value: 69
+      objectReference: {fileID: 0}
     - target: {fileID: 5934793953667984842, guid: 976b2f11d4aedb042b1e77a5f516daa1,
         type: 3}
       propertyPath: m_Name
@@ -4956,94 +4961,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563960042}
   m_CullTransparentMesh: 1
---- !u!1001 &1658172970
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.027
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.22542953
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.837
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 37410420407376741, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 953001292273011583, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1666396478698329187, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2473741740810868798, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_Name
-      value: Study_ Abyss Arachnid Controller
-      objectReference: {fileID: 0}
-    - target: {fileID: 5160944896491981913, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5822788726054346468, guid: 9fddcf25716419d4a9ee6f366a160426,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9fddcf25716419d4a9ee6f366a160426, type: 3}
 --- !u!1 &1706139316
 GameObject:
   m_ObjectHideFlags: 0
@@ -5733,7 +5650,7 @@ MonoBehaviour:
   - {fileID: 9004091073961757215, guid: 21aaf30152b54844eb71377fba303608, type: 3}
   - {fileID: 5079626374682972818, guid: 3dfa7fbc1b644ad45a134c7c8fad1a3f, type: 3}
   player: {fileID: 0}
-  chosenPlayer: 65
+  chosenPlayer: 69
   stats: {fileID: 0}
   skillActive: 00000000
   agent: {fileID: 1790939191}
@@ -7173,4 +7090,3 @@ SceneRoots:
   - {fileID: 453214867}
   - {fileID: 457785514}
   - {fileID: 1706139321}
-  - {fileID: 1658172970}
