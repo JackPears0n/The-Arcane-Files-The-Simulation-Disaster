@@ -21,6 +21,8 @@ public class Error_Code_Orb_Script : MonoBehaviour
     public bool[] attackReady;
     public float[] attackCooldowns;
 
+    public GameObject[] parryObjects;
+
     public EnemyHealthScript eHS; 
 
     // Start is called before the first frame update
@@ -50,10 +52,16 @@ public class Error_Code_Orb_Script : MonoBehaviour
 
         if (eHS.hasBeenHit && attackReady[1])
         {
+            eHS.isParrying = false;
             attackReady[1] = false;
 
             target.GetComponent<PlayerControlScript>().TakeDamage(skillDMGScale[1] * attack);
             eHS.health += eHS.maxHP * 0.01f;
+
+            foreach (GameObject g in parryObjects)
+            {
+                g.SetActive(false);
+            }
 
             StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
         }
@@ -99,6 +107,10 @@ public class Error_Code_Orb_Script : MonoBehaviour
 
     public IEnumerator Parry()
     {
+        foreach (GameObject g in parryObjects)
+        {
+            g.SetActive(true);
+        }
         yield return eHS.isParrying = true;
     }
 

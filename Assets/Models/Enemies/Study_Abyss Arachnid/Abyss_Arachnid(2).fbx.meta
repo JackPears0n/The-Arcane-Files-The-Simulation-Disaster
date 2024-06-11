@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 3c77c7c3e04acdd4b806ea99113cbfe1
+guid: 57d1b8183dae86146a23ea1d231562d0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: f645b180564af4a42a69966db105c54f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -22,7 +27,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -91,7 +96,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: Abyss Arachnid Body
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

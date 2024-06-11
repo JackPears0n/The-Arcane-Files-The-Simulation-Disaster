@@ -488,11 +488,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   gm: {fileID: 0}
+  anim: {fileID: 1772139839835982296}
   difficulty: 1
   mobType: 78
   maxHP: 500
+  currentMaxHP: 0
   health: 0
   defence: 5
+  currentDef: 0
   isDead: 0
   isParrying: 0
   hasBeenHit: 0
@@ -516,6 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a3ae852e45e0144c928b42fed49cc9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 1772139839835982296}
   target: {fileID: 0}
   attackRange: 0.5
   playerInAttackRange: 0
@@ -723,11 +727,22 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 2f7fc96c001bd57448e369b5bb14770a, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 79bf594a86fbabd46a09ce24b2349966,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: eb44195914f7dfc4cbaa26011472bfb9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79bf594a86fbabd46a09ce24b2349966, type: 3}
+--- !u!95 &1772139839835982296 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 79bf594a86fbabd46a09ce24b2349966,
+    type: 3}
+  m_PrefabInstance: {fileID: 5331543301096830025}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5654211191338177442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 79bf594a86fbabd46a09ce24b2349966,

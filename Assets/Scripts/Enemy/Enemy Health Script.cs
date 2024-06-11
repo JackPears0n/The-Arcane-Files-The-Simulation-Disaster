@@ -10,6 +10,8 @@ public class EnemyHealthScript : MonoBehaviour
 
     public GameManager gm;
 
+    public Animator anim;
+
     [Header("Stats")]
     public float difficulty;
 
@@ -83,6 +85,8 @@ public class EnemyHealthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        anim = gameObject.GetComponent<Animator>();
+
         HealthCheck();
     }
 

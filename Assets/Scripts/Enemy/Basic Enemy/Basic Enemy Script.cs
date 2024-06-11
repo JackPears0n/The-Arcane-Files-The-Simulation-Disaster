@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class BasicEnemyScript : MonoBehaviour
 {
+    public Animator anim;
+
     private NavMeshAgent agent;
 
     public GameObject target;
@@ -29,6 +31,8 @@ public class BasicEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        anim = gameObject.GetComponent<Animator>();
+
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (playerInAttackRange)
@@ -45,10 +49,12 @@ public class BasicEnemyScript : MonoBehaviour
         if (!playerInAttackRange)
         {
             agent.destination = target.transform.position;
+            anim.SetBool("Running", true);
         }
         else
         {
             agent.destination = transform.position;
+            anim.SetBool("Running", false);
             return;
         }
     }
@@ -57,6 +63,12 @@ public class BasicEnemyScript : MonoBehaviour
     {
         attackReady = false;
 
+        anim.SetBool("Running", false);
+        anim.SetBool("BA", true);
+
+        yield return new WaitForSeconds(1.2f);
+
+        anim.SetBool("BA", false);
         target.GetComponent<PlayerControlScript>().TakeDamage(attack);
 
         Invoke(nameof(resetBA), attackCooldown);
