@@ -1386,7 +1386,7 @@ PrefabInstance:
     - target: {fileID: 642503130928261019, guid: 976b2f11d4aedb042b1e77a5f516daa1,
         type: 3}
       propertyPath: chosenPlayer
-      value: 69
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 5934793953667984842, guid: 976b2f11d4aedb042b1e77a5f516daa1,
         type: 3}
@@ -5650,7 +5650,7 @@ MonoBehaviour:
   - {fileID: 9004091073961757215, guid: 21aaf30152b54844eb71377fba303608, type: 3}
   - {fileID: 5079626374682972818, guid: 3dfa7fbc1b644ad45a134c7c8fad1a3f, type: 3}
   player: {fileID: 0}
-  chosenPlayer: 69
+  chosenPlayer: 75
   stats: {fileID: 0}
   skillActive: 00000000
   agent: {fileID: 1790939191}

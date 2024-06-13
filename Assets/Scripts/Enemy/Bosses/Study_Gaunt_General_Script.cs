@@ -7,6 +7,10 @@ public class Study_Gaunt_General_Script : MonoBehaviour
 {
     private NavMeshAgent agent;
 
+    private Animator anim;
+
+    public GameObject parryShield;
+
     [Header("Player")]
     public GameObject target;
     public bool playerInAttackRange;
@@ -25,11 +29,15 @@ public class Study_Gaunt_General_Script : MonoBehaviour
 
     [Header("IS")]
     public int iSkillATKBuff;
+    private bool iskillBuffActive;
+    public ParticleSystem is_ps;
 
     [Header("Ult")]
     public int UltIFrameDuration;
+    private bool ultBuffActive;
     public GameObject husk;
     public GameObject[] summonedEntities = { null, null, null };
+    public ParticleSystem u_ps;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +53,8 @@ public class Study_Gaunt_General_Script : MonoBehaviour
 
     void Update()
     {
+        anim = eHS.anim;
+
         bossPhase = eHS.bossPhase;
 
         if (bossPhase == 0)
@@ -60,6 +70,39 @@ public class Study_Gaunt_General_Script : MonoBehaviour
             attack = 175;
             StartCoroutine(Phase2Brain());
         }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("BA"))
+        {
+            anim.SetBool("BA", false);
+        }
+
+        if (ultBuffActive)
+        {
+            u_ps.gameObject.SetActive(true);
+        }
+        else
+        {
+            u_ps.gameObject.SetActive(false);
+        }
+
+        if (iskillBuffActive)
+        {
+            is_ps.gameObject.SetActive(true);
+        }
+        else
+        {
+            is_ps.gameObject.SetActive(false);
+        }
+
+        if (eHS.isParrying)
+        {
+            parryShield.gameObject.SetActive(true);
+        }
+        else
+        {
+            parryShield.gameObject.SetActive(false);
+        }
+
     }
 
     void FixedUpdate()
@@ -165,6 +208,11 @@ public class Study_Gaunt_General_Script : MonoBehaviour
 
         eHS.isParrying = false;
 
+        //Animate
+        anim.SetBool("Running", true);
+        anim.SetBool("BA", false);
+        anim.SetBool("IS", false);
+
         target.GetComponent<PlayerControlScript>().TakeDamage(skillDMGScale[0] * attack);
 
         StartCoroutine(ResetCooldown(0, attackCooldowns[0]));
@@ -182,7 +230,14 @@ public class Study_Gaunt_General_Script : MonoBehaviour
 
         eHS.isParrying = false;
 
+        //Animate
+        anim.SetBool("Running", false);
+        anim.SetBool("BA", false);
+        anim.SetBool("IS", true);
+
         attack += iSkillATKBuff;
+
+        iskillBuffActive = true;
 
         StartCoroutine(ResetCooldown(2, 2));
         yield return null;
@@ -196,6 +251,8 @@ public class Study_Gaunt_General_Script : MonoBehaviour
 
         eHS.hasIFrames = true;
         eHS.canHaveIFrames = false;
+
+        ultBuffActive = true;
 
         foreach (GameObject e in summonedEntities)
         {
@@ -229,12 +286,15 @@ public class Study_Gaunt_General_Script : MonoBehaviour
         if (skillNO == 2 && cooldownLength == 2)
         {
             attack -= iSkillATKBuff;
+            iskillBuffActive = false;
         }
 
         if (skillNO == 3 && cooldownLength == 3)
         {
             eHS.Invoke("EnableIFrames", UltIFrameDuration);
             eHS.Invoke("RemoveIFrameCooldown", eHS.iFrameCooldown);
+
+            ultBuffActive = false;
         }
 
         yield return new WaitForSeconds(cooldownLength);

@@ -5107,10 +5107,10 @@ GameObject:
   m_Component:
   - component: {fileID: 37410420407376741}
   - component: {fileID: 4785717250536959840}
-  - component: {fileID: 7949273950900604054}
-  - component: {fileID: 75408130233124325}
   - component: {fileID: 1907346692562053267}
   - component: {fileID: 5170947466801747874}
+  - component: {fileID: 607622606713579105}
+  - component: {fileID: 229068280470733754}
   m_Layer: 7
   m_Name: Study_ Abyss Arachnid Controller
   m_TagString: Enemy
@@ -5157,61 +5157,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7949273950900604054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2473741740810868798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a3ae852e45e0144c928b42fed49cc9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 5571218638314217842}
-  target: {fileID: 0}
-  attackRange: 1.5
-  playerInAttackRange: 0
-  attack: 80
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  attackReady: 1
-  attackCooldown: 2
---- !u!114 &75408130233124325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2473741740810868798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c045e9f92295dcb42894b8ee7d7aad97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  gm: {fileID: 0}
-  anim: {fileID: 5571218638314217842}
-  difficulty: 1
-  mobType: 78
-  maxHP: 300
-  currentMaxHP: 0
-  health: 0
-  defence: 10
-  currentDef: 0
-  isDead: 0
-  isParrying: 0
-  hasBeenHit: 0
-  iFrameDuration: 0
-  hasIFrames: 0
-  iFrameCooldown: 0
-  IFramesOffCooldown: 0
-  canHaveIFrames: 0
-  bossPhase: 0
-  numberOfPhases: 0
-  hpBar: {fileID: 358432204046029070}
 --- !u!54 &1907346692562053267
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5260,6 +5205,62 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.34
   m_Center: {x: 0, y: 0.51, z: 0}
+--- !u!114 &607622606713579105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473741740810868798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c045e9f92295dcb42894b8ee7d7aad97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  gm: {fileID: 0}
+  anim: {fileID: 5571218638314217842}
+  model: {fileID: 1223586762069942706}
+  difficulty: 1
+  mobType: 78
+  maxHP: 300
+  currentMaxHP: 0
+  health: 0
+  defence: 10
+  currentDef: 0
+  isDead: 0
+  isParrying: 0
+  hasBeenHit: 0
+  iFrameDuration: 0
+  hasIFrames: 0
+  iFrameCooldown: 0
+  IFramesOffCooldown: 0
+  canHaveIFrames: 0
+  bossPhase: 0
+  numberOfPhases: 0
+  hpBar: {fileID: 358432204046029070}
+--- !u!114 &229068280470733754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473741740810868798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a3ae852e45e0144c928b42fed49cc9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 5571218638314217842}
+  target: {fileID: 0}
+  attackRange: 1.5
+  playerInAttackRange: 0
+  attack: 80
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 64
+  attackReady: 1
+  attackCooldown: 2
 --- !u!1 &2721044569213005119
 GameObject:
   m_ObjectHideFlags: 0
@@ -5771,6 +5772,12 @@ PrefabInstance:
       addedObject: {fileID: 7158413159648980748}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57d1b8183dae86146a23ea1d231562d0, type: 3}
+--- !u!1 &1223586762069942706 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 57d1b8183dae86146a23ea1d231562d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 2034048667681397987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1995337635513301768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 57d1b8183dae86146a23ea1d231562d0,

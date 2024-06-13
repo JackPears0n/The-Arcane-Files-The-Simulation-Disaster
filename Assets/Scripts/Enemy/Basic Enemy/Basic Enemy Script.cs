@@ -31,7 +31,7 @@ public class BasicEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        anim = gameObject.GetComponent<Animator>();
+        anim = gameObject.GetComponent<EnemyHealthScript>().anim;
 
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 

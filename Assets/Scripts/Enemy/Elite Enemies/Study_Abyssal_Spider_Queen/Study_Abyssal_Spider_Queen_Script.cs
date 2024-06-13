@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     public GameObject target;
 
@@ -21,6 +21,8 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
     public bool[] attackReady;
     public float[] attackCooldowns;
 
+    private Animator anim;
+
     public EnemyHealthScript eHS;
 
     // Start is called before the first frame update
@@ -32,12 +34,13 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
         eHS = gameObject.GetComponent<EnemyHealthScript>();
 
         target = GameObject.Find("Player Object");
-        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        anim = eHS.anim;
+
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         //Enters the parrying mode
@@ -68,11 +71,38 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
                     eHS.hasBeenHit = false;
                     eHS.isParrying = false;
 
+                    //Animate
+                    anim.SetBool("Running", false);
+                    anim.SetBool("BA", false);
+                    anim.SetBool("IS", true);
+
                     GameObject enemy = Instantiate(summonEntity, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
                 }
 
                 StartCoroutine(ResetCooldown(1, attackCooldowns[1]));
             }
+        }
+
+        if (!playerInAttackRange)
+        {
+            agent.destination = target.transform.position;
+            anim.SetBool("Running", true);
+        }
+        else
+        {
+            agent.destination = transform.position;
+            anim.SetBool("Running", false);
+            return;
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("BA"))
+        {
+            anim.SetBool("BA", false);
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.85 && anim.GetCurrentAnimatorStateInfo(0).IsName("IS"))
+        {
+            anim.SetBool("IS", false);
         }
     }
 
@@ -93,6 +123,11 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
     {
         attackReady[0] = false;
 
+        //Animate
+        anim.SetBool("Running", false);
+        anim.SetBool("BA", true);
+        anim.SetBool("IS", false);
+
         target.GetComponent<PlayerControlScript>().TakeDamage(skillDMGScale[0] * attack);
 
         StartCoroutine(ResetCooldown(0, attackCooldowns[0]));
@@ -109,6 +144,11 @@ public class Study_Abyssal_Spider_Queen_Script : MonoBehaviour
         attackReady[2] = false; 
 
         GameObject[] spiders = { null, null, null };
+
+        //Animate
+        anim.SetBool("Running", false);
+        anim.SetBool("BA", false);
+        anim.SetBool("IS", true);
 
         foreach (GameObject e in spiders)
         {

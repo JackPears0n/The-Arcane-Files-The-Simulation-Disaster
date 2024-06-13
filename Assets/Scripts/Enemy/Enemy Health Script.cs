@@ -11,6 +11,7 @@ public class EnemyHealthScript : MonoBehaviour
     public GameManager gm;
 
     public Animator anim;
+    public GameObject model; 
 
     [Header("Stats")]
     public float difficulty;
@@ -60,6 +61,12 @@ public class EnemyHealthScript : MonoBehaviour
         //Gets the game manager
         gm = GameObject.Find("GM").GetComponent<GameManager>();
 
+        //Gets animator
+        if (mobType != 'O')
+        {
+            anim = model.gameObject.GetComponent<Animator>();
+        }
+
         //Scales enemy max health  and defencewith difficulty
         currentMaxHP = maxHP *= difficulty;
         currentDef = defence *= difficulty;
@@ -85,7 +92,11 @@ public class EnemyHealthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        anim = gameObject.GetComponent<Animator>();
+        //Gets animator
+        if (mobType != 'O')
+        {
+            anim = model.gameObject.GetComponent<Animator>();
+        }
 
         HealthCheck();
     }
